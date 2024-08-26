@@ -1,6 +1,6 @@
-# 🚀 ConectaOficios 
+# 🚀 ContratApp 
 
-ConectaOficios es una aplicación web fullstack diseñada para conectar personas que ofrecen servicios de 
+ContratApp es una aplicación web fullstack diseñada para conectar personas que ofrecen servicios de 
 oficios (Oferentes) con aquellas que los necesitan (Solicitantes). La aplicación facilita la creación de 
 perfiles, la comunicación entre usuarios, seleccionar un servicio, calificar y comentar tanto a un Oferente 
 como a un Solicitante.
@@ -50,8 +50,8 @@ como a un Solicitante.
 
 1. **Clonar el repositorio**:
    ```bash
-   git clone https://github.com/tu-usuario/conectaoficios.git
-   cd conectaoficios
+   git clone https://github.com/tu-usuario/contratapp.git
+   cd contratapp
 2. **Configuración del Backend**:
 
 	* Navega a la carpeta del backend:
