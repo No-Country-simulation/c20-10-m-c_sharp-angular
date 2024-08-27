@@ -1,4 +1,4 @@
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
-export const providePrimengConfig = [MessageService, ToastModule];
+export const providePrimengConfig = [MessageService, ToastModule, ConfirmationService];
