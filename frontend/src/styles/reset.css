@@ -4,10 +4,6 @@
   box-sizing: border-box;
 }
 
-* {
-  margin: 0;
-}
-
 ul[role='list'],
 ol[role='list'] {
   list-style: none;
@@ -58,6 +54,7 @@ select {
 
 body,
 html {
+  margin: 0;
   height: 100%;
   scroll-behavior: auto;
 }
