@@ -13,6 +13,7 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
+    loadComponent: () => import('./features/auth/layout/layout.component'),
     children: [
       {
         path: '',
