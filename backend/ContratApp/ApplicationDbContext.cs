@@ -11,5 +11,17 @@ namespace ContratApp
         {
         }
 
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Oficio> Oficios { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Categoria>()
+                .HasMany(a => a.Oficios)
+                .WithOne(b => b.Categoria)
+                .HasForeignKey(b => b.CategoriaId);
+
+            base.OnModelCreating(builder);
+        }
     }
 }
