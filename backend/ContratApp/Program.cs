@@ -18,6 +18,13 @@ namespace ContratApp
             builder.Services.AddIdentityApiEndpoints<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddAuthorization();
+            builder.Services.AddCors(opciones =>
+            {
+                opciones.AddPolicy("PoliticaCORS", app =>
+                {
+                    app.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
 
@@ -35,7 +42,7 @@ namespace ContratApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseCors("PoliticaCORS");
             app.UseAuthorization();
 
             app.MapControllerRoute(
