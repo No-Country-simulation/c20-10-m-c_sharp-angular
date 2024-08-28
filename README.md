@@ -76,3 +76,23 @@ como a un Solicitante.
 * Una vez que ambos servidores estén corriendo, accede a la aplicación en tu navegador en `http://localhost:4200`.
 
 ## 🤝 Participantes:
+Front-end:
+ - Hiram Chávez
+ - Mario Molano
+ - Joaquin Albanese
+ - Jhon Herrera
+ - Aixa Mengassini
+ - Heidi Cordova
+   
+Back-end: 
+ - Eliana Calle
+ - Javier Cervantes
+
+Tester QA: 
+ - Camila Palacios
+
+UX/UI:
+ - Cecilia Etchepare
+
+Project Manager: 
+- Serena Sica
