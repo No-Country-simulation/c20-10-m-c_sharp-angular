@@ -1,7 +1,10 @@
-﻿namespace ContratApp.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ContratApp.Models;
 
 public class Entity
 {
-    public Guid Id { get; set; }
+    [Key]
+    public int Id { get; set; }
     public bool IsActive { get; set; } = true;
 }

@@ -25,7 +25,7 @@ namespace ContratApp
                     app.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
             });
-            builder.Services.AddCustomConfiguration();
+            builder.Services.AddAutoMapper(typeof(ApplicationMapper).Assembly);
 
             var app = builder.Build();
 

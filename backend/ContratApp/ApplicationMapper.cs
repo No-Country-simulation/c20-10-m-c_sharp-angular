@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ContratApp.Models;
-using ContratApp.Services.Contracts;
+using ContratApp.ViewModels;
 
 namespace ContratApp;
 
@@ -8,10 +8,10 @@ public class ApplicationMapper : Profile
 {
     public ApplicationMapper()
     {
-        CreateMap<CategoryAddRequest, Category>();
-        CreateMap<CategoryUpdateRequest, Category>();
+        CreateMap<CategoriaAddViewModel, Categoria>();
+        CreateMap<CategoriaUpdateViewModel, Categoria>();
 
-        CreateMap<JobAddRequest, Job>();
-        CreateMap<JobUpdateRequest, Job>();
+        CreateMap<OficioAddViewModel, Oficio>();
+        CreateMap<OficioUpdateViewModel, Oficio>();
     }
 }
