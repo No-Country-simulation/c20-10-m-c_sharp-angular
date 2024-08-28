@@ -1,0 +1,49 @@
+# Ignorar las compilaciones de Visual Studio
+.vscode/
+.vscode/*
+bin/
+obj/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignorar las carpetas de configuración de Visual Studio
+.vs/
+*.code-workspace
+
+# Ignorar archivos generados por herramientas de paquete
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Ignorar archivos de configuración de usuario
+*.env
+.env.*
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar archivos de publicación
+publish/
+out/
+
+# Ignorar las carpetas de las herramientas
+Tools/
+
+# Ignorar la carpeta de paquetes de NuGet
+packages/
+# Ignorar paquetes de NuGet descargados globalmente
+.nuget/
+
+# Ignorar el archivo de la base de datos local
+*.mdf
+*.ldf
+
+# Ignorar archivos generados por el sistema operativo
+[Dd]esktop.ini
+[Tt]humbs.db
+*.DS_Store
