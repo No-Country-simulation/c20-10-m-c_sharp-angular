@@ -85,7 +85,6 @@ Front-end:
  - Heidi Cordova
    
 Back-end: 
- - Eliana Calle
  - Javier Cervantes
 
 Tester QA: 
