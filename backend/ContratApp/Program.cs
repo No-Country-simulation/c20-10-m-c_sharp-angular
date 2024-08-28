@@ -25,6 +25,7 @@ namespace ContratApp
                     app.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
             });
+            builder.Services.AddCustomConfiguration();
 
             var app = builder.Build();
 
