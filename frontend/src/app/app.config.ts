@@ -4,11 +4,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { providePrimengConfig } from './core/configs/providePrimeng.config';
+import { providePrimengConfig, inMemoryScrollingFeature } from './core/configs';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes, inMemoryScrollingFeature),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
     providePrimengConfig,

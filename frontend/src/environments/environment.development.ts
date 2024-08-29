@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  url: "http://localhost:3800/api/v1",
+  url: "http://www.contratapp.somee.com",
 };
