@@ -6,7 +6,7 @@ export const environment = {
     USER: 'api/Usuario',
     REFRESH_TOKEN: 'identity/refresh',
   },
-  SESSION_STORAGE: {
+  COOKIES: {
     TOKEN: 'token',
     REFRESH_TOKEN: 'refresh_token',
   },
