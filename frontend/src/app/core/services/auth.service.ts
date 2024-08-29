@@ -1,19 +1,49 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
-import { IAuthLogin, ILoginOkResponse } from '../interfaces';
+import {
+  AuthLogin,
+  AuthLoginResponse,
+  AuthRegister,
+  AuthRegisterResponse,
+} from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private http = inject(HttpClient);
-  private url = environment.url;
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = environment.BASE_URL;
+  private readonly loginEndpoint = environment.ENDPOINT.LOGIN;
+  private readonly registerEndpoint = environment.ENDPOINT.REGISTER;
 
-  login(data: IAuthLogin): Observable<ILoginOkResponse> { //IResponse<IUser>
-    console.log('data', data);
-    return this.http.post<ILoginOkResponse>(`${this.url}/identity/login`, data);
+  /**
+   * Logs in with the provided email.
+   *
+   * @param formValue - The login form data, which includes:
+   *  - email: string
+   *  - password: string
+   * @returns An observable that emits the server response.
+   */
+  public loginWithEmail(formValue: AuthLogin): Observable<AuthLoginResponse> {
+    return this.http.post<AuthLoginResponse>(this.baseUrl + this.loginEndpoint, formValue);
   }
 
+  /**
+   * Registers a new user with the provided email.
+   *
+   * @param formValue - The registration form data, which includes:
+   *  - name: string
+   *  - email: string
+   *  - password: string
+   * @returns An observable that emits the server response.
+   */
+  public registerWithEmail(formValue: AuthRegister): Observable<AuthRegisterResponse> {
+    return this.http.post<AuthRegisterResponse>(this.baseUrl + this.registerEndpoint, formValue);
+  }
+
+  // public forgot() {}
+  // public logout() {}
 }
