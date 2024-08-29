@@ -2,8 +2,8 @@ import { inject, Injectable, signal } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { IAuthLogin, ILoginOkResponse } from '../../../../../core/interfaces';
 import { AuthService as AuthApiService } from '../../../../../core/services';
+import { AuthLogin, AuthLoginResponse } from '../../../../../core/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +16,10 @@ export class AuthService {
   private router = inject(Router);
 
   // User Authenticated
-  public authUser = signal<ILoginOkResponse | undefined>(undefined);
+  public authUser = signal<AuthLoginResponse | undefined>(undefined);
 
-  login(data: IAuthLogin): Observable<ILoginOkResponse> {
-    return this.authApi.login(data).pipe(
+  login(data: AuthLogin): Observable<AuthLoginResponse> {
+    return this.authApi.loginWithEmail(data).pipe(
       tap(( data) => {
         this.authUser.set(data);
         localStorage.setItem('dataToken', JSON.stringify( data ));
@@ -30,7 +30,7 @@ export class AuthService {
           key: 'toast',
           severity: 'success',
           summary: 'BIENVENIDO',
-          detail: `Te invitamos a terminar de llenar tus datos personales`,
+          detail: `Te invitamos a terminar de llenar tus datos personalez`,
         });
       }),
       catchError(( error) => throwError( () => error ))

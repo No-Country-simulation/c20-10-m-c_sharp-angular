@@ -9,7 +9,7 @@ import { Ripple } from 'primeng/ripple';
 import { InputTextModule } from 'primeng/inputtext';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ValidatorsService } from '../../../../shared/services/validators.service';
-import { IAuthLogin } from '../../../../core/interfaces';
+import { AuthLogin } from '../../../../core/interfaces';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -52,7 +52,7 @@ export default class LoginComponent {
       return;
     }
 
-    this.authService.login(this.myForm.value as IAuthLogin)
+    this.authService.login(this.myForm.value as AuthLogin)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         error: () => this.isButtonDisabled.set( false ),
