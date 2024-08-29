@@ -8,7 +8,7 @@ import {
   AuthLoginResponse,
   AuthRegister,
   AuthRegisterResponse,
-} from '../interfaces/auth.interface';
+} from '../interfaces';
 
 @Injectable({
   providedIn: 'root',

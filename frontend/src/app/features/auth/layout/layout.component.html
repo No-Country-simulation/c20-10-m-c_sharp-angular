@@ -1,4 +1,20 @@
 <div class="">
-  <h2>test</h2>
-  <router-outlet></router-outlet>
+  <div class="grid grid-nogutter surface-section text-800" >
+    <div class="col-12 md:col-5 p-4 text-center md:text-left flex align-items-center" style="max-width: 100%; box-sizing: border-box; ">
+      <div class="w-full" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div
+      class="col-12 md:col-7 overflow-hidden hidden md:block"
+      style="
+        background-image: url('assets/images/login/welding.jpg');
+        background-size: cover;
+        background-position: center;
+        clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%);
+        min-height: 100dvh;
+      "
+    >
+    </div>
+  </div>
 </div>
