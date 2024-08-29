@@ -4,39 +4,47 @@ import { Observable, throwError } from 'rxjs';
 
 import { RefreshTokenResponse } from '../interfaces/auth.interface';
 import { environment } from '../../../environments/environment';
+import { CookieOptions, CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JwtService {
   private readonly http = inject(HttpClient);
+  private readonly cookieService = inject(CookieService);
   private readonly baseUrl = environment.BASE_URL;
   private readonly refreshEndpoint = environment.ENDPOINT.REFRESH_TOKEN;
-  private readonly tokenStorage = environment.SESSION_STORAGE.TOKEN;
-  private readonly refreshTokenStorage = environment.SESSION_STORAGE.REFRESH_TOKEN;
+  private readonly tokenCookie = environment.COOKIES.TOKEN;
+  private readonly refreshTokenCookie = environment.COOKIES.REFRESH_TOKEN;
+
+  private readonly cookieOptions: CookieOptions = {
+    path: '/',
+    secure: true,
+    sameSite: 'Strict',
+  };
 
   public setAccessToken(token: string): void {
-    sessionStorage.setItem(this.tokenStorage, token);
+    this.cookieService.set(this.tokenCookie, token, { ...this.cookieOptions });
   }
 
   public getAccessToken(): string | null {
-    return sessionStorage.getItem(this.tokenStorage);
+    return this.cookieService.get(this.tokenCookie);
   }
 
   public clearAccessToken(): void {
-    sessionStorage.removeItem(this.tokenStorage);
+    this.cookieService.delete(this.tokenCookie, this.cookieOptions.path);
   }
 
   public setRefreshToken(token: string): void {
-    sessionStorage.setItem(this.refreshTokenStorage, token);
+    this.cookieService.set(this.refreshTokenCookie, token, this.cookieOptions);
   }
 
   public getRefreshToken(): string | null {
-    return sessionStorage.getItem(this.refreshTokenStorage);
+    return this.cookieService.get(this.refreshTokenCookie);
   }
 
   public clearRefreshToken(): void {
-    sessionStorage.removeItem(this.refreshTokenStorage);
+    this.cookieService.delete(this.refreshTokenCookie, this.cookieOptions.path);
   }
 
   public clearTokens(): void {
