@@ -31,3 +31,5 @@ export interface RegisterErrors {
   additionalProp2: string[];
   additionalProp3: string[];
 }
+
+export type RefreshTokenResponse = AuthLoginResponse;

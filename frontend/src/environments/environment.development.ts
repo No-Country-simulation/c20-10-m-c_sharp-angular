@@ -4,8 +4,10 @@ export const environment = {
     LOGIN: 'identity/login',
     REGISTER: 'identity/register',
     USER: 'api/Usuario',
+    REFRESH_TOKEN: 'identity/refresh',
   },
-  LOCALSTORAGE: {
-    JWT: 'jwt',
+  SESSION_STORAGE: {
+    TOKEN: 'token',
+    REFRESH_TOKEN: 'refresh_token',
   },
 };
