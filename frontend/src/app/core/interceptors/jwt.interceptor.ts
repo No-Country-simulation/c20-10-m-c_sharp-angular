@@ -26,9 +26,10 @@ import { AuthLoginResponse } from '../interfaces/auth.interface';
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const jwtService = inject(JwtService);
   const accessToken = jwtService.getAccessToken();
+  const isLoginRequest = req.url.includes(jwtService.getLoginEndpoint);
 
   // If the access token exists, clone the request and add the Authorization header.
-  if (accessToken) {
+  if (accessToken && !isLoginRequest) {
     const clonedRequest = req.clone({
       setHeaders: {
         Authorization: `Bearer ${accessToken}`,
@@ -36,7 +37,6 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
     });
     return next(clonedRequest);
   }
-
   return next(req).pipe(
     tap(event => {
       // If the request succeeds, store the new access and refresh tokens from the response.
@@ -55,7 +55,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
        * If a 401 error occurs and the request is not to the refresh endpoint,
        * attempt to refresh the access token.
        */
-      if (error.status === 401 && !req.url.includes(jwtService.getRefreshEndpoint)) {
+      if (error.status === 401 && !isLoginRequest && accessToken) {
         return jwtService.refreshAccessToken().pipe(
           switchMap(res => {
             jwtService.setAccessToken(res.accessToken);
@@ -68,7 +68,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
           }),
           catchError(refreshError => {
             // If token refresh fails, clear tokens and propagate the error.
-            // jwtService.clearTokens();
+            jwtService.clearTokens();
             return throwError(() => refreshError);
           })
         );
