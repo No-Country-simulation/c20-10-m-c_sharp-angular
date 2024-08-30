@@ -16,6 +16,7 @@ export class JwtService {
   private readonly refreshEndpoint = environment.ENDPOINT.REFRESH_TOKEN;
   private readonly tokenCookie = environment.COOKIES.TOKEN;
   private readonly refreshTokenCookie = environment.COOKIES.REFRESH_TOKEN;
+  private readonly loginEndpoint = environment.ENDPOINT.LOGIN;
 
   private readonly cookieOptions: CookieOptions = {
     path: '/',
@@ -61,6 +62,10 @@ export class JwtService {
     return this.http.post<RefreshTokenResponse>(this.getRefreshEndpoint, {
       refreshToken: refreshToken,
     });
+  }
+
+  public get getLoginEndpoint(): string {
+    return this.baseUrl + this.loginEndpoint;
   }
 
   public get getRefreshEndpoint(): string {
