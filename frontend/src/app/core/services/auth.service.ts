@@ -1,23 +1,26 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import {
-  AuthLogin,
-  AuthLoginResponse,
-  AuthRegister,
-  AuthRegisterResponse,
-} from '../interfaces';
+import { AuthLogin, AuthLoginResponse, AuthRegister, AuthRegisterResponse } from '../interfaces';
+import { JwtService } from './jwt.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private readonly jwtService = inject(JwtService);
+
   private readonly baseUrl = environment.BASE_URL;
   private readonly loginEndpoint = environment.ENDPOINT.LOGIN;
   private readonly registerEndpoint = environment.ENDPOINT.REGISTER;
+
+  /**
+   * Gets the authentication status.
+   */
+  public authStatus = signal<string | null>(null);
 
   /**
    * Logs in with the provided email.
@@ -45,5 +48,12 @@ export class AuthService {
   }
 
   // public forgot() {}
-  // public logout() {}
+
+  /**
+   * Logs out the user.
+   */
+  public logout(): void {
+    this.jwtService.clearTokens();
+    this.authStatus.set(null);
+  }
 }

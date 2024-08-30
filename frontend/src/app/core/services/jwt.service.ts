@@ -49,8 +49,7 @@ export class JwtService {
   }
 
   public clearTokens(): void {
-    this.clearAccessToken();
-    this.clearRefreshToken();
+    this.cookieService.deleteAll(this.cookieOptions.path);
   }
 
   public refreshAccessToken(): Observable<RefreshTokenResponse> {
