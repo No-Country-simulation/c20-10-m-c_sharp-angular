@@ -12,10 +12,14 @@ namespace ContratApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRouting(options =>
+            {
+                options.LowercaseUrls = true;
+            });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
-                // configuración para autenticación Bearer
+                // configuraciï¿½n para autenticaciï¿½n Bearer
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

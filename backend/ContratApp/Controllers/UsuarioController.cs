@@ -68,7 +68,7 @@ namespace ContratApp.Controllers
             {
                 Id = useR.Value,
                 Email = useR.Subject.Name,
-                Nombre = perfilViewModel.Nombre,
+                Name = perfilViewModel.Name,
                 Apellido = perfilViewModel.Apellido
             };
             if (_context.Usuarios.Any(e => e.Id == usuario.Id))

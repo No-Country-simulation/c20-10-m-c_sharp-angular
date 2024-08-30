@@ -8,10 +8,10 @@ public class ApplicationMapper : Profile
 {
     public ApplicationMapper()
     {
-        CreateMap<CategoriaAddViewModel, Categoria>();
-        CreateMap<CategoriaUpdateViewModel, Categoria>();
+        CreateMap<CategoryAddViewModel, Category>();
+        CreateMap<CategoryUpdateViewModel, Category>();
 
-        CreateMap<OficioAddViewModel, Oficio>();
-        CreateMap<OficioUpdateViewModel, Oficio>();
+        CreateMap<SpecialityAddViewModel, Speciality>();
+        CreateMap<SpecialityUpdateViewModel, Speciality>();
     }
 }
