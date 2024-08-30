@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { PrimeNGConfig } from 'primeng/api';
+import { ThemesService } from './core/themes';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,8 @@ import { PrimeNGConfig } from 'primeng/api';
   `,
 })
 export class AppComponent {
-
-  private primengConfig = inject(PrimeNGConfig);
+  private readonly themesService = inject(ThemesService);
+  private readonly primengConfig = inject(PrimeNGConfig);
 
   title = 'frontend';
 
