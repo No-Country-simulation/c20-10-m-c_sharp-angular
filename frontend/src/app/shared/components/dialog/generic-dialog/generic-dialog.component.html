@@ -1,0 +1,18 @@
+<p-dialog
+  [(visible)]="visible"
+  [header]="header"
+  [modal]="true"
+  [style]="{ width: '450px' }"
+  [closable]="true"
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
+  (onHide)="onHide()"
+>
+  <ng-container *ngIf="contentTemplate">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </ng-container>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple icon="pi pi-times" class="p-button-text" [label]="cancelLabel" (click)="onCancel()"></button>
+    <button pButton pRipple icon="pi pi-check" class="p-button-text" [label]="acceptLabel" (click)="onAccept()" [disabled]="isAcceptDisabled"></button>
+  </ng-template>
+</p-dialog>
