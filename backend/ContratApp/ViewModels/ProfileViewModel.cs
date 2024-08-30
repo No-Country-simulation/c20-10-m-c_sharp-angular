@@ -2,13 +2,13 @@
 
 namespace ContratApp.ViewModels
 {
-    public class PerfilViewModel
+    public class ProfileViewModel
     {
         [Required]
         [MaxLength(256)]
-        public string? Name { get; set; }
+        public string? FirstName { get; set; }
         [Required]
         [MaxLength(256)]
-        public string? Apellido { get; set; }
+        public string? LastName { get; set; }
     }
 }

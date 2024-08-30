@@ -2,7 +2,7 @@
 
 namespace ContratApp.Models
 {
-    public class Usuario
+    public class User
     {
         [Key]
         [MaxLength(450)]
@@ -13,9 +13,9 @@ namespace ContratApp.Models
         public string? Email { get; set; }
         [Required]
         [MaxLength(256)]
-        public string? Name { get; set; }
+        public string? FirstName { get; set; }
         [Required]
         [MaxLength(256)]
-        public string? Apellido { get; set; }
+        public string? LastName { get; set; }
     }
 }

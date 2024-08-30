@@ -1,10 +1,8 @@
 ﻿using ContratApp.Models;
 using ContratApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Security.Claims;
 
 namespace ContratApp.Controllers
@@ -14,44 +12,44 @@ namespace ContratApp.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]    
-    public class UsuarioController : ControllerBase
+    [Authorize]
+    public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public UsuarioController(ApplicationDbContext context)
+        public UserController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Usuario
+        // GET: api/User
         /// <summary>
         /// Datos del usuario autenticado.
         /// </summary>
         /// <returns></returns>
         /// <response code="200">Ok. Id, email y demás datos del perfil del usuario</response>
-        /// <response code="404">No se encontraron los datos complementarios del usuario. Use PUT:api/Usuario para complementar datos</response>
+        /// <response code="404">No se encontraron los datos complementarios del usuario. Use PUT:api/User para complementar datos</response>
         [HttpGet]
-        public ActionResult<Usuario> GetUsuario()
+        public ActionResult<User> GetUser()
         {
-            var usuario = _context.Usuarios.Find(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            if (usuario == null)
-                return NotFound(new { Msg = "No se encontraron los datos complementarios del usuario. Use PUT:api/Usuario para complementar datos" } );
-            return usuario;
+            var user = _context.Users.Find(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (user == null)
+                return NotFound(new { Msg = "No se encontraron los datos complementarios del usuario. Use PUT:api/User para complementar datos" });
+            return user;
         }
 
-        // GET: api/Usuario/Lista
+        // GET: api/User/List
         /// <summary>
         /// Lista de perfiles de usuario
         /// </summary>
         /// <returns></returns>
-        [HttpGet("Lista")]
-        public ActionResult<IEnumerable<Usuario>> GetListaUsuarios()
+        [HttpGet("List")]
+        public ActionResult<IEnumerable<User>> GetUsersList()
         {
-            return _context.Usuarios.ToList();
+            return _context.Users.ToList();
         }
 
-        // PUT: api/Usuario
+        // PUT: api/User
         /// <summary>
         /// Actualiza datos del usuario actual
         /// </summary>
@@ -61,20 +59,20 @@ namespace ContratApp.Controllers
         /// </remarks>
         /// <returns>Ok</returns>
         [HttpPut]
-        public IActionResult PutUsuario([FromBody] PerfilViewModel perfilViewModel)
+        public IActionResult PutUser([FromBody] ProfileViewModel profileViewModel)
         {
             var useR = User.FindFirst(ClaimTypes.NameIdentifier);
-            var usuario = new Usuario
+            var user = new User
             {
                 Id = useR.Value,
                 Email = useR.Subject.Name,
-                Name = perfilViewModel.Name,
-                Apellido = perfilViewModel.Apellido
+                FirstName = profileViewModel.FirstName,
+                LastName = profileViewModel.LastName
             };
-            if (_context.Usuarios.Any(e => e.Id == usuario.Id))
-                _context.Entry(usuario).State = EntityState.Modified;
+            if (_context.Users.Any(e => e.Id == user.Id))
+                _context.Entry(user).State = EntityState.Modified;
             else
-                _context.Entry(usuario).State = EntityState.Added;
+                _context.Entry(user).State = EntityState.Added;
 
             try
             {
@@ -84,11 +82,12 @@ namespace ContratApp.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Msg = ex.Message } );
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Msg = ex.Message });
             }
 
-            
+
         }
+
 
     }
 }
