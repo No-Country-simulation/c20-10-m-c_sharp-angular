@@ -50,6 +50,11 @@ export class ThemesService {
    * @param mode - The theme mode to set ('dark' or 'light').
    */
   public setThemeMode(mode: ThemeMode): void {
+    // Check if the mode is already the current mode
+    if (this.currentTheme().mode === mode) {
+      return;
+    }
+
     this.currentTheme.update(theme => ({ ...theme, mode }));
     this.applyTheme();
   }
@@ -60,6 +65,11 @@ export class ThemesService {
    * @param color - The color variant of the theme.
    */
   public setTheme(name: string, color: string): void {
+    // Check if the theme name and color are already the current ones
+    if (this.currentTheme().name === name && this.currentTheme().color === color) {
+      return;
+    }
+
     this.currentTheme.update(theme => ({ ...theme, name, color }));
     this.applyTheme();
   }
