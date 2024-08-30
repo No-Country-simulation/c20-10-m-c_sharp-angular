@@ -40,6 +40,11 @@ namespace ContratApp
                         Array.Empty<string>()
                     }
                 });
+
+                // Ruta al archivo XML con los comentarios
+                var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
             builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
                 opciones.UseSqlServer("name=DefaultConnection"));
