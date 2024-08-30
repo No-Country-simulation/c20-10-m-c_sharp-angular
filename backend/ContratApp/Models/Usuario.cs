@@ -13,7 +13,7 @@ namespace ContratApp.Models
         public string? Email { get; set; }
         [Required]
         [MaxLength(256)]
-        public string? Nombre { get; set; }
+        public string? Name { get; set; }
         [Required]
         [MaxLength(256)]
         public string? Apellido { get; set; }
