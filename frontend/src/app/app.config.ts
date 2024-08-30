@@ -6,7 +6,6 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { providePrimengConfig, inMemoryScrollingFeature } from './core/configs';
 import { jwtInterceptor } from './core/interceptors';
-import { ThemesService } from './core/themes/themes.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +13,5 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(withFetch(), withInterceptors([jwtInterceptor])),
     providePrimengConfig,
-    ThemesService,
   ],
 };
