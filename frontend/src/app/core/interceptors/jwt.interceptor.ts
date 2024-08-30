@@ -68,7 +68,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
           }),
           catchError(refreshError => {
             // If token refresh fails, clear tokens and propagate the error.
-            jwtService.clearTokens();
+            // jwtService.clearTokens();
             return throwError(() => refreshError);
           })
         );
