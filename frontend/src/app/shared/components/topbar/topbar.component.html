@@ -1,0 +1,41 @@
+<p-toolbar [style]="{ 'padding': '.5rem'}">
+
+  <ng-template pTemplate="start">
+    <img src="./assets/images/contractapp-logo.png" alt="logo" height="150" width="150">
+  </ng-template>
+
+  <ng-template pTemplate="center">
+    <a [routerLink]="'/'" class="no-underline font-semibold text-2xl" style="color: var(--text-color)">
+      <p>ContractApp </p>
+    </a>
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <div class="flex flex-wrap px-4">
+      <button pButton type="button" (click)="visibleSidebarTheme = true" icon="pi pi-wrench" ></button>
+    </div>
+  </ng-template>
+
+</p-toolbar>
+
+<p-sidebar [(visible)]="visibleSidebarTheme" position="right" [baseZIndex]="10000">
+  <h2>Temas</h2>
+  <div class="flex flex-column">
+    <div class="flex gap-1">
+      <p-button label="Modo oscuro" (onClick)="themesService.setThemeMode('dark')" />
+      <p-button label="Modo claro" (onClick)="themesService.setThemeMode('light')" />
+    </div>
+    @for (themes of themesService.themesList; track $index) {
+      <h3>{{ themes.title }}</h3>
+      <div class="flex flex-wrap	align-self-start gap-2">
+        @for (theme of themes.colors; track $index) {
+          <p-button
+            outlined="true"
+            label="{{ theme.color }}"
+            styleClass="{{ theme.color }}"
+            (onClick)="themesService.setTheme(themes.prefix, theme.color)" />
+        }
+      </div>
+    }
+  </div>
+</p-sidebar>
