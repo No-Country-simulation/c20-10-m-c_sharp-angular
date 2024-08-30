@@ -2,7 +2,7 @@ import { HttpResponse, type HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
 
-import { JwtService } from '../services/jwt.service';
+import { JwtService, AuthService } from '../services';
 import { AuthLoginResponse } from '../interfaces/auth.interface';
 
 /**
@@ -25,6 +25,8 @@ import { AuthLoginResponse } from '../interfaces/auth.interface';
  */
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const jwtService = inject(JwtService);
+  const authService = inject(AuthService);
+
   const accessToken = jwtService.getAccessToken();
   const isLoginRequest = req.url.includes(jwtService.getLoginEndpoint);
 
@@ -35,8 +37,10 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+    authService.authStatus.set(accessToken);
     return next(clonedRequest);
   }
+
   return next(req).pipe(
     tap(event => {
       // If the request succeeds, store the new access and refresh tokens from the response.
@@ -44,6 +48,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
         const body = event.body as AuthLoginResponse;
         if (body?.accessToken) {
           jwtService.setAccessToken(body.accessToken);
+          authService.authStatus.set(body?.accessToken);
         }
         if (body?.refreshToken) {
           jwtService.setRefreshToken(body.refreshToken);
@@ -59,6 +64,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
         return jwtService.refreshAccessToken().pipe(
           switchMap(res => {
             jwtService.setAccessToken(res.accessToken);
+            authService.authStatus.set(res.accessToken);
             const clonedRequest = req.clone({
               setHeaders: {
                 Authorization: `Bearer ${res.accessToken}`,
