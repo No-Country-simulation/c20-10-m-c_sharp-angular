@@ -9,5 +9,6 @@ export const environment = {
   COOKIES: {
     TOKEN: 'token',
     REFRESH_TOKEN: 'refresh_token',
+    USER_THEME: 'user_theme',
   },
 };
