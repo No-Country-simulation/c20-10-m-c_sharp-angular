@@ -64,7 +64,7 @@ export default class LoginComponent {
     this.authService.login(this.myForm.value as AuthLogin)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        error: () => this.isButtonDisabled(),
+        error: () => this.isButtonDisabled.set(false),
       });
   }
 
