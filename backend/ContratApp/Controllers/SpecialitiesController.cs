@@ -27,8 +27,14 @@ public class SpecialitiesController : ControllerBase
     /// This endpoint returns a list of all specialities available in the system.
     /// </remarks>
     /// <response code="200">Returns a list of specialities.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="500">Returns an internal server error response if an unexpected error occurs while processing the request.</response>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Speciality>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Get()
     {
         var specialities = await _context.Specialities.Where(c => c.IsActive).ToListAsync();
@@ -44,12 +50,18 @@ public class SpecialitiesController : ControllerBase
     /// </remarks>
     /// <response code="200">Returns the speciality with the specified ID.</response>
     /// <response code="400">Returns a bad request response if the provided ID is invalid.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="404">Returns a not found response if no speciality with the specified ID exists.</response>
     /// <response code="500">Returns an internal server error response if an unexpected error occurs while processing the request.</response>
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(Speciality), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Get(int id)
     {
-        if (id <= 0) return BadRequest($"Invalid ID {id}");
+        if (id <= 0) return BadRequest();
         var speciality = await _context.Specialities.FirstOrDefaultAsync(o => o.Id == id && o.IsActive);
         if (speciality == null) return NotFound();
         return Ok(speciality);
@@ -65,8 +77,13 @@ public class SpecialitiesController : ControllerBase
     /// </remarks>
     /// <response code="201">Returns the created speciality along with a location header pointing to the newly created resource.</response>
     /// <response code="400">Returns a bad request response if the provided data is invalid or the request is malformed.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="500">Returns an internal server error response if an unexpected error occurs while processing the request.</response>
     [HttpPost]
+    [ProducesResponseType(typeof(Speciality), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Post([FromBody] SpecialityAddViewModel speciality)
     {
         var nuevoSpeciality = await _context.Specialities.AddAsync(_mapper.Map<Speciality>(speciality));
@@ -85,12 +102,18 @@ public class SpecialitiesController : ControllerBase
     /// </remarks>
     /// <response code="200">Returns the updated speciality.</response>
     /// <response code="400">Returns a bad request response if the ID is invalid or if the request data is invalid.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="404">Returns a not found response if no speciality with the specified ID exists.</response>
     /// <response code="500">Returns an internal server error response if an unexpected error occurs while processing the request.</response>
     [HttpPut("{id}")]
+    [ProducesResponseType(typeof(Speciality), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Put(int id, [FromBody] SpecialityUpdateViewModel specialityRequest)
     {
-        if (id <= 0) return BadRequest($"Invalid ID {id}");
+        if (id <= 0) return BadRequest();
         var speciality = await _context.Specialities.FindAsync(id);
         if (speciality == null) return NotFound();
         _mapper.Map(specialityRequest, speciality);
@@ -109,12 +132,18 @@ public class SpecialitiesController : ControllerBase
     /// </remarks>
     /// <response code="200">Returns a boolean value indicating whether the update was successful.</response>
     /// <response code="400">Returns a bad request response if the provided ID is invalid.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="404">Returns a not found response if no speciality with the specified ID exists.</response>
     /// <response code="500">Returns an internal server error response if an unexpected error occurs while processing the request.</response>
     [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(int id)
     {
-        if (id <= 0) return BadRequest($"Invalid ID {id}");
+        if (id <= 0) return BadRequest();
         var speciality = await _context.Specialities.FindAsync(id);
         if (speciality == null) return NotFound();
         speciality.IsActive = false;
