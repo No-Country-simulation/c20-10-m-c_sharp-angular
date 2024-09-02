@@ -27,8 +27,13 @@ public class CategoriesController : ControllerBase
     /// Returns a list of categories.
     /// </remarks>
     /// <response code="200">Returns the list of categories.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="500">Internal server error if something goes wrong.</response>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Category>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Get()
     {
         var categories = await _context.Categories.Where(c => c.IsActive).ToListAsync();
@@ -44,12 +49,18 @@ public class CategoriesController : ControllerBase
     /// </remarks>
     /// <response code="200">Returns the category with the category ID.</response>
     /// <response code="400">Returns a bad request response if the request is invalid.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="404">If the category is not found.</response>
     /// <response code="500">Internal server error if something goes wrong.</response>
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(Category), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Get(int id)
     {
-        if (id <= 0) return BadRequest($"Invalid ID {id}");
+        if (id <= 0) return BadRequest();
         var category = await _context.Categories.FirstOrDefaultAsync(o => o.Id == id && o.IsActive);
         if (category == null) return NotFound();
         return Ok(category);
@@ -65,8 +76,13 @@ public class CategoriesController : ControllerBase
     /// </remarks>
     /// <response code="201">Returns the created category along with a location header pointing to the newly created resource.</response>
     /// <response code="400">Returns a bad request response if the provided data is invalid or the request is malformed.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="500">Returns an internal server error response if an unexpected error occurs while processing the request.</response>
     [HttpPost]
+    [ProducesResponseType(typeof(Category), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Post([FromBody] CategoryAddViewModel category)
     {
         var newCategory = await _context.Categories.AddAsync(_mapper.Map<Category>(category));
@@ -85,12 +101,18 @@ public class CategoriesController : ControllerBase
     /// </remarks>
     /// <response code="200">Returns the updated category.</response>
     /// <response code="400">Returns a bad request response if the ID is invalid or if the request data is invalid.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="404">Returns a not found response if no category with the specified ID exists.</response>
     /// <response code="500">Returns an internal server error response if an unexpected error occurs while processing the request.</response>
     [HttpPut("{id}")]
+    [ProducesResponseType(typeof(Category), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Put(int id, [FromBody] CategoryUpdateViewModel categoryRequest)
     {
-        if (id <= 0) return BadRequest($"Invalid ID {id}");
+        if (id <= 0) return BadRequest();
         var category = await _context.Categories.FindAsync(id);
         if (category == null) return NotFound();
         _mapper.Map(categoryRequest, category);
@@ -109,12 +131,18 @@ public class CategoriesController : ControllerBase
     /// </remarks>
     /// <response code="200">Returns a boolean value indicating whether the update was successful.</response>
     /// <response code="400">Returns a bad request response if the ID is invalid.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
     /// <response code="404">Returns a not found response if no category with the specified ID exists.</response>
     /// <response code="500">Returns an internal server error response if an unexpected error occurs while processing the request.</response>
     [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(int id)
     {
-        if (id <= 0) return BadRequest($"Invalid ID {id}");
+        if (id <= 0) return BadRequest();
         var category = await _context.Categories.FindAsync(id);
         if (category == null) return NotFound();
         category.IsActive = false;
