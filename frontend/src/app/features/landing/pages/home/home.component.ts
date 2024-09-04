@@ -1,43 +1,42 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 import { ButtonModule } from 'primeng/button';
 
-import { AuthService } from './../../../../core/services/auth.service';
-import { SidebarModule } from 'primeng/sidebar';
-import { TopbarComponent } from '../../../../shared/components/topbar/topbar.component';
+import { LandingHeaderComponent } from '../../layout/landing-header/landing-header.component';
+import { LandingFooterComponent } from '../../layout/landing-footer/landing-footer.component';
+import { SearchbarComponent } from '../../components/searchbar/searchbar.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule, SidebarModule, TopbarComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    LandingHeaderComponent,
+    ButtonModule,
+    LandingFooterComponent,
+    SearchbarComponent,
+  ],
   template: `
-    @let authStatus = authService.authStatus();
-
-    @let status = authStatus ? 'Usuario autenticado' : 'Usuario no autenticado';
-
-    <div class="w-full">
-      <app-topbar />
+    <div class="container-c">
+      <div class="flex flex-column justify-content-center gap-5 w-full min-h-custom">
+        <div>
+          <h1 class="m-0">Encuentre a los mejores profesionales</h1>
+          <p class="m-0">Obtenga presupuestos gratuitos en cuestión de minutos</p>
+        </div>
+        <div class="w-6">
+          <app-searchbar />
+        </div>
+      </div>
     </div>
-    <div class="flex flex-column justify-content-center align-items-center">
-      <h1>Test</h1>
-      <p class="text-3xl">
-        Status: <span [class]="authStatus ? 'text-green-500' : 'text-red-500'">{{ status }}</span>
-      </p>
-      @if (!authStatus) {
-        <p-button label="Iniciar sesión" outlined="true" routerLink="/auth/login" />
-      } @else {
-        <p-button
-          label="Cerrar sesión"
-          outlined="true"
-          severity="danger"
-          (click)="authService.logout()" />
-      }
-    </div>
+  `,
+  styles: `
+    .min-h-custom {
+      min-height: calc(100vh - 64px);
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class HomeComponent {
-  public readonly authService = inject(AuthService);
-}
+export default class HomeComponent {}
