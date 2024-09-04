@@ -12,6 +12,7 @@ import { ThemesService } from './core/themes';
   imports: [CommonModule, RouterOutlet, ToastModule, ConfirmDialogModule],
   template: `
     <router-outlet />
+    <p-toast key="logout" position="bottom-right"></p-toast>
     <p-toast key="toast" position="bottom-center" [life]="4000"></p-toast>
     <p-confirmDialog key="dialog"></p-confirmDialog>
   `,
