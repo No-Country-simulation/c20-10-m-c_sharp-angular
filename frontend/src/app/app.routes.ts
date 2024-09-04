@@ -1,44 +1,121 @@
 import { Routes } from '@angular/router';
+import { browserCategoriesResolver } from './features/landing/resolver/browser-categories.resolver';
+import { authGuard } from './core/guards/auth.guard';
+import { dashboardGuard } from './core/guards/dashboard.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'inicio',
     pathMatch: 'full',
   },
   {
-    path: 'home',
-    title: 'Home',
-    loadComponent: () => import('./features/landing/pages/home/home.component'),
-  },
-  {
-    path: 'auth',
-    loadComponent: () => import('./features/auth/layout/layout.component'),
+    path: '',
+    loadComponent: () =>
+      import('./features/landing/layout/landing-layout/landing-layout.component'),
     children: [
       {
+        path: 'inicio',
+        title: 'Inicio',
+        loadComponent: () => import('./features/landing/pages/home/home.component'),
+      },
+      {
+        path: 'explorar',
+        title: 'Explorar',
+        loadComponent: () => import('./features/landing/pages/browser/browser.component'),
+      },
+      {
+        path: 'explorar/categoria/:categoryName',
+        title: 'Explorar',
+        resolve: {
+          categories: browserCategoriesResolver,
+        },
+        loadComponent: () =>
+          import('./features/landing/pages/browser-category/browser-category.component'),
+      },
+      {
+        path: 'como-funciona',
+        title: 'Como funciona',
+        loadComponent: () => import('./features/landing/pages/how-it-works/how-it-works.component'),
+      },
+      {
+        path: 'professional-profile/:professionalId/:professionalName',
+        title: 'Perfil profesional',
+        loadComponent: () =>
+          import('./features/landing/pages/professional-profile/professional-profile.component'),
+      },
+      {
         path: '',
-        redirectTo: 'login',
-        pathMatch: 'full',
-      },
-      {
-        path: 'login',
-        title: 'Iniciar sesión',
-        loadComponent: () => import('./features/auth/pages/login/login.component'),
-      },
-      {
-        path: 'register',
-        title: 'Registrarse',
-        loadComponent: () => import('./features/auth/pages/register/register.component'),
-      },
-      {
-        path: 'forgot',
-        title: 'Restablecer contraseña',
-        loadComponent: () => import('./features/auth/pages/forgot/forgot.component'),
+        loadComponent: () => import('./features/auth/layout/layout.component'),
+        canActivate: [authGuard],
+        children: [
+          {
+            path: '',
+            redirectTo: 'iniciar-sesion',
+            pathMatch: 'full',
+          },
+          {
+            path: 'iniciar-sesion',
+            title: 'Iniciar sesión',
+            loadComponent: () => import('./features/auth/pages/login/login.component'),
+          },
+          {
+            path: 'registrarse',
+            title: 'Registrarse',
+            loadComponent: () => import('./features/auth/pages/register/register.component'),
+          },
+          {
+            path: 'registro-profesional',
+            title: 'Registrarse como profesional',
+            loadComponent: () =>
+              import('./features/auth/pages/register-professional/register-professional.component'),
+          },
+          {
+            path: 'restablecer-contraseña',
+            title: 'Restablecer contraseña',
+            loadComponent: () => import('./features/auth/pages/forgot/forgot.component'),
+          },
+        ],
       },
     ],
   },
   {
+    path: 'dashboard',
+    canActivate: [dashboardGuard],
+    children: [
+      // {
+      //   path: '',
+      //   title: 'Dashboard',
+      //   loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard.component'),
+      // },
+      {
+        path: 'profile',
+        title: 'Perfil',
+        loadComponent: () => import('./features/dashboard/pages/profile/profile.component'),
+      },
+      {
+        path: 'rating-history',
+        title: 'Historial de calificaciones',
+        loadComponent: () =>
+          import('./features/dashboard/pages/rating-history/rating-history.component'),
+      },
+      {
+        path: 'mis-servicios',
+        title: 'Mis Servicios',
+        loadComponent: () =>
+          import('./features/dashboard/pages/management-services/management-services.component'),
+      },
+      {
+        path: 'gestionar-servicios/:serviceId',
+        title: 'Servicios',
+        loadComponent: () =>
+          import('./features/dashboard/pages/management-services/management-services.component'),
+      },
+    ],
+  },
+
+  {
     path: '**',
-    redirectTo: 'home',
+    loadComponent: () => import('./features/landing/pages/not-found/not-found.component'),
   },
 ];
