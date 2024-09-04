@@ -1,34 +1,41 @@
-<form [formGroup]="registerForm" autocomplete="off">
+<form [formGroup]="form" [autocomplete]="isLogin() ? 'on' : 'off'">
   <div class="flex flex-column gap-4">
     <div class="w-full">
-      <input
-        pInputText
-        type="text"
-        class="w-full mb-1"
-        styleClass="w-full"
-        autocomplete="off"
-        placeholder="Correo electrónico *"
-        formControlName="email" />
-      @if (email!.errors && (email!.dirty || email!.touched)) {
-        @if (email!.errors!['required']) {
-          <small class="font-bold text-red-500 pl-2">El campo es obligatorio</small>
+      <span class="p-input-icon-left w-full">
+        <i class="pi pi-envelope"></i>
+        <input
+          pInputText
+          type="text"
+          class="w-full mb-1"
+          styleClass="w-full"
+          autocomplete="off"
+          placeholder="Correo electrónico *"
+          formControlName="email" />
+      </span>
+      <div class="flex flex-column gap-2">
+        @if (email!.errors && (email!.dirty || email!.touched)) {
+          @if (email!.errors!['required']) {
+            <small class="font-bold text-red-500 pl-2">El campo es obligatorio</small>
+          }
+          @if (email!.errors!['email']) {
+            <small class="font-bold text-red-500">El correo electrónico es inválido</small>
+          }
         }
-        @if (email!.errors!['email']) {
-          <small class="font-bold text-red-500">El correo electrónico es inválido</small>
-        }
-      }
+      </div>
     </div>
     <div class="w-full">
-      <p-password
-        styleClass="w-full mb-1"
-        inputStyleClass="w-full"
-        autocomplete="off"
-        placeholder="Contraseña *"
-        formControlName="password"
-        [feedback]="false"
-        [toggleMask]="true">
-        <i class="pi pi-check"></i>
-      </p-password>
+      <span class="realtive p-input-icon-left w-full">
+        <i class="pi pi-lock absoulte" style="left: 0.75rem; z-index: 1"></i>
+        <p-password
+          styleClass="w-full mb-1"
+          inputStyleClass="c-pl w-full"
+          autocomplete="off"
+          placeholder="Contraseña *"
+          formControlName="password"
+          [feedback]="false"
+          [toggleMask]="true">
+        </p-password>
+      </span>
       <div class="flex flex-column gap-2">
         @if (password!.errors && (password!.dirty || password!.touched)) {
           @if (password!.errors!['required']) {
@@ -57,8 +64,11 @@
         }
       </div>
     </div>
-    <div class="flex flex-column w-full my-2">
-      <!-- <div class="pb-2">
+    <div class="flex flex-column gap-2 w-full">
+      <ng-content></ng-content>
+    </div>
+    <!-- <div class="flex flex-column w-full my-2">
+      <div class="pb-2">
         <p-checkbox class="px-1" inputId="terms" value="terms" formControlName="terms" />
         <label class="font-medium select-none" for="terms">
           Acepto los
@@ -67,19 +77,19 @@
           >
         </label>
       </div> -->
-      <!-- @if (terms?.invalid && terms?.dirty) {
+    <!-- @if (terms?.invalid && terms?.dirty) {
         @if ((terms?.errors)!['required']) {
           <small class="font-bold text-red-500 pl-2">Se requiere aceptar los terminos</small>
         }
-      } -->
-    </div>
+      }
+    </div>-->
     <div>
       <p-button
         styleClass="w-full"
-        label="Crear cuenta"
-        [rounded]="true"
-        [disabled]="registerForm.invalid"
-        (click)="handleRegisterWithEmail()" />
+        [label]="isLogin() ? 'Iniciar sesión' : 'Crear cuenta'"
+        [severity]="isLogin() ? 'primary' : 'contrast'"
+        [disabled]="form.invalid"
+        (click)="handleSubmit()" />
       <!-- Google Auth -->
       <!--
         <p-divider />
@@ -93,14 +103,6 @@
           Google
         </p-button>
       -->
-    </div>
-    <div class="w-full">
-      <div class="flex flex-column align-items-center gap-2">
-        <span>¿Ya tenés cuenta?</span>
-        <a class="font-bold underline text-black-alpha-90" routerLink="/auth/login"
-          >Iniciar sesión</a
-        >
-      </div>
     </div>
   </div>
 </form>

@@ -1,10 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RouterLink } from '@angular/router';
-import { ButtonDirective } from 'primeng/button';
+import { ButtonDirective, ButtonModule } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
 import { InputTextModule } from 'primeng/inputtext';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -14,24 +20,40 @@ import { AuthService } from './services/auth.service';
 import { GenericDialogComponent } from '../../../../shared/components/dialog/generic-dialog/generic-dialog.component';
 import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
 import { MessageService } from 'primeng/api';
+import { FormBaseComponent } from '../../components/form-base/form-base.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, PasswordModule, CheckboxModule, RouterLink, ButtonDirective, Ripple, InputTextModule, ReactiveFormsModule, GenericDialogComponent, RecoveryPasswordComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    PasswordModule,
+    ButtonModule,
+    CheckboxModule,
+    RouterLink,
+    ButtonDirective,
+    Ripple,
+    InputTextModule,
+    ReactiveFormsModule,
+    GenericDialogComponent,
+    RecoveryPasswordComponent,
+    FormBaseComponent,
+  ],
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [`
-        :host ::ng-deep .pi-eye,
-        :host ::ng-deep .pi-eye-slash {
-            transform:scale(1.6);
-            margin-right: 1rem;
-            color: var(--primary-color) !important;
-        }
-    `]
+  styles: [
+    `
+      :host ::ng-deep .pi-eye,
+      :host ::ng-deep .pi-eye-slash {
+        transform: scale(1.6);
+        margin-right: 1rem;
+        color: var(--primary-color) !important;
+      }
+    `,
+  ],
 })
 export default class LoginComponent {
-
   //Service injection
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
@@ -61,7 +83,8 @@ export default class LoginComponent {
       return;
     }
 
-    this.authService.login(this.myForm.value as AuthLogin)
+    this.authService
+      .login(this.myForm.value as AuthLogin)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         error: () => this.isButtonDisabled.set(false),
@@ -99,5 +122,4 @@ export default class LoginComponent {
   onDialogVisibleChange(isVisible: boolean) {
     this.dialogVisible = isVisible;
   }
-
 }
