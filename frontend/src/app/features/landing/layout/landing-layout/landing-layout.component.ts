@@ -11,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
   template: `
     <app-landing-header />
     <div class="container-c">
-      <div class="py-5 c-min-h">
+      <div class="c-min-h">
         <router-outlet></router-outlet>
       </div>
       <app-landing-footer />
