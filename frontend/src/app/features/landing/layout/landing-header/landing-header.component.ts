@@ -1,7 +1,7 @@
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
@@ -16,7 +16,7 @@ import { LogoComponent } from '../../../../shared/components';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
+    RouterLink,
     ButtonModule,
     MenuModule,
     BadgeModule,
@@ -25,10 +25,28 @@ import { LogoComponent } from '../../../../shared/components';
   ],
   template: `
     <div
-      class="sticky top-0 flex justify-content-between align-items-center surface-card w-full h-4rem z-5 custom-shadow">
-      <div class="container-c flex align-items-center justify-content-between w-full px-5">
+      class="sticky top-0 flex justify-content-center align-items-center w-full h-5rem px-4 py-4 z-5 custom-bg custom-shadow">
+      <div class="flex justify-content-between align-items-center w-full h-full">
+        <!-- <app-logo [size]="3" /> -->
+        <img
+          src="/assets/icons/contratAppLogo.svg"
+          width="48"
+          alt="logo de la aplicacion"
+          routerLink="/" />
+        <div class="flex">
+          <p-button icon="pi pi-user text-2xl text-white" size="small" text="true" />
+          <p-button icon="pi pi-bell text-2xl text-white" size="small" text="true">
+            <i
+              class="absolute top-0 left-50 mt-2 select-none"
+              severity="danger"
+              pBadge
+              value="4"></i>
+          </p-button>
+        </div>
+      </div>
+      <!-- <div class="container-c flex align-items-center justify-content-between w-full px-5">
         <app-logo [size]="3" />
-        <div class="flex align-items-center gap-2">
+        <div class="flex align-items-center">
           @if (!authService.isAuthenticated()) {
             <p-button label="Iniciar sesión" link="true" routerLink="/iniciar-sesion" />
             <p-button
@@ -38,18 +56,22 @@ import { LogoComponent } from '../../../../shared/components';
               rounded="true"
               routerLink="/registro-profesional" />
           } @else {
-            <p-button icon="pi pi-bell" styleClass="text-color" text="true">
-              <i class="mb-4" severity="danger" pBadge value="2"></i>
-            </p-button>
             <p-button
-              styleClass="text-color"
+              styleClass="w-2rem h-2rem text-color"
               icon="pi pi-user"
               text="true"
               (onClick)="menu.toggle($event)" />
+            <div class="relative">
+              <p-button styleClass="w-2rem h-2rem text-color" icon="pi pi-bell" text="true" />
+              @if (true) {
+                <i class="custom-badge text-sm" pBadge value="2"></i>
+              }
+            </div>
+
             <p-menu #menu [model]="dropdownActions" [popup]="true" />
           }
         </div>
-      </div>
+      </div> -->
     </div>
     <p-confirmDialog />
   `,
@@ -66,10 +88,21 @@ import { LogoComponent } from '../../../../shared/components';
       }
     }
 
+    .custom-badge {
+      span {
+        width: 0.25rem !important;
+        min-width: 0.25rem !important;
+      }
+    }
+
     .custom-shadow {
       animation: scroll-shadow linear forwards;
       animation-timeline: scroll();
       animation-range: 0vh 50vh;
+    }
+
+    .custom-bg {
+      background-color: #231f20;
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

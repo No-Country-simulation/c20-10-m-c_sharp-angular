@@ -10,12 +10,10 @@ import { RouterOutlet } from '@angular/router';
   imports: [CommonModule, RouterOutlet, LandingFooterComponent, LandingHeaderComponent],
   template: `
     <app-landing-header />
-    <div class="container-c">
-      <div class="c-min-h">
-        <router-outlet></router-outlet>
-      </div>
-      <app-landing-footer />
+    <div class="c-min-h px-4">
+      <router-outlet></router-outlet>
     </div>
+    <!-- <app-landing-footer /> -->
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
