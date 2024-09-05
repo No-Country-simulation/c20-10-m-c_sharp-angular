@@ -5,16 +5,23 @@ import {
   input,
   OnInit,
   output,
+  signal,
   ViewEncapsulation,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { numberValidator } from '../../validators/number.validator';
-import { specialCharacterValidator } from '../../validators/special-character.validator';
-import { uppercaseValidator } from '../../validators/uppercase.validator';
-import { PasswordModule } from 'primeng/password';
+
+import { AutoFocusModule } from 'primeng/autofocus';
 import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
-import { RouterModule } from '@angular/router';
+
+import { specialCharacterValidator, uppercaseValidator, numberValidator } from '../../validators';
+import {
+  ShowErrorsDirective,
+  ShowErrorsPasswordDirective,
+  FocusNextDirective,
+} from '../../../../shared/directives';
 
 export interface AuthFormBase {
   email: string;
@@ -26,11 +33,15 @@ export interface AuthFormBase {
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
+    RouterLink,
     ReactiveFormsModule,
+    AutoFocusModule,
     InputTextModule,
     PasswordModule,
     ButtonModule,
+    ShowErrorsPasswordDirective,
+    ShowErrorsDirective,
+    FocusNextDirective,
   ],
   styles: [
     `
@@ -44,9 +55,10 @@ export interface AuthFormBase {
   encapsulation: ViewEncapsulation.None,
 })
 export class FormBaseComponent implements OnInit {
+  public readonly buttonDisabled = input.required<boolean>();
   public readonly isLogin = input.required<boolean>();
   public readonly formOutput = output<AuthFormBase>();
-  // public readonly isSubmitted = signal<boolean>(true);
+  public readonly isSubmitted = signal<boolean>(false);
 
   public readonly form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -58,7 +70,7 @@ export class FormBaseComponent implements OnInit {
   }
 
   private configureFormValidations() {
-    const passwordControl = this.form.get('password');
+    const passwordControl = this.password;
     if (this.isLogin()) {
       passwordControl?.setValidators([Validators.required]);
     } else {
@@ -78,7 +90,6 @@ export class FormBaseComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    // this.isSubmitted.set(true);z
     const formValue = this.form.value as AuthFormBase;
     this.formOutput.emit(formValue);
   }
@@ -86,6 +97,7 @@ export class FormBaseComponent implements OnInit {
   public get email() {
     return this.form.get('email');
   }
+
   public get password() {
     return this.form.get('password');
   }
