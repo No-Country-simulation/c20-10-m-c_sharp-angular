@@ -24,15 +24,7 @@
     <div class="hidden md:block w-6">
       <div
         class="w-full h-full bg-cover bg-center bg-no-repeat"
-        [style.backgroundImage]="
-          authData.currentAuthRoute === '/iniciar-sesion'
-            ? 'url(' + imgLogin + ')'
-            : authData.currentAuthRoute === '/registrarse'
-              ? 'url(' + imgRegister + ')'
-              : authData.currentAuthRoute === '/registro-profesional'
-                ? 'url(' + imgRegisterProfessional + ')'
-                : ''
-        "></div>
+        [style.background-image]="'url(' + authData.img + ')'"></div>
     </div>
   </div>
 </div>

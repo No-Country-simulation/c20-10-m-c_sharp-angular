@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { ButtonDirective, ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,7 +10,7 @@ import { LogoComponent } from '../../../shared/components/logo/logo.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface AuthData {
-  currentAuthRoute: string;
+  img: string;
   title: string;
   subtitle: string;
   switchLabel?: string;
@@ -42,12 +42,8 @@ interface AuthData {
 })
 export default class LayoutComponent {
   private readonly router = inject(Router);
-
-  public readonly imgLogin = '/assets/images/auth/login.webp';
-  public readonly imgRegister = '/assets/images/auth/register-1.webp';
-  public readonly imgRegisterProfessional = '/assets/images/auth/register.webp';
-
   public authData: AuthData = {} as AuthData;
+  public isForgot = signal<boolean>(false);
 
   constructor() {
     this.router.events
@@ -64,7 +60,7 @@ export default class LayoutComponent {
   private updateTitleAndSubtitle(url: string): void {
     if (url === '/iniciar-sesion') {
       this.authData = {
-        currentAuthRoute: '/iniciar-sesion',
+        img: '/assets/images/auth/login.webp',
         title: '¡Bienvenido de nuevo!',
         subtitle: 'Iniciar Sesión',
         switchLabel: '¿No tienes una cuenta?',
@@ -73,7 +69,7 @@ export default class LayoutComponent {
       };
     } else if (url === '/registrarse') {
       this.authData = {
-        currentAuthRoute: '/registrarse',
+        img: '/assets/images/auth/register-1.webp',
         title: 'Crear Cuenta',
         subtitle: 'Empieza a contratar servicios',
         switchLabel: '¿Ya tienes una cuenta?',
@@ -82,18 +78,19 @@ export default class LayoutComponent {
       };
     } else if (url === '/registro-profesional') {
       this.authData = {
-        currentAuthRoute: '/registro-profesional',
+        img: '/assets/images/auth/register.webp',
         title: 'Registrarse como Profesional',
         subtitle: 'Empieza a publicar tus servicios',
         switchLabel: '¿Ya tienes cuenta?',
         swithchLabelButton: 'Iniciar Sesión',
         switchRoute: '/iniciar-sesion',
       };
-    } else if (url === '/recuperar-clave') {
+    } else if (url === '/restablecer-contrase%C3%B1a') {
+      this.isForgot.set(true);
       this.authData = {
-        currentAuthRoute: '/recuperar-clave',
-        title: 'Recuperar Clave',
-        subtitle: 'Recuperar Clave',
+        img: '/assets/images/auth/forgot.webp',
+        title: 'Restablecer contraseña',
+        subtitle: 'Introduce tu correo',
       };
     }
   }
