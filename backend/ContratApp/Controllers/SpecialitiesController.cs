@@ -68,6 +68,24 @@ public class SpecialitiesController : ControllerBase
     }
 
     /// <summary>
+    /// Regresa todas las especialidades de una categoría.
+    /// </summary>
+    /// <response code="200">Returns a list of specialities.</response>
+    /// <response code="401">Returns an error message if the request is not authenticated.</response>
+    /// <response code="500">Returns an internal server error response if an unexpected error occurs while processing the request.</response>
+    [HttpGet("ByCategory/{id}")]
+    [ProducesResponseType(typeof(IEnumerable<Speciality>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetByCategory(int id)
+    {
+        var specialities = await _context.Specialities.Where(c => c.CategoryId == id && c.IsActive).ToListAsync();
+        return Ok(specialities);
+    }
+
+    /// <summary>
     /// Creates a new speciality.
     /// </summary>
     /// <param name="speciality">The data for the new speciality, provided in the request body.</param>
