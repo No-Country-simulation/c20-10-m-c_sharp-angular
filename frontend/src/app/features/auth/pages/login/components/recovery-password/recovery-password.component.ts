@@ -7,14 +7,8 @@ import { ValidatorsService } from '../../../../../../shared/services/validators.
 @Component({
   selector: 'app-recovery-password',
   standalone: true,
-  imports: [
-    InputTextModule,
-    NgIf,
-    ReactiveFormsModule,
-    NgStyle,
-  ],
+  imports: [InputTextModule, NgIf, ReactiveFormsModule, NgStyle],
   templateUrl: './recovery-password.component.html',
-  styles: []
 })
 export class RecoveryPasswordComponent implements OnInit {
   @Output() formValid = new EventEmitter<boolean>();
@@ -24,7 +18,10 @@ export class RecoveryPasswordComponent implements OnInit {
   validatorService = inject(ValidatorsService);
 
   myForm: FormGroup = this.fb.group({
-    email_recover_password: ['', [Validators.required, Validators.pattern(this.validatorService.emailPattern)]],
+    email_recover_password: [
+      '',
+      [Validators.required, Validators.pattern(this.validatorService.emailPattern)],
+    ],
   });
 
   ngOnInit() {
@@ -43,5 +40,4 @@ export class RecoveryPasswordComponent implements OnInit {
       return;
     }
   }
-
 }

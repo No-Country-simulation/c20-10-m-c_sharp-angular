@@ -1,69 +1,65 @@
-<div
-  class="w-full"
-  style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
-  <div class="surface-card py-6 px-4 " style="border-radius:53px">
-    <div class="text-center mb-5">
-      <img src="assets/images/login/hyper.svg" alt="Image" height="50" class="mb-3">
-      <div class="text-900 text-3xl font-medium mb-3">¡Bienvenido de nuevo!</div>
-      <span class="text-600 font-medium">Inicia sesión</span>
-    </div>
-
+<!-- <div class="w-full">
+  <div class="py-6 px-4">
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
-
       <div class="mb-2 row p-0">
         <div class="col-12 lg:col-4 lg:mb-0 w-full">
-              <span class="p-input-icon-left w-full mb-2">
-                <i class="pi pi-envelope"></i>
-                <input
-                  id="email"
-                  type="text"
-                  placeholder="Correo electrónico"
-                  pInputText
-                  class="w-full"
-                  formControlName="email"
-                />
-              </span>
+          <span class="p-input-icon-left w-full mb-2">
+            <i class="pi pi-envelope"></i>
+            <input
+              id="email"
+              type="text"
+              placeholder="Correo electrónico"
+              pInputText
+              class="w-full"
+              formControlName="email" />
+          </span>
 
-            <span [ngStyle]="{color: 'var(--red-500)', fontSize: '0.9rem'}"
-                  *ngIf="validatorService.isValidField(myForm, 'email')"
-            >
-              {{ validatorService.getFieldError(myForm, 'email')}}
-            </span>
+          <span
+            [ngStyle]="{ color: 'var(--red-500)', fontSize: '0.9rem' }"
+            *ngIf="validatorService.isValidField(myForm, 'email')">
+            {{ validatorService.getFieldError(myForm, 'email') }}
+          </span>
         </div>
       </div>
 
       <div class="mb-1 row p-0">
         <div class="col-12 mb-2 lg:col-4 lg:mb-0 w-full">
-          <div class="custom-password-container mb-2" style="position: relative; width: 100%;">
-            <i class="pi pi-lock" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); z-index: 1;"></i>
+          <div class="custom-password-container mb-2" style="position: relative; width: 100%">
+            <i
+              class="pi pi-lock"
+              style="
+                position: absolute;
+                left: 0.75rem;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 1;
+              "></i>
             <p-password
               id="password"
               placeholder="Contraseña"
               [toggleMask]="true"
-              [style]="{'width': '100%'}"
-              [inputStyle]="{'width': '100%', 'padding-left': '2.5rem'}"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%', 'padding-left': '2.5rem' }"
               formControlName="password"
               promptLabel="Elige una contraseña"
               weakLabel="Muy débil"
               mediumLabel="Complejidad media"
-              strongLabel="Contraseña segura"
-            ></p-password>
+              strongLabel="Contraseña segura"></p-password>
           </div>
 
-          <span [ngStyle]="{color: 'var(--red-500)', fontSize: '0.9rem'}"
-                *ngIf="validatorService.isValidField(myForm, 'password')"
-          >
-            {{ validatorService.getFieldError(myForm, 'password')}}
+          <span
+            [ngStyle]="{ color: 'var(--red-500)', fontSize: '0.9rem' }"
+            *ngIf="validatorService.isValidField(myForm, 'password')">
+            {{ validatorService.getFieldError(myForm, 'password') }}
           </span>
         </div>
       </div>
 
-      <div class="flex align-items-center justify-content-between mb-5" >
+      <div class="flex align-items-center justify-content-between mb-5">
         <a
           (click)="showDialog()"
           class="font-medium text-sm no-underline ml-2 text-center cursor-pointer w-full"
-          style="color: var(--primary-color);"
-        >
+          style="color: var(--primary-color)">
           ¿Olvidaste tu contraseña?
         </a>
       </div>
@@ -73,23 +69,8 @@
         label="Iniciar sesión"
         [icon]="isButtonDisabled() ? 'pi pi-spin pi-spinner' : 'pi pi-user'"
         class="w-full"
-        [disabled]="isButtonDisabled()"
-      ></button>
+        [disabled]="isButtonDisabled()"></button>
     </form>
-
-    <div class="flex flex-column align-items-center justify-content-between mt-3 gap-1 md:mt-2 md:flex-row md:gap:5">
-      <div class="flex align-items-center">
-        <span class="text-sm">¿No tienes cuenta?</span>
-      </div>
-      <a
-        class="font-medium no-underline ml-2 text-right cursor-pointer text-sm"
-        style="color: var(--primary-color)"
-        [routerLink]="['/auth/register']"
-      >
-        Regístrate
-      </a>
-    </div>
-
   </div>
 
   <app-generic-dialog
@@ -101,15 +82,16 @@
     (cancel)="onCancel()"
     (accept)="onAccept()"
     [isAcceptDisabled]="isDialogAcceptDisabled"
-    (visibleChange)="onDialogVisibleChange($event)"
-  ></app-generic-dialog>
+    (visibleChange)="onDialogVisibleChange($event)"></app-generic-dialog>
 
   <ng-template #dialogContent>
     <div class="w-full">
       <app-recovery-password
         (formValid)="onRecoveryFormValidChange($event)"
-        (emailValue)="onRecoveryEmailChange($event)"
-      />
+        (emailValue)="onRecoveryEmailChange($event)" />
     </div>
   </ng-template>
-</div>
+</div> -->
+<app-form-base [isLogin]="true">
+  <p-button class="align-self-end" link="true" label="¿Olvidaste tu contraseña?" />
+</app-form-base>

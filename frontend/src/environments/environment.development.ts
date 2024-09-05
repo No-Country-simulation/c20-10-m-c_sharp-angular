@@ -5,6 +5,8 @@ export const environment = {
     REGISTER: 'identity/register',
     USER: 'api/Usuario',
     REFRESH_TOKEN: 'identity/refresh',
+    CATEGORY: 'api/category',
+    SPECIALITY: 'api/speciality',
   },
   COOKIES: {
     TOKEN: 'token',
