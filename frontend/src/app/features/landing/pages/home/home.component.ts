@@ -9,15 +9,10 @@ import { LandingFooterComponent } from '../../layout/landing-footer/landing-foot
 import { SearchbarComponent } from '../../components/searchbar/searchbar.component';
 import { AuthService } from '../../../../core/services';
 
-
-
 @Component({
   selector: 'app-home',
   standalone: true,
-<<<<<<< HEAD
-  imports: [CommonModule, RouterModule, ButtonModule, LandingHeaderComponent, LandingFooterComponent, SearchbarComponent],
   templateUrl: './home.component.html',
-=======
   imports: [
     CommonModule,
     RouterModule,
@@ -44,15 +39,8 @@ import { AuthService } from '../../../../core/services';
       min-height: calc(100vh - 64px);
     }
   `,
->>>>>>> c2c011febd340d030ef63ee92c66b9b006dc94e8
   changeDetection: ChangeDetectionStrategy.OnPush,
-
 })
-<<<<<<< HEAD
 export default class HomeComponent {
-
   public readonly authService = inject(AuthService);
 }
-=======
-export default class HomeComponent {}
->>>>>>> c2c011febd340d030ef63ee92c66b9b006dc94e8
