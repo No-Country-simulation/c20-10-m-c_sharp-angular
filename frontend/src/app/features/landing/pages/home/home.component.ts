@@ -4,15 +4,13 @@ import { RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 
-import { LandingHeaderComponent } from '../../layout/landing-header/landing-header.component';
-import { LandingFooterComponent } from '../../layout/landing-footer/landing-footer.component';
-import { SearchbarComponent } from '../../components/searchbar/searchbar.component';
+import { LandingHeaderComponent, LandingFooterComponent } from '../../layout';
+import { SearchbarComponent, CategoriesCarouselComponent } from '../../components';
 import { AuthService } from '../../../../core/services';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  templateUrl: './home.component.html',
   imports: [
     CommonModule,
     RouterModule,
@@ -20,18 +18,17 @@ import { AuthService } from '../../../../core/services';
     ButtonModule,
     LandingFooterComponent,
     SearchbarComponent,
+    CategoriesCarouselComponent,
   ],
   template: `
-    <div class="container-c">
-      <div class="flex flex-column justify-content-center gap-5 w-full min-h-custom">
-        <div>
-          <h1 class="m-0">Encuentre a los mejores profesionales</h1>
-          <p class="m-0">Obtenga presupuestos gratuitos en cuestión de minutos</p>
-        </div>
-        <div class="w-6">
-          <app-searchbar />
-        </div>
+    <div class="mt-5">
+      <!-- <p-button styleClass="text-color" icon="pi pi-bars" text="true" /> -->
+      <div class="flex justify-content-center w-full">
+        <app-searchbar />
       </div>
+      <h2 class="mt-6 mb-5 text-center text-regular text-base">Explora nuestras categorías</h2>
+      <app-categories-carousel />
+      <h2 class="mt-6 mb-5 text-center text-regular text-base">¿Que opinan nuestros usuarios?</h2>
     </div>
   `,
   styles: `

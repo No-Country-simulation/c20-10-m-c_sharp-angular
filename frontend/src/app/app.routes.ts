@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { browserCategoriesResolver } from './features/landing/resolver/browser-categories.resolver';
 import { authGuard } from './core/guards/auth.guard';
-import { dashboardGuard } from './core/guards/dashboard.guard';
 
 export const routes: Routes = [
   {
@@ -33,17 +32,17 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/landing/pages/browser-category/browser-category.component'),
       },
-      {
-        path: 'como-funciona',
-        title: 'Como funciona',
-        loadComponent: () => import('./features/landing/pages/how-it-works/how-it-works.component'),
-      },
-      {
-        path: 'professional-profile/:professionalId/:professionalName',
-        title: 'Perfil profesional',
-        loadComponent: () =>
-          import('./features/landing/pages/professional-profile/professional-profile.component'),
-      },
+      // {
+      //   path: 'como-funciona',
+      //   title: 'Como funciona',
+      //   loadComponent: () => import('./features/landing/pages/how-it-works/how-it-works.component'),
+      // },
+      // {
+      //   path: 'professional-profile/:professionalId/:professionalName',
+      //   title: 'Perfil profesional',
+      //   loadComponent: () =>
+      //     import('./features/landing/pages/professional-profile/professional-profile.component'),
+      // },
       {
         path: '',
         loadComponent: () => import('./features/auth/layout/layout.component'),
@@ -79,43 +78,43 @@ export const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'dashboard',
-    canActivate: [dashboardGuard],
-    children: [
-      // {
-      //   path: '',
-      //   title: 'Dashboard',
-      //   loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard.component'),
-      // },
-      {
-        path: 'profile',
-        title: 'Perfil',
-        loadComponent: () => import('./features/dashboard/pages/profile/profile.component'),
-      },
-      {
-        path: 'rating-history',
-        title: 'Historial de calificaciones',
-        loadComponent: () =>
-          import('./features/dashboard/pages/rating-history/rating-history.component'),
-      },
-      {
-        path: 'mis-servicios',
-        title: 'Mis Servicios',
-        loadComponent: () =>
-          import('./features/dashboard/pages/management-services/management-services.component'),
-      },
-      {
-        path: 'gestionar-servicios/:serviceId',
-        title: 'Servicios',
-        loadComponent: () =>
-          import('./features/dashboard/pages/management-services/management-services.component'),
-      },
-    ],
-  },
+  // {
+  //   path: 'dashboard',
+  //   canActivate: [dashboardGuard],
+  //   children: [
+  //     // {
+  //     //   path: '',
+  //     //   title: 'Dashboard',
+  //     //   loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard.component'),
+  //     // },
+  //     {
+  //       path: 'profile',
+  //       title: 'Perfil',
+  //       loadComponent: () => import('./features/dashboard/pages/profile/profile.component'),
+  //     },
+  //     {
+  //       path: 'rating-history',
+  //       title: 'Historial de calificaciones',
+  //       loadComponent: () =>
+  //         import('./features/dashboard/pages/rating-history/rating-history.component'),
+  //     },
+  //     {
+  //       path: 'mis-servicios',
+  //       title: 'Mis Servicios',
+  //       loadComponent: () =>
+  //         import('./features/dashboard/pages/management-services/management-services.component'),
+  //     },
+  //     {
+  //       path: 'gestionar-servicios/:serviceId',
+  //       title: 'Servicios',
+  //       loadComponent: () =>
+  //         import('./features/dashboard/pages/management-services/management-services.component'),
+  //     },
+  //   ],
+  // },
 
-  {
-    path: '**',
-    loadComponent: () => import('./features/landing/pages/not-found/not-found.component'),
-  },
+  // {
+  //   path: '**',
+  //   loadComponent: () => import('./features/landing/pages/not-found/not-found.component'),
+  // },
 ];
