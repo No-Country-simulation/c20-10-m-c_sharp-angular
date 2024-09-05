@@ -7,6 +7,8 @@ export const environment = {
     REFRESH_TOKEN: 'identity/refresh',
     CATEGORY: 'api/category',
     SPECIALITY: 'api/speciality',
+    FORGOT_SEND_EMAIL: 'identity/forgotPassword',
+    FORGOT_CONFIRM: 'identity/resetPassword',
   },
   COOKIES: {
     TOKEN: 'token',

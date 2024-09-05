@@ -1,108 +1,54 @@
+<!-- eslint-disable @angular-eslint/template/no-autofocus -->
 <form [formGroup]="form" [autocomplete]="isLogin() ? 'on' : 'off'">
   <div class="flex flex-column gap-4">
     <div class="w-full">
       <span class="p-input-icon-left w-full">
         <i class="pi pi-envelope"></i>
         <input
+          pAutoFocus
           pInputText
+          id="email"
           type="text"
+          name="email"
           class="w-full mb-1"
           styleClass="w-full"
-          autocomplete="off"
+          autocomplete="email"
           placeholder="Correo electrónico *"
-          formControlName="email" />
+          formControlName="email"
+          [autofocus]="true" />
       </span>
       <div class="flex flex-column gap-2">
-        @if (email!.errors && (email!.dirty || email!.touched)) {
-          @if (email!.errors!['required']) {
-            <small class="font-bold text-red-500 pl-2">El campo es obligatorio</small>
-          }
-          @if (email!.errors!['email']) {
-            <small class="font-bold text-red-500">El correo electrónico es inválido</small>
-          }
-        }
+        <div [appShowErrors]="email"></div>
       </div>
     </div>
     <div class="w-full">
       <span class="realtive p-input-icon-left w-full">
         <i class="pi pi-lock absoulte" style="left: 0.75rem; z-index: 1"></i>
         <p-password
+          inputId="password"
+          placeholder="Contraseña *"
           styleClass="w-full mb-1"
           inputStyleClass="c-pl w-full"
-          autocomplete="off"
-          placeholder="Contraseña *"
           formControlName="password"
           [feedback]="false"
-          [toggleMask]="true">
+          [toggleMask]="true"
+          [autocomplete]="isLogin() ? 'current-password' : 'new-password'"
+          (keydown.enter)="handleSubmit()">
         </p-password>
       </span>
-      <div class="flex flex-column gap-2">
-        @if (password!.errors && (password!.dirty || password!.touched)) {
-          @if (password!.errors!['required']) {
-            <small class="font-bold text-red-500 pl-2">El campo es obligatorio</small>
-          }
-          @if (password!.errors!['minlength']) {
-            <small class="font-bold text-red-500 pl-2">
-              La contraseña debe tener al menos 8 caracteres
-            </small>
-          }
-          @if (password!.errors!['number']) {
-            <small class="font-bold text-red-500 pl-2">
-              La contraseña debe contener al menos un número
-            </small>
-          }
-          @if (password!.errors!['uppercase']) {
-            <small class="font-bold text-red-500 pl-2">
-              La contraseña debe contener al menos una mayúscula
-            </small>
-          }
-          @if (password!.errors!['specialCharacter']) {
-            <small class="font-bold text-red-500 pl-2">
-              La contraseña debe contener al menos un caracter especial
-            </small>
-          }
-        }
-      </div>
+      <div class="flex flex-column gap-2" [appShowErrorsPassword]="password"></div>
     </div>
     <div class="flex flex-column gap-2 w-full">
       <ng-content></ng-content>
     </div>
-    <!-- <div class="flex flex-column w-full my-2">
-      <div class="pb-2">
-        <p-checkbox class="px-1" inputId="terms" value="terms" formControlName="terms" />
-        <label class="font-medium select-none" for="terms">
-          Acepto los
-          <a class="font-bold underline text-black-alpha-90" routerLink="/"
-            >términos y condiciones</a
-          >
-        </label>
-      </div> -->
-    <!-- @if (terms?.invalid && terms?.dirty) {
-        @if ((terms?.errors)!['required']) {
-          <small class="font-bold text-red-500 pl-2">Se requiere aceptar los terminos</small>
-        }
-      }
-    </div>-->
     <div>
       <p-button
         styleClass="w-full"
+        [icon]="buttonDisabled() ? 'pi pi-spin pi-spinner' : ''"
         [label]="isLogin() ? 'Iniciar sesión' : 'Crear cuenta'"
         [severity]="isLogin() ? 'primary' : 'contrast'"
-        [disabled]="form.invalid"
+        [disabled]="form.invalid || buttonDisabled()"
         (click)="handleSubmit()" />
-      <!-- Google Auth -->
-      <!--
-        <p-divider />
-        <p-button
-          type="submit"
-          styleClass="w-full flex justify-content-center"
-          severity="secondary"
-          [rounded]="true"
-          (onClick)="handleRegisterWithGoogle()">
-          <i class="pi pi-google pr-2"></i>
-          Google
-        </p-button>
-      -->
     </div>
   </div>
 </form>
