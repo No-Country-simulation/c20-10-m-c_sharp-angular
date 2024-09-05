@@ -11,7 +11,10 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormBaseComponent],
   template: `
-    <app-form-base [isLogin]="false" (formOutput)="handleRegisterProfessionalWithEmail($event)" />
+    <app-form-base
+      [isLogin]="false"
+      [buttonDisabled]="false"
+      (formOutput)="handleRegisterProfessionalWithEmail($event)" />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -26,7 +26,7 @@ import { LogoComponent } from '../../../../shared/components';
   template: `
     <div
       class="sticky top-0 flex justify-content-center align-items-center w-full h-5rem px-4 py-4 z-5 custom-bg custom-shadow">
-      <div class="flex justify-content-between align-items-center w-full h-full">
+      <div class="container-app flex justify-content-between align-items-center w-full h-full">
         <!-- <app-logo [size]="3" /> -->
         <img
           src="/assets/icons/contratAppLogo.svg"
@@ -34,7 +34,11 @@ import { LogoComponent } from '../../../../shared/components';
           alt="logo de la aplicacion"
           routerLink="/" />
         <div class="flex">
-          <p-button icon="pi pi-user text-2xl text-white" size="small" text="true" />
+          <p-button
+            icon="pi pi-user text-2xl text-white"
+            size="small"
+            text="true"
+            (onClick)="authService.isAuthenticated() ? menu.toggle($event) : onLogin()" />
           <p-button icon="pi pi-bell text-2xl text-white" size="small" text="true">
             <i
               class="absolute top-0 left-50 mt-2 select-none"
@@ -44,6 +48,7 @@ import { LogoComponent } from '../../../../shared/components';
           </p-button>
         </div>
       </div>
+      <p-menu #menu [model]="dropdownActions" [popup]="true" />
       <!-- <div class="container-c flex align-items-center justify-content-between w-full px-5">
         <app-logo [size]="3" />
         <div class="flex align-items-center">
@@ -68,7 +73,6 @@ import { LogoComponent } from '../../../../shared/components';
               }
             </div>
 
-            <p-menu #menu [model]="dropdownActions" [popup]="true" />
           }
         </div>
       </div> -->
@@ -85,13 +89,6 @@ import { LogoComponent } from '../../../../shared/components';
           0px 1px 8px rgba(0, 0, 0, 0.08),
           0px 3px 4px rgba(0, 0, 0, 0.1),
           0px 1px 4px -1px rgba(0, 0, 0, 0.1);
-      }
-    }
-
-    .custom-badge {
-      span {
-        width: 0.25rem !important;
-        min-width: 0.25rem !important;
       }
     }
 
@@ -115,43 +112,46 @@ export class LandingHeaderComponent {
 
   public readonly dropdownActions = [
     {
-      label: 'Notificaciones',
-      icon: 'pi pi-bell',
-      command: () => {
-        this.router.navigate(['/dashboard/configuracion']);
-      },
-    },
-    {
-      label: 'Perfil',
-      icon: 'pi pi-user',
+      label: 'Mi perfil',
       command: () => {
         this.router.navigate(['/dashboard/perfil']);
       },
     },
     {
-      label: 'Dashboard',
-      icon: 'pi pi-chart-bar',
+      label: 'Mensajes',
       command: () => {
-        this.router.navigate(['/dashboard/configuracion']);
+        this.router.navigate(['/dashboard/mensajes']);
       },
     },
     {
-      label: 'Configuración',
-      icon: 'pi pi-cog',
+      label: 'Ofrecer servicio',
       command: () => {
-        this.router.navigate(['/dashboard/configuracion']);
+        this.router.navigate(['/dashboard/ofrecer-servicio']);
       },
     },
-
+    {
+      label: 'Mis publicaciones',
+      command: () => {
+        this.router.navigate(['/dashboard/mis-publicaciones']);
+      },
+    },
+    {
+      label: 'Mis calificaciones',
+      command: () => {
+        this.router.navigate(['/dashboard/mis-calificaciones']);
+      },
+    },
     {
       label: 'Cerrar sesión',
-      icon: 'pi pi-sign-out',
-      severity: 'danger',
       command: () => {
         this.onLogout();
       },
     },
   ];
+
+  public onLogin(): void {
+    this.router.navigate(['/iniciar-sesion']);
+  }
 
   private onLogout(): void {
     this.confirmationService.confirm({
