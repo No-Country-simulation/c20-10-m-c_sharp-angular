@@ -84,15 +84,31 @@ export const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: 'dashboard',
+  {
+    path: ROUTES_PATH.DASHBOARD_HOME,
+    loadComponent: () => import('./features/dashboard/components/layout/layout-dashboard/layout-dashboard.component'),
   //   canActivate: [dashboardGuard],
-  //   children: [
-  //     // {
-  //     //   path: '',
-  //     //   title: 'Dashboard',
-  //     //   loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard.component'),
-  //     // },
+    children: [
+      {
+        path: '',
+        redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES, //TODO: cambiar al perfil o ruta que estaría por defecto
+        pathMatch: 'full',
+      },
+      {
+        path: ROUTES_PATH.DASHBOARD_MESSAGES,
+        title: 'Mensajes',
+        loadComponent: () => import('./features/dashboard/pages/dashboard-messages/dashboard-messages.component'),
+      },
+      {
+        path: ROUTES_PATH.DASHBOARD_MESSAGES_INBOX,
+        title: 'Mensajes',
+        loadComponent: () => import('./features/dashboard/pages/dashboard-messages/dashboard-messages.component'),
+      },
+      {
+        path: '**',
+        redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES,
+        pathMatch: 'full',
+      },
   //     {
   //       path: 'profile',
   //       title: 'Perfil',
@@ -116,8 +132,8 @@ export const routes: Routes = [
   //       loadComponent: () =>
   //         import('./features/dashboard/pages/management-services/management-services.component'),
   //     },
-  //   ],
-  // },
+    ],
+  },
   // {
   //   path: '**',
   //   loadComponent: () => import('./features/landing/pages/not-found/not-found.component'),
