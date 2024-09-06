@@ -20,7 +20,7 @@ import { specialCharacterValidator, uppercaseValidator, numberValidator } from '
 import {
   ShowErrorsDirective,
   ShowErrorsPasswordDirective,
-  FocusNextDirective,
+  // FocusNextDirective,
 } from '../../../../shared/directives';
 
 export interface AuthFormBase {
@@ -41,7 +41,7 @@ export interface AuthFormBase {
     ButtonModule,
     ShowErrorsPasswordDirective,
     ShowErrorsDirective,
-    FocusNextDirective,
+    // FocusNextDirective,
   ],
   styles: [
     `

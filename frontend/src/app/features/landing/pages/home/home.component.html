@@ -1,92 +1,13 @@
-<!-- @let authStatus = authService.authStatus();
-
-@let status = authStatus ? 'Usuario autenticado' : 'Usuario no autenticado';
-
-<div class="w-full">
-    <app-topbar />
-</div>
-
 <main>
-    <div style="height: 90vh;
-    background:linear-gradient(to right top,  #0000008a, #0000008a), url(/src/assets/images/login/welding.jpg); background-size: cover;
-    background-position: center;"
-    class="flex flex-column justify-content-center align-items-center text-align-center">
-        <section>
-            <h1>Encontrá profesionales calificados, </h1>
-            <h3>de manera rápida y segura.</h3>
-
-            <h3>¿Como Funciona?</h3>
-
-
-
-            <p class="text-3xl">
-            Status: <span [class]="authStatus ? 'text-green-500' : 'text-red-500'">{{ status }}</span>
-            </p>
-            @if (!authStatus) {
-            <p-button label="Iniciar sesión" outlined="true" routerLink="/auth/login" />
-            } @else {
-            <p-button
-                label="Cerrar sesión"
-                outlined="true"
-                severity="danger"
-                (click)="authService.logout()" />
-            }
-        </section>
+  <div class="mt-5 button-searchbar-container">
+    <p-button styleClass="text-color" icon="pi pi-bars" text="true"></p-button>
+    <div class="flex justify-content-center w-full">
+      <app-searchbar></app-searchbar>
     </div>
+  </div>
+  <h2 class="mt-6 mb-5 text-center text-regular text-base">Explora nuestras categorías</h2>
+  <app-categories-carousel></app-categories-carousel>
+  <h2 class="mt-6 mb-5 text-center text-regular text-base">¿Qué opinan nuestros usuarios?</h2>
+  <app-opinion-carousel></app-opinion-carousel>
+  
 </main>
-
-<footer>
-    <nav>
-        <ul class="navList">
-            <h3>Para Clientes</h3>
-            <li class="item">
-                <a class="linkNav" href="">Encuentra un profesional</a>
-            </li>
-            <li class="item">
-                <a class="linkNav" href="">Como funciona</a>
-            </li>
-            <li class="item">
-                <a class="linkNav" href="">Login</a>
-            </li>
-            <li class="item">
-                <a class="linkNav" href="">Mobile App</a>
-            </li>
-        </ul>
-        <ul class="navList">
-            <h3>Para Profesionales</h3>
-            <li class="item">
-                <a class="linkNav" href="">¿Cómo funciona?</a>
-            </li>
-            <li class="item">
-                <a class="linkNav" href="">Precios</a>
-            </li>
-            <li class="item">
-                <a class="linkNav" href="">Ingresa como profesional</a>
-            </li>
-            <li class="item">
-                <a class="linkNav" href="">Mobile App</a>
-            </li>
-        </ul>
-        <ul class="navList">
-            <h3>Usuario</h3>
-            <li class="item">
-                <a class="linkNav" href="">Trabaja con CA</a>
-            </li>
-            <li class="item">
-                <a class="linkNav" href="">Iniciar sesion</a>
-            </li>
-            <li class="item">
-                <a class="linkNav" href="">Registrarme</a>
-            </li>
-            <li class="item">
-                <a class="linkNav" href="">Recuperar contraseña</a>
-            </li>
-        </ul>
-        <hr>
-        <h3>© 2024 ContratApp</h3>
-    </nav>
-</footer>
-
-
-<hr>
- -->
