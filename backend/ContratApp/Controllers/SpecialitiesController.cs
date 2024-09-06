@@ -35,6 +35,7 @@ public class SpecialitiesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [AllowAnonymous]
     public async Task<IActionResult> Get()
     {
         var specialities = await _context.Specialities.Where(c => c.IsActive).ToListAsync();
@@ -59,6 +60,7 @@ public class SpecialitiesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [AllowAnonymous]
     public async Task<IActionResult> Get(int id)
     {
         if (id <= 0) return BadRequest();
@@ -79,6 +81,7 @@ public class SpecialitiesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [AllowAnonymous]
     public async Task<IActionResult> GetByCategory(int id)
     {
         var specialities = await _context.Specialities.Where(c => c.CategoryId == id && c.IsActive).ToListAsync();

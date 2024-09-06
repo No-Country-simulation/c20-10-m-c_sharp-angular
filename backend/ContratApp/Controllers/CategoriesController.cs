@@ -34,6 +34,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [AllowAnonymous]
     public async Task<IActionResult> Get()
     {
         var categories = await _context.Categories.Where(c => c.IsActive).ToListAsync();
@@ -58,6 +59,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [AllowAnonymous]
     public async Task<IActionResult> Get(int id)
     {
         if (id <= 0) return BadRequest();
