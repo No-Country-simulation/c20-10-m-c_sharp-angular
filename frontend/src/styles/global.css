@@ -1,0 +1,19 @@
+.container-c {
+  max-width: 70rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.container-app {
+  padding-inline: 1.5rem;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.custom-width {
+  width: calc(100% / 4 - 0.75rem);
+}
+
+.c-min-h {
+  min-height: calc(100vh - 4rem);
+}

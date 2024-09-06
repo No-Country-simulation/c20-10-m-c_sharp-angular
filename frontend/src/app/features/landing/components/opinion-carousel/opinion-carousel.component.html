@@ -1,0 +1,25 @@
+
+<p-carousel 
+[value]="products" 
+[numVisible]="3" 
+[numScroll]="3" 
+[circular]="true" 
+[responsiveOptions]="responsiveOptions" 
+autoplayInterval="3000"
+[showIndicators]="false">
+    <ng-template let-product pTemplate="item">
+            <div style="height: 100%;">
+                <div class="mb-3" style="height: 100%;">
+                    <div class="relative mx-auto" style="height: 100%;">
+                        <img 
+                            [src]= "product.image" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Descripción personalizada si existe -->
+            <div *ngIf="product.description" class="text-center">
+                <p>{{ product.description }}</p>
+            </div>
+    </ng-template>
+</p-carousel>

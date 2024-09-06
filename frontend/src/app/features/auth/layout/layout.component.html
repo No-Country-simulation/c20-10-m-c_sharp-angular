@@ -1,19 +1,30 @@
-<div class="grid grid-nogutter surface-section text-800 w-full">
-  <div
-    class="col-12 md:col-5 p-4 text-center md:text-left"
-    style="max-width: 100%; box-sizing: border-box;"
-  >
-    <router-outlet></router-outlet>
-  </div>
-  <div
-    class="col-12 md:col-7 overflow-hidden hidden md:block"
-    style="
-      background-image: url('assets/images/login/welding.jpg');
-      background-size: cover;
-      background-position: center;
-      clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%);
-      min-height: 100dvh;
-    "
-  >
+<div class="c-mt">
+  <div class="w-full flex border-round-xl sm:shadow-5 surface-card overflow-hidden">
+    <div class="w-12 md:w-6 py-7">
+      <div class="flex flex-column gap-5">
+        <div class="flex flex-column align-items-center gap-2">
+          <app-logo [size]="4" />
+          <div class="text-3xl font-medium">{{ authData.title }}</div>
+          <span class="text-color-secondary font-medium">{{ authData.subtitle }}</span>
+        </div>
+        <div class="px-7">
+          <router-outlet />
+        </div>
+        <div class="w-full">
+          <div class="flex flex-column align-items-center gap-2">
+            <span>{{ authData.switchLabel }}</span>
+            <p-button
+              link="true"
+              [label]="authData.swithchLabelButton"
+              [routerLink]="authData.switchRoute" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hidden md:block w-6">
+      <div
+        class="w-full h-full bg-cover bg-center bg-no-repeat"
+        [style.background-image]="'url(' + authData.img + ')'"></div>
+    </div>
   </div>
 </div>

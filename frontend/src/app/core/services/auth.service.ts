@@ -3,7 +3,14 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { AuthLogin, AuthLoginResponse, AuthRegister, AuthRegisterResponse } from '../interfaces';
+import {
+  AuthLogin,
+  AuthLoginResponse,
+  AuthRegister,
+  AuthRegisterResponse,
+  ForgotPassword,
+  ForgotPasswordResponse,
+} from '../interfaces';
 import { JwtService } from './jwt.service';
 
 @Injectable({
@@ -17,6 +24,8 @@ export class AuthService {
   private readonly loginEndpoint = environment.ENDPOINT.LOGIN;
   private readonly registerEndpoint = environment.ENDPOINT.REGISTER;
   private readonly registerProfessionalEndpoint = environment.ENDPOINT.REGISTER;
+  private readonly forgotPasswordEndpoint = environment.ENDPOINT.FORGOT_SEND_EMAIL;
+  private readonly forgotConfirmEndpoint = environment.ENDPOINT.FORGOT_CONFIRM;
 
   /**
    * Gets the authentication status.
@@ -75,7 +84,32 @@ export class AuthService {
     );
   }
 
-  // public forgot() {}
+  /**
+   *
+   * @param email
+   * @returns An observable that emits the server response.
+   */
+  public sendEmailToRecoveryPassword(email: string): Observable<ForgotPasswordResponse> {
+    return this.http.post<ForgotPasswordResponse>(
+      this.baseUrl + this.forgotPasswordEndpoint,
+      email
+    );
+  }
+
+  /**
+   *
+   * @param formValue - The recovery password form data, which includes:
+   * - email: string
+   * - resetCode: string
+   * - newPassword: string
+   * @returns An observable that emits the server response.
+   */
+  public confirmRecoveryPassword(formValue: ForgotPassword): Observable<ForgotPasswordResponse> {
+    return this.http.post<ForgotPasswordResponse>(
+      this.baseUrl + this.forgotConfirmEndpoint,
+      formValue
+    );
+  }
 
   /**
    * Logs out the user.

@@ -5,13 +5,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { providePrimengConfig, inMemoryScrollingFeature } from './core/configs';
-import { jwtInterceptor } from './core/interceptors';
+import { authErrorInterceptor, jwtInterceptor } from './core/interceptors';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, inMemoryScrollingFeature),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch(), withInterceptors([jwtInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([jwtInterceptor, authErrorInterceptor])),
     providePrimengConfig,
   ],
 };
