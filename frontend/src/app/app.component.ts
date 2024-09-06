@@ -6,6 +6,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { PrimeNGConfig } from 'primeng/api';
 import { ThemesService } from './core/themes';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -16,6 +17,7 @@ import { ThemesService } from './core/themes';
     <p-confirmDialog key="dialog"></p-confirmDialog>
   `,
 })
+
 export class AppComponent {
   private readonly themesService = inject(ThemesService);
   private readonly primengConfig = inject(PrimeNGConfig);

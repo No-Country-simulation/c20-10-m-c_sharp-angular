@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+
   {
     path: '',
     redirectTo: 'home',
@@ -37,8 +38,17 @@ export const routes: Routes = [
       },
     ],
   },
+
+  {
+    path: 'publish',
+    title: 'Publicar',
+    loadComponent: () => import('./features/publish/publish.component').then(m => m.PublishComponent)
+  },
+
+
   {
     path: '**',
     redirectTo: 'home',
   },
+
 ];
