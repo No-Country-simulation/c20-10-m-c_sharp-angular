@@ -6,6 +6,7 @@ import { CATEGORIES_LIST } from '../../../../shared/const/categoriesList.const';
 import { CardModule } from 'primeng/card';
 import { OrderFilterComponent } from '../../components';
 import { SearchbarComponent } from '../../components/searchbar/searchbar.component';
+import { ROUTES_PATH } from '../../../../core/routes';
 
 @Component({
   selector: 'app-browser',
@@ -64,6 +65,6 @@ export default class BrowserComponent implements OnInit {
   }
 
   onSelectCategory(category: any) {
-    this.router.navigate(['explorar/categoria/', category]);
+    this.router.navigate([ROUTES_PATH.LANDING_BROWSER_CATEGORIES, category]);
   }
 }

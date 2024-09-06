@@ -7,9 +7,11 @@ import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { BadgeModule } from 'primeng/badge';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AvatarModule } from 'primeng/avatar';
 
 import { AuthService } from '../../../../core/services';
 import { LogoComponent } from '../../../../shared/components';
+import { ROUTES_PATH } from '../../../../core/routes';
 
 @Component({
   selector: 'app-landing-header',
@@ -22,23 +24,25 @@ import { LogoComponent } from '../../../../shared/components';
     BadgeModule,
     ConfirmDialogModule,
     LogoComponent,
+    AvatarModule,
   ],
   template: `
     <div
       class="sticky top-0 flex justify-content-center align-items-center w-full h-5rem px-4 py-4 z-5 custom-bg custom-shadow">
       <div class="container-app flex justify-content-between align-items-center w-full h-full">
-        <!-- <app-logo [size]="3" /> -->
+        <p-button icon="pi pi-bars text-2xl text-white" size="small" text="true"> </p-button>
         <img
           src="/assets/icons/contratAppLogo.svg"
           width="48"
           alt="logo de la aplicacion"
           routerLink="/" />
         <div class="flex">
-          <p-button
+          <p-avatar label="JA" size="large" shape="circle" />
+          <!-- <p-button
             icon="pi pi-user text-2xl text-white"
             size="small"
             text="true"
-            (onClick)="authService.isAuthenticated() ? menu.toggle($event) : onLogin()" />
+            (onClick)="authService.isAuthenticated() ? menu.toggle($event) : onLogin()" /> -->
           <p-button icon="pi pi-bell text-2xl text-white" size="small" text="true">
             <i
               class="absolute top-0 left-50 mt-2 select-none"
@@ -150,7 +154,7 @@ export class LandingHeaderComponent {
   ];
 
   public onLogin(): void {
-    this.router.navigate(['/iniciar-sesion']);
+    this.router.navigate([ROUTES_PATH.AUTH_LOGIN]);
   }
 
   private onLogout(): void {
