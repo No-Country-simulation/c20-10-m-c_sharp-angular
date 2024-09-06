@@ -1,3 +1,4 @@
+import { ROUTES_PATH } from './../../../../core/routes/routes-path.const';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
@@ -43,10 +44,11 @@ import { CATEGORIES_LIST } from '../../../../shared/const/categoriesList.const';
         } @empty {
           <div class="flex flex-column justify-content-center align-items-center h-30rem">
             <p class="text-2xl">No se encontraron resultados</p>
-            <p-button label="Volver al explorador" routerLink="/explorar" />
+            <p-button label="Volver al explorador" [routerLink]="routesPath.LANDING_BROWSER" />
           </div>
         }
       </div>
+      6
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -54,6 +56,7 @@ import { CATEGORIES_LIST } from '../../../../shared/const/categoriesList.const';
 export default class BrowserCategoryComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly categoriesLIst = CATEGORIES_LIST;
+  public readonly routesPath = ROUTES_PATH;
 
   public currentCategory = signal<string>('');
 
