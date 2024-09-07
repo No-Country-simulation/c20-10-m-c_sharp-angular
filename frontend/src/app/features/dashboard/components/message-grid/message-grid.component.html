@@ -1,4 +1,6 @@
-<div class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round p-3 flex flex-column gap-2 w-full">
+<div
+  class="grid grid-nogutter m-0 p-0 list-none border-2 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
+>
 
   <div class="col-12 flex flex-column align-items-center">
     <p-avatar image="{{ owner.image }}" size="xlarge" shape="circle"></p-avatar>
@@ -24,7 +26,11 @@
     [paginator]="true"
   >
     <ng-template pTemplate="list" let-users>
-      <div class="col-12" *ngFor="let user of users; let first = first" class="col-12">
+      <div
+        [routerLink]="['/dashboard/mensajes', user.id]"
+        class="col-12 cursor-pointer border-1"
+        *ngFor="let user of users; let first = first"
+      >
         <li
           class="p-2 hover:surface-hover border-round border-1 border-transparent transition-all transition-duration-200"
         >

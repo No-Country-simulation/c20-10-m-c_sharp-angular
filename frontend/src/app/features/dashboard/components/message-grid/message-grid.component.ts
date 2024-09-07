@@ -12,6 +12,7 @@ import { DividerModule } from 'primeng/divider';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { ROUTES_PATH } from '../../../../core/routes';
 
 @Component({
   selector: 'app-message-grid',
@@ -42,4 +43,5 @@ export class MessageGridComponent {
   users = gridChats;
   owner = owner;
 
+  protected readonly ROUTES_PATH = ROUTES_PATH;
 }
