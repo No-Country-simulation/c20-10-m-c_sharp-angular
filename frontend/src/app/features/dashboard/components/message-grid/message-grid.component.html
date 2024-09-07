@@ -1,5 +1,5 @@
 <div
-  class="grid grid-nogutter m-0 p-0 list-none border-2 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
+  class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
 >
 
   <div class="col-12 flex flex-column align-items-center">
@@ -27,8 +27,8 @@
   >
     <ng-template pTemplate="list" let-users>
       <div
-        [routerLink]="['/dashboard/mensajes', user.id]"
-        class="col-12 cursor-pointer border-1"
+        [routerLink]="['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, user.id]"
+        class="col-12 cursor-pointer"
         *ngFor="let user of users; let first = first"
       >
         <li
