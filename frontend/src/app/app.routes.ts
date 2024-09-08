@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 import { browserCategoriesResolver } from './features/landing/resolver/browser-categories.resolver';
 import { authGuard } from './core/guards/auth.guard';
+import { ROUTES_PATH } from './core/routes';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'inicio',
+    redirectTo: ROUTES_PATH.LANDING_HOME,
     pathMatch: 'full',
   },
   {
@@ -14,17 +15,22 @@ export const routes: Routes = [
       import('./features/landing/layout/landing-layout/landing-layout.component'),
     children: [
       {
-        path: 'inicio',
+        path: ROUTES_PATH.LANDING_HOME,
         title: 'Inicio',
         loadComponent: () => import('./features/landing/pages/home/home.component'),
       },
       {
-        path: 'explorar',
+        path: '',
+        redirectTo: ROUTES_PATH.LANDING_BROWSER,
+        pathMatch: 'full',
+      },
+      {
+        path: ROUTES_PATH.LANDING_BROWSER,
         title: 'Explorar',
         loadComponent: () => import('./features/landing/pages/browser/browser.component'),
       },
       {
-        path: 'explorar/categoria/:categoryName',
+        path: ROUTES_PATH.LANDING_BROWSER_CATEGORIES_ID,
         title: 'Explorar',
         resolve: {
           categories: browserCategoriesResolver,
@@ -50,27 +56,27 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'iniciar-sesion',
+            redirectTo: ROUTES_PATH.AUTH_LOGIN,
             pathMatch: 'full',
           },
           {
-            path: 'iniciar-sesion',
+            path: ROUTES_PATH.AUTH_LOGIN,
             title: 'Iniciar sesión',
             loadComponent: () => import('./features/auth/pages/login/login.component'),
           },
           {
-            path: 'registrarse',
+            path: ROUTES_PATH.AUTH_REGISTER,
             title: 'Registrarse',
             loadComponent: () => import('./features/auth/pages/register/register.component'),
           },
           {
-            path: 'registro-profesional',
+            path: ROUTES_PATH.AUTH_REGISTER_PROFESSIONAL,
             title: 'Registrarse como profesional',
             loadComponent: () =>
               import('./features/auth/pages/register-professional/register-professional.component'),
           },
           {
-            path: 'restablecer-contraseña',
+            path: ROUTES_PATH.AUTH_FORGOT_PASSWORD,
             title: 'Restablecer contraseña',
             loadComponent: () => import('./features/auth/pages/forgot/forgot.component'),
           },
@@ -78,15 +84,31 @@ export const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: 'dashboard',
+  {
+    path: ROUTES_PATH.DASHBOARD_HOME,
+    loadComponent: () => import('./features/dashboard/layout/layout-dashboard/layout-dashboard.component'),
   //   canActivate: [dashboardGuard],
-  //   children: [
-  //     // {
-  //     //   path: '',
-  //     //   title: 'Dashboard',
-  //     //   loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard.component'),
-  //     // },
+    children: [
+      {
+        path: '',
+        redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES, //TODO: cambiar al perfil o ruta que estaría por defecto
+        pathMatch: 'full',
+      },
+      {
+        path: ROUTES_PATH.DASHBOARD_MESSAGES,
+        title: 'Mensajes',
+        loadComponent: () => import('./features/dashboard/pages/dashboard-messages/dashboard-messages.component'),
+      },
+      {
+        path: ROUTES_PATH.DASHBOARD_MESSAGES_INBOX,
+        title: 'Mensajes',
+        loadComponent: () => import('./features/dashboard/pages/dashboard-messages/dashboard-messages.component'),
+      },
+      {
+        path: '**',
+        redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES,
+        pathMatch: 'full',
+      },
   //     {
   //       path: 'profile',
   //       title: 'Perfil',
@@ -110,9 +132,8 @@ export const routes: Routes = [
   //       loadComponent: () =>
   //         import('./features/dashboard/pages/management-services/management-services.component'),
   //     },
-  //   ],
-  // },
-
+    ],
+  },
   // {
   //   path: '**',
   //   loadComponent: () => import('./features/landing/pages/not-found/not-found.component'),

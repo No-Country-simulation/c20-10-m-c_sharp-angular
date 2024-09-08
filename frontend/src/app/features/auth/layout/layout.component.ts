@@ -8,6 +8,7 @@ import { PasswordModule } from 'primeng/password';
 import { filter, startWith } from 'rxjs';
 import { LogoComponent } from '../../../shared/components/logo/logo.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ROUTES_PATH } from '../../../core/routes';
 
 interface AuthData {
   img: string;
@@ -42,6 +43,7 @@ interface AuthData {
 })
 export default class LayoutComponent {
   private readonly router = inject(Router);
+  public readonly routesPath = ROUTES_PATH;
   public authData: AuthData = {} as AuthData;
   public isForgot = signal<boolean>(false);
 
@@ -58,34 +60,34 @@ export default class LayoutComponent {
   }
 
   private updateTitleAndSubtitle(url: string): void {
-    if (url === '/iniciar-sesion') {
+    if (url === this.routesPath.AUTH_LOGIN) {
       this.authData = {
         img: '/assets/images/auth/login.webp',
         title: '¡Bienvenido de nuevo!',
         subtitle: 'Iniciar Sesión',
         switchLabel: '¿No tienes una cuenta?',
         swithchLabelButton: 'Crear Cuenta',
-        switchRoute: '/registrarse',
+        switchRoute: this.routesPath.AUTH_REGISTER,
       };
-    } else if (url === '/registrarse') {
+    } else if (url === this.routesPath.AUTH_REGISTER) {
       this.authData = {
         img: '/assets/images/auth/register-1.webp',
         title: 'Crear Cuenta',
         subtitle: 'Empieza a contratar servicios',
         switchLabel: '¿Ya tienes una cuenta?',
         swithchLabelButton: 'Iniciar Sesión',
-        switchRoute: '/iniciar-sesion',
+        switchRoute: this.routesPath.AUTH_LOGIN,
       };
-    } else if (url === '/registro-profesional') {
+    } else if (url === this.routesPath.AUTH_REGISTER_PROFESSIONAL) {
       this.authData = {
         img: '/assets/images/auth/register.webp',
         title: 'Registrarse como Profesional',
         subtitle: 'Empieza a publicar tus servicios',
         switchLabel: '¿Ya tienes cuenta?',
         swithchLabelButton: 'Iniciar Sesión',
-        switchRoute: '/iniciar-sesion',
+        switchRoute: this.routesPath.AUTH_LOGIN,
       };
-    } else if (url === '/restablecer-contrase%C3%B1a') {
+    } else if (url === this.routesPath.AUTH_FORGOT_PASSWORD) {
       this.isForgot.set(true);
       this.authData = {
         img: '/assets/images/auth/forgot.webp',

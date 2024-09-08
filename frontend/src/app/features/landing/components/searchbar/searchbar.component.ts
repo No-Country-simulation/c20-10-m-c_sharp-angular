@@ -14,6 +14,7 @@ import * as fuzzysort from 'fuzzysort';
 
 import { CATEGORIES_LIST, CategoryList } from '../../../../shared/const/categoriesList.const';
 import { FormsModule } from '@angular/forms';
+import { ROUTES_PATH } from '../../../../core/routes';
 
 @Component({
   selector: 'app-searchbar',
@@ -50,7 +51,7 @@ export class SearchbarComponent {
   public onSelect(event: AutoCompleteSelectEvent): void {
     console.log(event);
     const selectedCategory = event.value;
-    this.router.navigate(['explorar/categoria/' + selectedCategory.value.url], {
+    this.router.navigate([ROUTES_PATH.LANDING_BROWSER + selectedCategory.value.url], {
       state: { id: selectedCategory.value.id },
     });
   }
