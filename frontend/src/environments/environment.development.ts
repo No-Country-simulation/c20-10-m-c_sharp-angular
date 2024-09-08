@@ -3,7 +3,7 @@ export const environment = {
   ENDPOINT: {
     LOGIN: 'identity/login',
     REGISTER: 'identity/register',
-    USER: 'api/Usuario',
+    USER: 'api/user',
     REFRESH_TOKEN: 'identity/refresh',
     CATEGORY: 'api/category',
     SPECIALITY: 'api/speciality',
