@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -8,7 +8,8 @@ import { RouterOutlet } from '@angular/router';
     RouterOutlet,
   ],
   templateUrl: './layout-dashboard.component.html',
-  styles: ``
+  styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LayoutDashboardComponent {
 

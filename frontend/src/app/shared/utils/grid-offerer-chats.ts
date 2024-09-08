@@ -1,10 +1,10 @@
-export const owner = {
-  "id": 1,
+export const contractor = {
+  "id": "06196f2b-0720-4764-9b98-3eb456d822e2",
   "name": "Elwin Sharvill",
   "image": "assets/avatar/elwinsharvill.png"
 };
 
-export const gridChats = [
+export const gridOffererChats = [
   {
     "id": 2,
     "name": "Amy Elsner",
@@ -14,17 +14,17 @@ export const gridChats = [
       {
         "message": "Cuanto cobras por hora?",
         "createdAt": "09-06-2024 11:21 AM",
-        "own": true
+        "user": "06196f2b-0720-4764-9b98-3eb456d822e2"
       },
       {
         "message": "350 pesos",
         "createdAt": "09-06-2024 11:35 AM",
-        "own": false
+        "user": 2
       },
       {
         "message": "No cobras por dia?",
         "createdAt": "09-06-2024 11:35 AM",
-        "own": true
+        "user": "06196f2b-0720-4764-9b98-3eb456d822e2"
       }
     ]
   },
@@ -37,12 +37,12 @@ export const gridChats = [
       {
         "message": "Hola, que disponibilidad tienes?",
         "createdAt": "09-06-2024 11:21 AM",
-        "own": true
+        "user": "06196f2b-0720-4764-9b98-3eb456d822e2"
       },
       {
         "message": "Hasta dentro de 2 dias",
         "createdAt": "09-06-2024 11:35 AM",
-        "own": false
+        "user": 3
       },
     ]
   },
@@ -55,12 +55,12 @@ export const gridChats = [
       {
         "message": "Tambien sabes de programacion?",
         "createdAt": "09-06-2024 11:21 AM",
-        "own": true
+        "user": "06196f2b-0720-4764-9b98-3eb456d822e2"
       },
       {
         "message": "No, de eso no se nada",
         "createdAt": "09-06-2024 11:35 AM",
-        "own": false
+        "user": 4
       },
     ]
   },
@@ -73,7 +73,7 @@ export const gridChats = [
       {
         "message": "Cuando podrias presentarte",
         "createdAt": "09-06-2024 11:21 AM",
-        "own": true
+        "user": "06196f2b-0720-4764-9b98-3eb456d822e2"
       }
     ]
   },
@@ -86,22 +86,32 @@ export const gridChats = [
       {
         "message": "Cuanto cobras por hora?",
         "createdAt": "09-06-2024 11:21 AM",
-        "own": true
+        "user": "06196f2b-0720-4764-9b98-3eb456d822e2"
       },
       {
         "message": "500 pesos",
         "createdAt": "09-06-2024 11:35 AM",
-        "own": false
+        "user": 6
+      },
+      {
+        "message": "Pero estoy dispuesto a negociar",
+        "createdAt": "09-06-2024 11:35 AM",
+        "user": 6
       },
       {
         "message": "No cobras por dia?",
         "createdAt": "09-06-2024 11:35 AM",
-        "own": true
+        "user": "06196f2b-0720-4764-9b98-3eb456d822e2"
       },
       {
         "message": "Depende el tipo de trabajo. Tendria que verlo",
         "createdAt": "09-06-2024 11:35 AM",
-        "own": false
+        "user": 6
+      },
+      {
+        "message": "Ok gracias",
+        "createdAt": "10-06-2024 2:25 PM",
+        "user": "06196f2b-0720-4764-9b98-3eb456d822e2"
       },
     ]
   }

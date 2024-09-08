@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { MessageGridComponent } from '../../components/message-grid/message-grid.component';
 import { MessageChatComponent } from '../../components/message-chat/message-chat.component';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dashboard-messages',
@@ -10,8 +11,15 @@ import { MessageChatComponent } from '../../components/message-chat/message-chat
     MessageChatComponent,
   ],
   templateUrl: './dashboard-messages.component.html',
-  styles: ``
+  styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class DashboardMessagesComponent {
+export default class DashboardMessagesComponent implements OnInit {
+
+  private userService = inject(UserService);
+
+  ngOnInit(): void {
+    this.userService.getUserDataForMessages().subscribe();
+  }
 
 }

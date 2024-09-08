@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Button, ButtonDirective } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
-import { gridChats, owner } from '../../../../shared/utils/grid-chats';
+import { gridOffererChats, contractor } from '../../../../shared/utils/grid-offerer-chats';
 import { DatePipe, NgClass, NgForOf } from '@angular/common';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { AvatarModule } from 'primeng/avatar';
@@ -35,13 +35,14 @@ import { ROUTES_PATH } from '../../../../core/routes';
     InputGroupAddonModule,
   ],
   templateUrl: './message-grid.component.html',
-  styles: ``
+  styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageGridComponent {
 
   @ViewChild('cm') cm!: ContextMenu;
-  users = gridChats;
-  owner = owner;
+  users = gridOffererChats;
+  owner = contractor;
 
   protected readonly ROUTES_PATH = ROUTES_PATH;
 }

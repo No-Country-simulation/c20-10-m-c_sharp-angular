@@ -2,10 +2,18 @@
   class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full h-full"
   style="position: relative;"
 >
-  <div class="col-12">
+  <div class="col-12 flex justify-content-between align-items-center">
     <div class="gap-3 flex align-items-center h-full p-1">
-      <p-avatar image="{{ user().image }}" size="xlarge" shape="circle"></p-avatar>
-      <span class="font-bold text-xl">{{ user().name }}</span>
+      <p-avatar image="{{ offerer().image }}" size="xlarge" shape="circle"></p-avatar>
+      <span class="font-bold text-xl">{{ offerer().name }}</span>
+    </div>
+    <div>
+      <p-button
+        size="large"
+        label=""
+        icon="pi pi-refresh"
+        styleClass="p-button-text"
+      ></p-button>
     </div>
   </div>
 
@@ -16,19 +24,20 @@
     style="flex-basis: 70%;"
   >
     <div class="overflow-y-auto" style="max-height: 550px; min-height: 550px">
-    @for (message of user()?.messages; track $index || message.id) {
-        <div class="col-12 gap-2 flex align-items-center pr-3 {{ message.own ? 'justify-content-end' : 'justify-content-start'}}">
-          @if( !message.own ) {
-            <p-avatar image="{{ user().image }}" size="normal" shape="circle"></p-avatar>
-            <span class="font-light">{{ user().name }}</span>
+      @for (message of offerer()?.messages; track $index) {
+        <div class="col-12 gap-2 flex align-items-center pr-3 {{ message.user === this.userService.user()?.id ? 'justify-content-end' : 'justify-content-start'}}">
+          @if( message.user !== this.userService.user()?.id ) {
+            <p-avatar image="{{ offerer().image }}" size="normal" shape="circle"></p-avatar>
+            <span class="font-light">{{ offerer().name }}</span>
           } @else {
             <span class="font-light font-italic text-right">Tu</span>
           }
         </div>
-        <div class="col-12 -my-2 flex {{ message.own ? 'justify-content-end' : 'align-items-start'}}">
 
-          <div class="-my-2 {{ message.own ? '' : 'ml-5'}}" style="min-width: 400px">
-            @if( message.own ) {
+        <div class="col-12 -my-2 flex {{ message.user === this.userService.user()?.id ? 'justify-content-end' : 'align-items-start'}}">
+
+          <div class="-my-2 {{ message.user === this.userService.user()?.id ? '' : 'ml-5'}}" style="min-width: 400px">
+            @if( message.user === this.userService.user()?.id ) {
               <p-messages severity="info">
                 <ng-template pTemplate>
                   <div>{{ message.message }}</div>
@@ -42,7 +51,10 @@
                 </ng-template>
               </p-messages>
             }
-            <span class="text-xs w-full flex -my-2 {{ message.own ? ' justify-content-end' : ''}}">{{ message.createdAt | date:'dd/MM hh:mm' }}</span>
+            <span class="text-xs w-full flex {{ message.user === this.userService.user()?.id ? ' justify-content-end' : ''}}">
+              {{ message.createdAt | date:'dd/MMM hh:mm' }}
+            </span>
+
           </div>
         </div>
     } @empty {
