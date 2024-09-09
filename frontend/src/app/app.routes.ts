@@ -42,7 +42,12 @@ export const routes: Routes = [
   {
     path: 'publish',
     title: 'Publicar',
-    loadComponent: () => import('./features/publish/publish.component').then(m => m.PublishComponent)
+    loadComponent: () => import('./features/publish/create-publish/publish.component').then(m => m.PublishComponent)
+  },
+  {
+    path: 'share',
+    title: 'postear',
+    loadComponent: () => import('./features/publish/share-post/share-post.component').then(m => m.SharePostComponent)
   },
 
 

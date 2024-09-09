@@ -1,0 +1,90 @@
+<!-- Cabecera con menú hamburguesa, iconos de perfil y notificación -->
+<div class="header">
+  <div class="header-left">
+    <i class="pi pi-bars" (click)="toggleMenu()"></i> <!-- Menú hamburguesa -->
+    <p-menu #menu *ngIf="isMenuVisible">
+      <ng-template pTemplate="item">
+        <li><a href="#">Opción 1</a></li>
+        <li><a href="#">Opción 2</a></li>
+      </ng-template>
+    </p-menu>
+  </div>
+  <div class="header-right">
+    <i class="pi pi-user"></i> <!-- Icono de perfil -->
+    <i class="pi pi-bell"></i> <!-- Icono de notificación -->
+  </div>
+</div>
+
+<!-- Icono de desplazamiento a la izquierda -->
+<div class="scroll-icon">
+  <i class="pi pi-chevron-left"></i> <!-- Icono de desplazamiento a la izquierda -->
+</div>
+
+<!-- Contenedor principal de la publicación -->
+<div class="publication-container">
+  <!-- Título con el nombre del prestador del servicio -->
+  <div class="service-provider">
+    <h2>Nombre del Prestador del Servicio</h2>
+  </div>
+
+  <!-- Sección de calificación numérica y estrellas -->
+  <div class="rating">
+    <span class="rating-number">4.5</span> <!-- Valor numérico -->
+    <span class="star">★</span>
+    <span class="star">★</span>
+    <span class="star">★</span>
+    <span class="star">★</span>
+    <span class="star">☆</span> <!-- Ejemplo de una calificación de 4.5/5 -->
+  </div>
+
+  <!-- Información del precio y enlace Ver Perfil -->
+  <div class="price-and-profile">
+    <span class="price">Precio a convenir</span>
+    <a href="#" class="view-profile">Ver Perfil</a>
+  </div>
+
+  <!-- Imágenes desplazables -->
+  <div class="image-slider">
+    <img *ngFor="let image of images; let i = index" [src]="image" [alt]="'Imagen ' + (i + 1)">
+  </div>
+
+  <!-- Indicadores de imagen actual -->
+  <div class="image-indicators">
+    <span *ngFor="let image of images; let i = index" [class]="getIndicatorStyle(i)" (click)="setActiveImage(i)"></span>
+  </div>
+
+
+  <!-- Descripción del servicio -->
+  <div class="service-description">
+    <h3>Descripción</h3>
+    <p>PLOMERIA, GAS Y DESTAPACIONES ***Tu Casa Sin Problemas***PRESUPUESTOS ON LINE AL INSTANTE EN NUESTRO
+      WHATSAPP.CONSULTAS ÚNICAMENTE DE 9 A 18 HS.URGENCIAS LAS 24HS TODOS LOS DIAS.Atendemos toda la capital federal
+      y zona
+      norte de Bs. As... Consulte si llegamos a su zonaTrabajos garantidos. Realizamos factura consumidor final.o,
+      cambio..¨</p>
+  </div>
+
+  <!-- Métodos de pago aceptados con checkboxes marcadas -->
+  <div class="payment-methods">
+    <h3>Métodos de Pago Aceptados</h3>
+    <ul>
+      <li *ngFor="let method of paymentMethods">
+        <label>
+          <input type="checkbox" [checked]="method.selected" disabled>
+          {{ method.name }}
+        </label>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Ubicación del prestador del servicio -->
+  <div class="service-location">
+    <h3>Ubicación</h3>
+    <p>Ciudad, País</p>
+  </div>
+
+  <!-- Enlace para enviar consulta -->
+  <div class="contact-link">
+    <a href="#">Envíame una consulta</a>
+  </div>
+</div>
