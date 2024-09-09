@@ -9,6 +9,9 @@ export const environment = {
     SPECIALITY: 'api/speciality',
     FORGOT_SEND_EMAIL: 'identity/forgotPassword',
     FORGOT_CONFIRM: 'identity/resetPassword',
+    USER_MESSAGES_ONE: '/api/user/messages/:idOtherUser',
+    USER_MESSAGES_ALL: '/api/user/messages',
+    CREATE_USER_MESSAGE: '/api/user/messages/:idOtherUser',
   },
   COOKIES: {
     TOKEN: 'token',
