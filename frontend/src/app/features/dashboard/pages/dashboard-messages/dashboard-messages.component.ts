@@ -19,7 +19,7 @@ export default class DashboardMessagesComponent implements OnInit {
   private userService = inject(UserService);
 
   ngOnInit(): void {
-    this.userService.getUserDataForMessages().subscribe();
+    this.userService.getUserData().subscribe();
   }
 
 }

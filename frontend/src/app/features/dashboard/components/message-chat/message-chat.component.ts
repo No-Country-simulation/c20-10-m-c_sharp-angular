@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { gridOffererChats } from '../../../../shared/utils/grid-offerer-chats';
+import { gridOffererChats } from '../../../../../assets/demo/grid-offerer-chats';
 import { AvatarModule } from 'primeng/avatar';
 import { DatePipe, JsonPipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -50,10 +50,11 @@ export class MessageChatComponent implements OnInit {
       return;
     }
 
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(async params => {
       const id = params.get('id');
       this.offererParamId.set(id);
-      this.offerer.set(gridOffererChats.filter( offerer => Number(offerer.id) === Number(this.offererParamId()))[0]);
+      const dataOfferer = await this.userService.getUserMessagesFromOneUser(this.offererParamId());
+      this.offerer.set(dataOfferer[0]);
     });
   }
 

@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Button, ButtonDirective } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
-import { gridOffererChats, contractor } from '../../../../shared/utils/grid-offerer-chats';
+import { gridOffererChats, contractor } from '../../../../../assets/demo/grid-offerer-chats';
 import { DatePipe, NgClass, NgForOf } from '@angular/common';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { AvatarModule } from 'primeng/avatar';
