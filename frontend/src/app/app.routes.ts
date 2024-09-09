@@ -38,6 +38,17 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/landing/pages/browser-category/browser-category.component'),
       },
+      {
+        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
+        title: 'Explorar',
+        loadComponent: () => 
+          import('./features/landing/pages/browser-detailed-post/detailed-post.component').then(
+          (m) => m.DetailedPostComponent
+          )
+      },
+
+
+
       // {
       //   path: 'como-funciona',
       //   title: 'Como funciona',

@@ -3,6 +3,9 @@ export const ROUTES_PATH = {
   LANDING_BROWSER: 'explorar',
   LANDING_BROWSER_CATEGORIES: 'explorar/categoria',
   LANDING_BROWSER_CATEGORIES_ID: 'explorar/categoria/:categoryName',
+
+  LANDING_BROWSER_DETAILED_POST: 'explorar/',
+
   LANDING_PROFILE_PROFESSIONAL: '',
   LANDING_PROFILE_CLIENT: '',
 

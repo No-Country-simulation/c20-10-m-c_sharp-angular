@@ -49,9 +49,8 @@ export class SearchbarComponent {
   }
 
   public onSelect(event: AutoCompleteSelectEvent): void {
-    console.log(event);
     const selectedCategory = event.value;
-    this.router.navigate([ROUTES_PATH.LANDING_BROWSER + selectedCategory.value.url], {
+    this.router.navigate([ROUTES_PATH.LANDING_BROWSER_CATEGORIES + '/' + selectedCategory.value.url], {
       state: { id: selectedCategory.value.id },
     });
   }
