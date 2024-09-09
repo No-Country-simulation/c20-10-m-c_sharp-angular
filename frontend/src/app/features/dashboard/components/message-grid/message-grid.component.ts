@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Button, ButtonDirective } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
 import { gridOffererChats, contractor } from '../../../../../assets/demo/grid-offerer-chats';
@@ -13,6 +13,8 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ROUTES_PATH } from '../../../../core/routes';
+import { FakeUserService } from '../../../../shared/services/fake-user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-message-grid',
@@ -38,11 +40,19 @@ import { ROUTES_PATH } from '../../../../core/routes';
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MessageGridComponent {
+export class MessageGridComponent implements OnInit {
+
+  private readonly userService = inject(UserService);
 
   @ViewChild('cm') cm!: ContextMenu;
-  users = gridOffererChats;
+  users = signal<any>([]);
   owner = contractor;
 
   protected readonly ROUTES_PATH = ROUTES_PATH;
+
+  ngOnInit(): void {
+    this.userService.getAllUserMessages().then((users) => {
+      this.users.set(users);
+    });
+  }
 }

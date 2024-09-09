@@ -10,6 +10,7 @@ import { MessagesModule } from 'primeng/messages';
 import { PrimeTemplate } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
 import { UserService } from '../../services/user.service';
+import { UserMessage } from '../../../../core/interfaces';
 
 @Component({
   selector: 'app-message-chat',
@@ -51,20 +52,23 @@ export class MessageChatComponent implements OnInit {
     }
 
     this.route.paramMap.subscribe(async params => {
+
       const id = params.get('id');
       this.offererParamId.set(id);
       const dataOfferer = await this.userService.getUserMessagesFromOneUser(this.offererParamId());
+      const updatedMessages = gridOffererChats.find(offerer => dataOfferer[0].id === offerer.id);
+      dataOfferer[0].messages = updatedMessages?.messages;
       this.offerer.set(dataOfferer[0]);
     });
   }
 
-  getInputValue() {
+  async getInputValue() {
 
     if(!this.textChat.nativeElement.value) {
       return;
     }
 
-    const message = {
+    const message: UserMessage = {
       message: this.textChat.nativeElement.value,
       createdAt: new Date(),
       user: this.userService.user()?.id,
