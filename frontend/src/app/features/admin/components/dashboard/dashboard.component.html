@@ -1,0 +1,85 @@
+<div class="dashboard-container">
+  <!-- Tarjetas para resúmenes usando Angular Material -->
+  <div class="mat-grid-list" cols="3" rowHeight="200px">
+    <mat-grid-tile>
+      <mat-card class="mat-elevation-z4">
+        <mat-card-title>Total Categorías</mat-card-title>
+        <mat-card-content>
+          <h1>{{ totalCategorias }}</h1>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="mat-elevation-z4">
+        <mat-card-title>Total Oficios</mat-card-title>
+        <mat-card-content>
+          <h1>{{ totalOficios }}</h1>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="mat-elevation-z4">
+        <mat-card-title>Total Usuarios</mat-card-title>
+        <mat-card-content>
+          <h1>{{ totalUsuarios }}</h1>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </div>
+
+  <!-- Gráficos usando Angular Material con Chart.js -->
+  <div class="chart-container mat-elevation-z4">
+    <mat-card>
+      <mat-card-title>Distribución de Categorías</mat-card-title>
+      <mat-card-content>
+        <p-chart type="pie" [data]="categoriasChartData"></p-chart>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="chart-container mat-elevation-z4">
+    <mat-card>
+      <mat-card-title>Distribución de Oficios</mat-card-title>
+      <mat-card-content>
+        <p-chart baseChart
+                [data]="oficiosChartData"
+                [type]="'doughnut'">
+        </p-chart>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Tabla de Usuarios usando Angular Material -->
+  <mat-card class="mat-elevation-z4">
+    <mat-card-title>Últimos Usuarios Registrados</mat-card-title>
+    <mat-card-content>
+      <table mat-table [dataSource]="ultimosUsuarios" class="mat-elevation-z8">
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let user"> {{user.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rol">
+          <th mat-header-cell *matHeaderCellDef> Rol </th>
+          <td mat-cell *matCellDef="let user"> {{user.rol}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaRegistro">
+          <th mat-header-cell *matHeaderCellDef> Fecha de Registro </th>
+          <td mat-cell *matCellDef="let user"> {{user.fechaRegistro | date}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
