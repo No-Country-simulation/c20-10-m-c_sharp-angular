@@ -58,6 +58,11 @@ export class MessageChatComponent implements OnInit {
   }
 
   getInputValue() {
+
+    if(!this.textChat.nativeElement.value) {
+      return;
+    }
+
     const message = {
       message: this.textChat.nativeElement.value,
       createdAt: new Date(),

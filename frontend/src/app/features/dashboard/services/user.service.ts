@@ -16,7 +16,7 @@ export class UserService {
   private router = inject(Router);
   user = signal<User | undefined>(undefined);
 
-  public getUserDataForMessages(): Observable<User> {
+  getUserDataForMessages(): Observable<User> {
     return this.userApi.getUserData().pipe(
       tap((user) => {
         this.user.set(user);
