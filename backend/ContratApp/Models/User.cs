@@ -17,5 +17,6 @@ namespace ContratApp.Models
         [Required]
         [MaxLength(256)]
         public string? LastName { get; set; }
+        public Offeror Offeror { get; set; }
     }
 }
