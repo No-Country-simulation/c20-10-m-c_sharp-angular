@@ -29,10 +29,9 @@ import { PlacesService } from './services';
   ],
   templateUrl: './publish.component.html',
   styleUrls: ['./publish.component.css'],
-  providers: [MessageService]
+  providers: [MessageService],
 })
-export class PublishComponent implements OnInit {
-
+export default class PublishComponent implements OnInit {
   selectedCategory: string | null = null;
   serviceInfo: string = '';
   selectedPaymentMethod: string | null = null;
@@ -46,7 +45,7 @@ export class PublishComponent implements OnInit {
     { name: 'Jardinería', key: 'J' },
     { name: 'Cuidados', key: 'C' },
     { name: 'Pintura', key: 'T' },
-    { name: 'Otros', key: 'O' }
+    { name: 'Otros', key: 'O' },
   ];
 
   // Métodos de pago disponibles
@@ -54,25 +53,28 @@ export class PublishComponent implements OnInit {
     { name: 'Mercado Pago', key: 'M' },
     { name: 'Tarjeta Débito/Crédito', key: 'T' },
     { name: 'Transferencia Bancaria', key: 'B' },
-    { name: 'Pago en Efectivo', key: 'P' }
+    { name: 'Pago en Efectivo', key: 'P' },
   ];
 
   constructor(
     private messageService: MessageService,
     private router: Router,
     private placesService: PlacesService
-  ) { }
+  ) {}
 
   // Hook que se ejecuta al inicializar el componente
   ngOnInit() {
     this.selectedCategory = null; // Inicializa la categoría seleccionada a null
 
     // Obtener la ubicación del usuario a través del servicio PlacesService
-    this.placesService.getUserLocation().then((location: any[]) => {
-      this.userLocation = `Lat: ${location[1]}, Lng: ${location[0]}`;
-    }).catch(() => {
-      this.userLocation = 'No se pudo obtener la ubicación';
-    });
+    this.placesService
+      .getUserLocation()
+      .then((location: any[]) => {
+        this.userLocation = `Lat: ${location[1]}, Lng: ${location[0]}`;
+      })
+      .catch(() => {
+        this.userLocation = 'No se pudo obtener la ubicación';
+      });
   }
 
   // Método que se ejecuta cuando el formulario es enviado
@@ -82,7 +84,7 @@ export class PublishComponent implements OnInit {
       category: this.selectedCategory,
       serviceInfo: this.serviceInfo,
       userLocation: this.userLocation,
-      uploadedFiles: this.uploadedFiles
+      uploadedFiles: this.uploadedFiles,
     };
     console.log(formData);
     // Aquí se puede implementar la lógica para enviar los datos a un servidor o base de datos

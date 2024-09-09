@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { ROUTES, Routes } from '@angular/router';
 import { browserCategoriesResolver } from './features/landing/resolver/browser-categories.resolver';
 import { authGuard } from './core/guards/auth.guard';
 import { ROUTES_PATH } from './core/routes';
@@ -39,14 +39,18 @@ export const routes: Routes = [
           import('./features/landing/pages/browser-category/browser-category.component'),
       },
       {
-        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
-        title: 'Explorar',
-        loadComponent: () =>
-          import('./features/landing/pages/browser-detailed-post/detailed-post.component').then(
-            m => m.DetailedPostComponent
-          ),
+        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST + ':postId',
+        title: 'publicacion', //TODO: cambiar el title
+        loadComponent: () => import('./features/landing/pages/share-post/share-post.component'),
       },
-
+      // {
+      //   path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
+      //   title: 'Explorar',
+      //   loadComponent: () =>
+      //     import('./features/landing/pages/browser-detailed-post/detailed-post.component').then(
+      //       m => m.DetailedPostComponent
+      //     ),
+      // },
       // {
       //   path: 'como-funciona',
       //   title: 'Como funciona',
@@ -116,11 +120,17 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/dashboard/pages/dashboard-messages/dashboard-messages.component'),
       },
+      // {
+      //   path: '**',
+      //   redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES,
+      //   pathMatch: 'full',
+      // },
       {
-        path: '**',
-        redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES,
-        pathMatch: 'full',
+        path: ROUTES_PATH.DASHBOARD_CREATE_POST,
+        title: 'Crear publicacion',
+        loadComponent: () => import('./features/dashboard/pages/create-publish/publish.component'),
       },
+
       //     {
       //       path: 'profile',
       //       title: 'Perfil',

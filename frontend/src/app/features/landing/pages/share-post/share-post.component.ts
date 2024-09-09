@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuModule } from 'primeng/menu';  // Importa el módulo
+import { MenuModule } from 'primeng/menu'; // Importa el módulo
 
 @Component({
   selector: 'app-share-post',
   standalone: true,
-  imports: [CommonModule, MenuModule],  // Añade MenuModule a las importaciones
+  imports: [CommonModule, MenuModule], // Añade MenuModule a las importaciones
   templateUrl: './share-post.component.html',
-  styleUrls: ['./share-post.component.css']
+  styleUrls: ['./share-post.component.css'],
 })
-export class SharePostComponent {
+export default class SharePostComponent {
   isMenuVisible = false;
   images = [
     { itemImageSrc: 'imagen1.jpg', alt: 'Imagen 1' },
@@ -21,7 +21,7 @@ export class SharePostComponent {
   paymentMethods = [
     { name: 'Tarjeta de Crédito', selected: true },
     { name: 'PayPal', selected: true },
-    { name: 'Transferencia Bancaria', selected: true }
+    { name: 'Transferencia Bancaria', selected: true },
   ];
 
   toggleMenu() {
