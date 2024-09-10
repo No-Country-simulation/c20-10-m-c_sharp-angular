@@ -1,5 +1,6 @@
 ﻿using ContratApp.Migrations;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ContratApp.Models
 {
@@ -12,6 +13,9 @@ namespace ContratApp.Models
         [MaxLength(256)]
         public string? Geolocation { get; set; }
 
+        [JsonIgnore]
         public User? User { get; set; }
+
+        public ICollection<OfferorSpeciality>? OfferorSpecialities { get; set; }
     }
 }

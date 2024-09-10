@@ -1,6 +1,7 @@
 ﻿using ContratApp.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace ContratApp
 {
@@ -13,6 +14,7 @@ namespace ContratApp
         public DbSet<Offeror> Offerors { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
+        public DbSet<OfferorSpeciality> OfferorSpecialities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -24,6 +26,15 @@ namespace ContratApp
                 .HasMany(a => a.Specialities)
                 .WithOne(b => b.Category)
                 .HasForeignKey(b => b.CategoryId);
+            builder.Entity<OfferorSpeciality>()
+                .HasOne(oe => oe.Offeror)
+                .WithMany(o => o.OfferorSpecialities)
+                .HasForeignKey(oe => oe.IdOfferor);
+
+            builder.Entity<OfferorSpeciality>()
+                .HasOne(oe => oe.Speciality)
+                .WithMany(e => e.OfferorSpecialities)
+                .HasForeignKey(oe => oe.IdSpeciality);
 
             base.OnModelCreating(builder);
         }
