@@ -3,8 +3,6 @@ export const ROUTES_PATH = {
   LANDING_BROWSER: 'explorar',
   LANDING_BROWSER_CATEGORIES: 'explorar/categoria',
   LANDING_BROWSER_CATEGORIES_ID: 'explorar/categoria/:categoryName',
-  LANDING_PROFILE_PROFESSIONAL: '',
-  LANDING_PROFILE_CLIENT: '',
 
   DASHBOARD_HOME: 'dashboard',
   DASHBOARD_MESSAGES: 'mensajes',
@@ -14,4 +12,6 @@ export const ROUTES_PATH = {
   AUTH_REGISTER: 'registrarse',
   AUTH_REGISTER_PROFESSIONAL: 'registro-profesional',
   AUTH_FORGOT_PASSWORD: 'restablecer-contrase%C3%B1a',
+
+  DASHBOARD_PROFILE: 'perfil',
 } as const;
