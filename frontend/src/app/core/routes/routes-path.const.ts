@@ -6,6 +6,7 @@ export const ROUTES_PATH = {
   LANDING_PROFILE_PROFESSIONAL: '',
   LANDING_PROFILE_CLIENT: '',
 
+  DASHBOARD_HOME: 'dashboard',
   DASHBOARD_MESSAGES: 'mensajes',
   DASHBOARD_MESSAGES_INBOX: 'mensajes/:id',
 

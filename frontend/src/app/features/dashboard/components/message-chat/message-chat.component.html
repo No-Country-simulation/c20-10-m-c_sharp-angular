@@ -1,0 +1,79 @@
+<div
+  class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full h-full"
+  style="position: relative;"
+>
+  <div class="col-12 flex justify-content-between align-items-center">
+    <div class="gap-3 flex align-items-center h-full p-1">
+      <p-avatar image="{{ offerer() && offerer().image }}" size="xlarge" shape="circle"></p-avatar>
+      <span class="font-bold text-xl">{{ offerer() && offerer().name }}</span>
+    </div>
+    <div>
+      <p-button
+        size="large"
+        label=""
+        icon="pi pi-refresh"
+        styleClass="p-button-text"
+      ></p-button>
+    </div>
+  </div>
+
+  <p-divider />
+
+  <div
+    class="col-12 -my-2"
+    style="flex-basis: 70%;"
+  >
+    <div class="overflow-y-auto" style="max-height: 550px; min-height: 550px">
+      @for (message of offerer()?.messages; track $index) {
+        <div class="col-12 gap-2 flex align-items-center pr-3 {{ message.user === this.userService.user()?.id ? 'justify-content-end' : 'justify-content-start'}}">
+          @if( message.user !== this.userService.user()?.id ) {
+            <p-avatar image="{{ offerer().image }}" size="normal" shape="circle"></p-avatar>
+            <span class="font-light">{{ offerer().name }}</span>
+          } @else {
+            <span class="font-light font-italic text-right">Tu</span>
+          }
+        </div>
+
+        <div class="col-12 -my-2 flex {{ message.user === this.userService.user()?.id ? 'justify-content-end' : 'align-items-start'}}">
+
+          <div class="-my-2 {{ message.user === this.userService.user()?.id ? '' : 'ml-5'}}" style="min-width: 400px">
+            @if( message.user === this.userService.user()?.id ) {
+              <p-messages severity="info">
+                <ng-template pTemplate>
+                  <div>{{ message.message }}</div>
+                </ng-template>
+              </p-messages>
+            } @else {
+
+              <p-messages severity="secondary">
+                <ng-template pTemplate>
+                  <div class="ml-2">{{ message.message }}</div>
+                </ng-template>
+              </p-messages>
+            }
+            <span class="text-xs w-full flex {{ message.user === this.userService.user()?.id ? ' justify-content-end' : ''}}">
+              {{ message.createdAt | date:'dd/MMM hh:mm' }}
+            </span>
+
+          </div>
+        </div>
+    } @empty {
+      <div class="col-12 flex justify-content-center align-items-center">
+        <p-messages [(value)]="messageNotData" [enableService]="false" [closable]="false"></p-messages>
+      </div>
+    }
+    </div>
+  </div>
+
+  <div class="col-12" style="position: absolute; bottom: 0; left: 0; width: 100%;">
+    <div class="gap-2 flex align-items-center justify-content-between h-full p-3">
+      <div class="flex-grow-1">
+        <input #textChat class="w-full" pInputText id="text-chat" type="text" placeholder="Escribe tu mensaje" />
+      </div>
+      <div class="">
+        <p-button label="Enviar" icon="pi pi-send" styleClass="p-button-info hidden md:inline-flex" (click)="getInputValue()"></p-button>
+        <p-button icon="pi pi-send" styleClass="p-button-info inline-flex md:hidden" (click)="getInputValue()"></p-button>
+      </div>
+    </div>
+  </div>
+</div>
