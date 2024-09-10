@@ -4,7 +4,7 @@ export const ROUTES_PATH = {
   LANDING_BROWSER_CATEGORIES: 'explorar/categoria',
   LANDING_BROWSER_CATEGORIES_ID: 'explorar/categoria/:categoryName',
 
-  LANDING_BROWSER_DETAILED_POST: 'explorar/',
+  LANDING_BROWSER_DETAILED_POST: 'explorar/post/',
 
   LANDING_PROFILE_PROFESSIONAL: '',
   LANDING_PROFILE_CLIENT: '',
@@ -12,6 +12,7 @@ export const ROUTES_PATH = {
   DASHBOARD_HOME: 'dashboard',
   DASHBOARD_MESSAGES: 'mensajes',
   DASHBOARD_MESSAGES_INBOX: 'mensajes/:id',
+  DASHBOARD_CREATE_POST: 'crear-publicacion',
 
   AUTH_LOGIN: 'iniciar-sesion',
   AUTH_REGISTER: 'registrarse',

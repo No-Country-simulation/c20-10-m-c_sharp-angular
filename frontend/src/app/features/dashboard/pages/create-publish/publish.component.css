@@ -1,0 +1,226 @@
+/* Centra el contenido horizontalmente con un margen de 50px */
+.justify-content-center {
+  margin: 50px;
+  justify-content: center;
+}
+
+/* Aplica un margen de 2 rem alrededor del elemento */
+.center {
+  margin: 2rem;
+}
+
+/* Alinea el texto del título 1 al centro */
+.tittle-1 {
+  text-align: center;
+}
+
+/* Subraya el texto del título 2 */
+.tittle-2 {
+  text-decoration: underline;
+}
+
+/* Estilos para las categorías */
+
+/* Define un cuadro con bordes redondeados y texto centrado */
+.styled-box-green {
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Configuración responsive */
+.grid-category {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* Tres columnas para pantallas grandes */
+  gap: 50px;
+  padding: 20px;
+}
+
+/* Estilos de la tarjeta */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  padding-bottom: 100%;
+  height: 0;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* Imagen dentro de la tarjeta, ajustada a la tarjeta */
+.card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* Título de la tarjeta */
+.card-title {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  font-size: 18px;
+}
+
+/* Estilo aplicado a la tarjeta seleccionada */
+.selected {
+  border: 2px solid #4caf50;
+}
+
+/* Estilo para deshabilitar elementos */
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Información adicional */
+.text-area {
+  display: grid;
+  margin: 20px auto;
+}
+
+/* Flexbox centrado con fondo gris claro */
+.flex {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f6f6f6;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 200px;
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+/* Estilo del botón de éxito personalizado */
+.p-button-success {
+  background-color: #F3CC0F;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 3rem;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.p-button-success:hover {
+  background-color: #e0a517;
+}
+
+/* Alinea el contenido de las categorías en un grid */
+.text-category {
+  justify-content: center;
+  display: grid;
+  gap: 30px;
+}
+
+/* Estilos para la sección de subida de imágenes */
+.upload-images {
+  display: grid;
+  grid-auto-flow: inherit;
+  padding-right: 30px;
+}
+
+/* Clase para añadir margen en los bordes verticales y un estilo de borde */
+.mb12 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  border-style: solid;
+  width: 100%;
+}
+
+/* Media Queries para pantallas pequeñas (móviles) */
+
+/* Ajustes para pantallas con un ancho máximo de 768px */
+@media (max-width: 768px) {
+
+  /* Reducir márgenes en dispositivos móviles */
+  .justify-content-center {
+    margin: 20px;
+  }
+
+  /* Ajustar el margen en el centro */
+  .center {
+    margin: 1rem;
+  }
+
+  /* Cambiar la cuadrícula de las categorías a una columna en lugar de tres */
+  .grid-category {
+    grid-template-columns: repeat(1, 1fr);
+    /* Una columna en pantallas pequeñas */
+    gap: 10px;
+    /* Reducir el espacio entre los elementos */
+    padding: 10px;
+    /* Reducir el padding */
+  }
+
+  /* Ajustar el tamaño de las tarjetas */
+  .card {
+    height: 150px;
+    /* Reducir la altura de la tarjeta */
+  }
+
+  /* Reducir el tamaño del título dentro de las tarjetas */
+  .card-title {
+    font-size: 16px;
+    /* Reducir el tamaño de fuente */
+    padding: 3px;
+    /* Reducir el padding */
+  }
+
+  /* Reducir el tamaño del botón */
+  .p-button-success {
+    margin-top: 1.5rem;
+  }
+
+  /* Ajustar los tamaños de las imágenes para móviles */
+  .upload-images {
+    padding-right: 10px;
+  }
+}
+
+/* Media Query adicional para pantallas aún más pequeñas (480px) */
+@media (max-width: 480px) {
+
+  /* Ajustar las categorías para que ocupen todo el ancho */
+  .grid-category {
+    grid-template-columns: 1fr;
+    /* Ocupa una columna */
+  }
+
+  /* Reducir aún más las tarjetas */
+  .card {
+    height: 120px;
+    /* Ajusta la altura para móviles pequeños */
+  }
+
+  /* Reducir el tamaño del texto en títulos */
+  .tittle-1,
+  .tittle-2 {
+    font-size: 1.2rem;
+  }
+}
