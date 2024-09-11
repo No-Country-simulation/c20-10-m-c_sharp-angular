@@ -1,6 +1,6 @@
 ﻿namespace ContratApp.ViewModels
 {
-    public class OfferorSpecialitiesSearchViewModel
+    public class UserSpecialitiesSearchViewModel
     {
         public string? Criteria { get; set; }
         public int? IdCategory { get; set; }

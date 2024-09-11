@@ -2,12 +2,12 @@
 
 namespace ContratApp.Models
 {
-    public class OfferorSpeciality : Entity
+    public class UserSpeciality : Entity
     {
         [MaxLength(450)]
         [Required]
-        public string? IdOfferor { get; set; }
-        public Offeror? Offeror { get; set; }
+        public string? IdUser { get; set; }
+        public User? User { get; set; }
 
         [Required]
         public int IdSpeciality { get; set; }

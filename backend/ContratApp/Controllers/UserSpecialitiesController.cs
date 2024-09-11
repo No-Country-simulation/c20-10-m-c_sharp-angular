@@ -10,11 +10,11 @@ namespace ContratApp.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class OfferorSpecialitiesController : ControllerBase
+    public class UserSpecialitiesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public OfferorSpecialitiesController(ApplicationDbContext context)
+        public UserSpecialitiesController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -22,9 +22,9 @@ namespace ContratApp.Controllers
         // GET: api/OfferorSpecialities
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<OfferorSpeciality>>> GetOfferorSpecialities()
+        public async Task<ActionResult<IEnumerable<UserSpeciality>>> GetOfferorSpecialities()
         {
-            return await _context.OfferorSpecialities
+            return await _context.UserSpecialities
                                  //.Include(oe => oe.Offeror)
                                  //.Include(oe => oe.Speciality)
                                  .ToListAsync();
@@ -32,9 +32,9 @@ namespace ContratApp.Controllers
 
         // GET: api/OfferorSpecialities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OfferorSpeciality>> GetOfferorSpeciality(int id)
+        public async Task<ActionResult<UserSpeciality>> GetOfferorSpeciality(int id)
         {
-            var oferenteEspecialidad = await _context.OfferorSpecialities
+            var oferenteEspecialidad = await _context.UserSpecialities
                                                      //.Include(oe => oe.Offeror)
                                                      //.Include(oe => oe.Speciality)
                                                      .FirstOrDefaultAsync(oe => oe.Id == id);
@@ -50,13 +50,12 @@ namespace ContratApp.Controllers
         // GET: api/OfferorSpecialities/Search
         [HttpGet("Search")]
         [AllowAnonymous]
-        public IActionResult GetOfferorSpecialitiesSearch([FromQuery] OfferorSpecialitiesSearchViewModel offerorSpecialitiesSearchViewModel)
+        public IActionResult GetOfferorSpecialitiesSearch([FromQuery] UserSpecialitiesSearchViewModel offerorSpecialitiesSearchViewModel)
         {
 
-            var result = _context.OfferorSpecialities
+            var result = _context.UserSpecialities
                 .Include(oe => oe.Speciality)
-                .Include(oe => oe.Offeror)
-                .Include(oe => oe.Offeror.User)
+                .Include(oe => oe.User)
                 .AsQueryable()
                 ;
             if (!string.IsNullOrWhiteSpace(offerorSpecialitiesSearchViewModel.Criteria))
@@ -78,8 +77,9 @@ namespace ContratApp.Controllers
 
             return Ok(result.Select(x => new
             {
-                x.IdOfferor,
-                OfferorName = x.Offeror.User.FirstName + " " + x.Offeror.User.LastName,
+                UserSpecialityId = x.Id,
+                x.IdUser,
+                UserName = x.User.FirstName + " " + x.User.LastName,
                 x.IdSpeciality,
                 SpecialityName = x.Speciality.Name,
                 x.Speciality.CategoryId,
@@ -94,9 +94,9 @@ namespace ContratApp.Controllers
 
         // POST: api/OfferorSpecialities
         [HttpPost]
-        public async Task<ActionResult<OfferorSpeciality>> PostOfferorSpeciality(OfferorSpeciality offerorSpeciality)
+        public async Task<ActionResult<UserSpeciality>> PostOfferorSpeciality(UserSpeciality offerorSpeciality)
         {
-            _context.OfferorSpecialities.Add(offerorSpeciality);
+            _context.UserSpecialities.Add(offerorSpeciality);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetOfferorSpeciality), new { id = offerorSpeciality.Id }, offerorSpeciality);
@@ -104,14 +104,14 @@ namespace ContratApp.Controllers
 
         // PUT: api/OfferorSpecialities/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOfferorSpeciality(int id, OfferorSpeciality offerorSpeciality)
+        public async Task<IActionResult> PutOfferorSpeciality(int id, UserSpeciality offerorSpeciality)
         {
             if (id != offerorSpeciality.Id)
             {
                 return BadRequest();
             }
 
-            var existingEntity = await _context.OfferorSpecialities.FindAsync(id);
+            var existingEntity = await _context.UserSpecialities.FindAsync(id);
             if (existingEntity == null)
             {
                 return NotFound();
@@ -139,7 +139,7 @@ namespace ContratApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.OfferorSpecialities.Any(e => e.Id == id))
+                if (!_context.UserSpecialities.Any(e => e.Id == id))
                 {
                     return NotFound();
                 }

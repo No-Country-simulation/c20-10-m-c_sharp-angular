@@ -13,5 +13,5 @@ public class Speciality : Entity
     public int CategoryId { get; set; }
     [JsonIgnore]
     public Category? Category { get; set; }
-    public ICollection<OfferorSpeciality>? OfferorSpecialities { get; set; }
+    public ICollection<UserSpeciality>? UserSpecialities { get; set; }
 }

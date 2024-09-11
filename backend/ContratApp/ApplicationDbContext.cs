@@ -11,30 +11,30 @@ namespace ContratApp
         {
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<Offeror> Offerors { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
-        public DbSet<OfferorSpeciality> OfferorSpecialities { get; set; }
+        public DbSet<UserSpeciality> UserSpecialities { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Offeror>()
-                .HasOne(o => o.User)
-                .WithOne(u => u.Offeror)
-                .HasForeignKey<Offeror>(o => o.Id);
             builder.Entity<Category>()
                 .HasMany(a => a.Specialities)
                 .WithOne(b => b.Category)
                 .HasForeignKey(b => b.CategoryId);
-            builder.Entity<OfferorSpeciality>()
-                .HasOne(oe => oe.Offeror)
-                .WithMany(o => o.OfferorSpecialities)
-                .HasForeignKey(oe => oe.IdOfferor);
-
-            builder.Entity<OfferorSpeciality>()
+            builder.Entity<UserSpeciality>()
+                .HasOne(ue => ue.User)
+                .WithMany(u => u.UserSpecialities)
+                .HasForeignKey(oe => oe.IdUser);
+            builder.Entity<UserSpeciality>()
                 .HasOne(oe => oe.Speciality)
-                .WithMany(e => e.OfferorSpecialities)
+                .WithMany(e => e.UserSpecialities)
                 .HasForeignKey(oe => oe.IdSpeciality);
+            builder.Entity<Chat>()
+                .HasMany(a => a.Messages)
+                .WithOne(b => b.Chat)
+                .HasForeignKey(b => b.IdChat);
 
             base.OnModelCreating(builder);
         }

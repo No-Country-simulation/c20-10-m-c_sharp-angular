@@ -35,11 +35,6 @@ namespace ContratApp.Controllers
             var user = _context.Users.Find(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             if (user == null)
                 return NotFound(new { Msg = "No se encontraron los datos complementarios del usuario. Use PUT:api/User para complementar datos" });
-            var offeror = _context.Offerors.Find(user.Id);
-            //if (offeror != null)
-            //    user.Offeror = offeror;
-            if (user.Offeror != null) // esto es necesario; si no, se hace un bucle infinito en relacion 1 a 1
-                user.Offeror.User = null;
             return user;
         }
 
@@ -93,6 +88,7 @@ namespace ContratApp.Controllers
 
         }
 
+        
 
     }
 }
