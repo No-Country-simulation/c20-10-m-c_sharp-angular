@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { gridOffererChats } from '../../../../shared/utils/grid-offerer-chats';
+import { gridOffererChats } from '../../../../../assets/demo/grid-offerer-chats';
 import { AvatarModule } from 'primeng/avatar';
 import { DatePipe, JsonPipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { MessagesModule } from 'primeng/messages';
 import { PrimeTemplate } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
 import { UserService } from '../../services/user.service';
+import { UserMessage } from '../../../../core/interfaces';
 
 @Component({
   selector: 'app-message-chat',
@@ -50,15 +51,24 @@ export class MessageChatComponent implements OnInit {
       return;
     }
 
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(async params => {
+
       const id = params.get('id');
       this.offererParamId.set(id);
-      this.offerer.set(gridOffererChats.filter( offerer => Number(offerer.id) === Number(this.offererParamId()))[0]);
+      const dataOfferer = await this.userService.getUserMessagesFromOneUser(this.offererParamId());
+      const updatedMessages = gridOffererChats.find(offerer => dataOfferer[0].id === offerer.id);
+      dataOfferer[0].messages = updatedMessages?.messages;
+      this.offerer.set(dataOfferer[0]);
     });
   }
 
-  getInputValue() {
-    const message = {
+  async getInputValue() {
+
+    if(!this.textChat.nativeElement.value) {
+      return;
+    }
+
+    const message: UserMessage = {
       message: this.textChat.nativeElement.value,
       createdAt: new Date(),
       user: this.userService.user()?.id,

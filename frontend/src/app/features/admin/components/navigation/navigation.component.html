@@ -1,0 +1,32 @@
+<p-sidebar [(visible)]="sidebarVisible" [position]="'left'" [modal]="isHandset">
+  <h3>Menu</h3>
+  <ul>
+    <li>
+      <a pMenuItem [routerLink]="['/dashboard']">Inicio</a>
+    </li>
+    <li>
+      <a pMenuItem [routerLink]="['/categorias-dashboard']">Categorias</a>
+    </li>
+    <li>
+      <a pMenuItem [routerLink]="['/oficios-dashboard']">Oficios</a>
+    </li>
+    <li>
+      <a pMenuItem [routerLink]="['/usuarios-dashboard']">Usuarios</a>
+    </li>
+  </ul>
+</p-sidebar>
+
+<div class="content">
+  <p-menubar>
+    <ng-template pTemplate="start">
+      <button *ngIf="isHandset" type="button" pButton icon="pi pi-bars" (click)="toggleSidebar()" label="Menu"></button>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <span>Administrador</span>
+    </ng-template>
+  </p-menubar>
+
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
