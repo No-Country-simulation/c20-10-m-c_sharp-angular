@@ -6,10 +6,9 @@ import { AuthService as AuthApiService } from '../../../../../core/services';
 import { AuthLogin, AuthLoginResponse } from '../../../../../core/interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   //services
   private authApi = inject(AuthApiService);
   private messageService = inject(MessageService);
@@ -17,7 +16,7 @@ export class AuthService {
 
   login(data: AuthLogin): Observable<AuthLoginResponse> {
     return this.authApi.loginWithEmail(data).pipe(
-      tap(() => this.router.navigateByUrl('/home') ),
+      tap(() => this.router.navigateByUrl('/')),
       tap(() => {
         this.messageService.add({
           key: 'toast',
@@ -26,7 +25,7 @@ export class AuthService {
           detail: `Te invitamos a terminar de llenar tus datos personales`,
         });
       }),
-      catchError(( error) => throwError( () => error ))
+      catchError(error => throwError(() => error))
     );
   }
 }

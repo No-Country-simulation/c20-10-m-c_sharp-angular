@@ -19,12 +19,14 @@
     "@angular/platform-browser": "^18.2.1",
     "@angular/platform-browser-dynamic": "^18.2.1",
     "@angular/router": "^18.2.1",
+    "fuzzysort": "^3.0.2",
     "ngx-cookie-service": "^18.0.0",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.9",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "uuid": "^10.0.0",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {

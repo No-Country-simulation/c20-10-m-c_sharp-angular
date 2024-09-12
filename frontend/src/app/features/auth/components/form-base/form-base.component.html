@@ -1,0 +1,54 @@
+<!-- eslint-disable @angular-eslint/template/no-autofocus -->
+<form [formGroup]="form" [autocomplete]="isLogin() ? 'on' : 'off'">
+  <div class="flex flex-column gap-4">
+    <div class="w-full">
+      <span class="p-input-icon-left w-full">
+        <i class="pi pi-envelope"></i>
+        <input
+          pAutoFocus
+          pInputText
+          id="email"
+          type="text"
+          name="email"
+          class="w-full mb-1"
+          styleClass="w-full"
+          autocomplete="email"
+          placeholder="Correo electrónico *"
+          formControlName="email"
+          [autofocus]="true" />
+      </span>
+      <div class="flex flex-column gap-2">
+        <div [appShowErrors]="email"></div>
+      </div>
+    </div>
+    <div class="w-full">
+      <span class="realtive p-input-icon-left w-full">
+        <i class="pi pi-lock absoulte" style="left: 0.75rem; z-index: 1"></i>
+        <p-password
+          inputId="password"
+          placeholder="Contraseña *"
+          styleClass="w-full mb-1"
+          inputStyleClass="c-pl w-full"
+          formControlName="password"
+          [feedback]="false"
+          [toggleMask]="true"
+          [autocomplete]="isLogin() ? 'current-password' : 'new-password'"
+          (keydown.enter)="handleSubmit()">
+        </p-password>
+      </span>
+      <div class="flex flex-column gap-2" [appShowErrorsPassword]="password"></div>
+    </div>
+    <div class="flex flex-column gap-2 w-full">
+      <ng-content></ng-content>
+    </div>
+    <div>
+      <p-button
+        styleClass="w-full"
+        [icon]="buttonDisabled() ? 'pi pi-spin pi-spinner' : ''"
+        [label]="isLogin() ? 'Iniciar sesión' : 'Crear cuenta'"
+        [severity]="isLogin() ? 'primary' : 'contrast'"
+        [disabled]="form.invalid || buttonDisabled()"
+        (click)="handleSubmit()" />
+    </div>
+  </div>
+</form>

@@ -1,40 +1,50 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-
 import { RouterModule } from '@angular/router';
+
 import { ButtonModule } from 'primeng/button';
 
-import { AuthService } from './../../../../core/services/auth.service';
-import { SidebarModule } from 'primeng/sidebar';
-import { TopbarComponent } from '../../../../shared/components/topbar/topbar.component';
+import { LandingHeaderComponent, LandingFooterComponent } from '../../layout';
+import { SearchbarComponent, CategoriesCarouselComponent } from '../../components';
+import { AuthService } from '../../../../core/services';
+import { OpinionCarouselComponent } from '../../components/opinion-carousel/opinion-carousel.component';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule, SidebarModule, TopbarComponent],
-  template: `
-    @let authStatus = authService.authStatus();
+  imports: [
+    CommonModule,
+    RouterModule,
+    LandingHeaderComponent,
+    ButtonModule,
+    LandingFooterComponent,
+    SearchbarComponent,
+    CategoriesCarouselComponent,
+    OpinionCarouselComponent,
+  ],
+  templateUrl: "./home.component.html",
+  // template: `
+  //   <div class="mt-5">
+  //     <!-- <p-button styleClass="text-color" icon="pi pi-bars" text="true" /> -->
+  //     <div class="flex justify-content-center w-full">
+  //       <app-searchbar />
+  //     </div>
+  //     <h2 class="mt-6 mb-5 text-center text-regular text-base">Explora nuestras categorías</h2>
+  //     <app-categories-carousel />
+  //     <h2 class="mt-6 mb-5 text-center text-regular text-base">¿Que opinan nuestros usuarios?</h2>
+  //   </div>
+  // `,
+  styles: `
+    .min-h-custom {
+      min-height: calc(100vh - 64px);
+    }
 
-    @let status = authStatus ? 'Usuario autenticado' : 'Usuario no autenticado';
-
-    <div class="w-full">
-      <app-topbar />
-    </div>
-    <div class="flex flex-column justify-content-center align-items-center">
-      <h1>Test</h1>
-      <p class="text-3xl">
-        Status: <span [class]="authStatus ? 'text-green-500' : 'text-red-500'">{{ status }}</span>
-      </p>
-      @if (!authStatus) {
-        <p-button label="Iniciar sesión" outlined="true" routerLink="/auth/login" />
-      } @else {
-        <p-button
-          label="Cerrar sesión"
-          outlined="true"
-          severity="danger"
-          (click)="authService.logout()" />
-      }
-    </div>
+    .button-searchbar-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
