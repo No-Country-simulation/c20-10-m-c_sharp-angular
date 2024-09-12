@@ -3,10 +3,14 @@
   style="position: relative;"
 >
   <div class="col-12 flex justify-content-between align-items-center">
-    <div class="gap-3 flex align-items-center h-full p-1">
-      <p-avatar image="{{ offerer() && offerer().image }}" size="xlarge" shape="circle"></p-avatar>
-      <span class="font-bold text-xl">{{ offerer() && offerer().name }}</span>
-    </div>
+    <app-profile-avatar
+      [user]="offerer()"
+      [classes]="{
+      'mainContainer': 'col-12 flex align-items-center gap-3',
+    }"
+      [ratingValue]="4"
+      [toLink]="offerer().id"
+    />
     <div>
       <p-button
         size="large"

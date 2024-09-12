@@ -15,6 +15,9 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ROUTES_PATH } from '../../../../core/routes';
 import { FakeUserService } from '../../../../shared/services/fake-user.service';
 import { UserService } from '../../services/user.service';
+import { RatingModule } from 'primeng/rating';
+import { FormsModule } from '@angular/forms';
+import { ProfileAvatarComponent } from '../../../../shared/components/profile-avatar/profile-avatar.component';
 
 @Component({
   selector: 'app-message-grid',
@@ -35,6 +38,9 @@ import { UserService } from '../../services/user.service';
     InputGroupModule,
     InputTextModule,
     InputGroupAddonModule,
+    RatingModule,
+    FormsModule,
+    ProfileAvatarComponent,
   ],
   templateUrl: './message-grid.component.html',
   styles: ``,
@@ -47,6 +53,7 @@ export class MessageGridComponent implements OnInit {
   @ViewChild('cm') cm!: ContextMenu;
   users = signal<any>([]);
   owner = contractor;
+  value!: number;
 
   protected readonly ROUTES_PATH = ROUTES_PATH;
 

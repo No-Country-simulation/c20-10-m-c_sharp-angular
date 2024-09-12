@@ -31,7 +31,7 @@ export class UserService {
           summary: 'Error al obtener los datos de usuario',
           detail: `Inicie sesión nuevamente`,
         });
-        this.router.navigate(['/', ROUTES_PATH.AUTH_LOGIN]);
+        // this.router.navigate(['/', ROUTES_PATH.AUTH_LOGIN]);
         return throwError(() => 'Error al obtener los datos de usuario');
       })
     );

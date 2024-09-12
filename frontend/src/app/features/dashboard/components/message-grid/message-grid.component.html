@@ -2,15 +2,16 @@
   class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
 >
 
-  <div class="col-12 flex flex-column align-items-center">
-    <p-avatar image="{{ owner.image }}" size="xlarge" shape="circle"></p-avatar>
-    <span class="font-bold text-xl">
-        {{ owner.name }}
-    </span>
-  </div>
-  <div>
-
-  </div>
+  <app-profile-avatar
+    [user]="owner"
+    [classes]="{
+      'mainContainer': 'col-12 flex flex-column align-items-center',
+    }"
+    [ratingValue]="4"
+    [message]="'Mi perfil'"
+    [toLink]="owner.id"
+    [isPrivate]="true"
+  />
   <p-divider />
 
   <div class="col-12 w-full">
