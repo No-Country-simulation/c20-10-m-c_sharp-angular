@@ -1,6 +1,36 @@
+/* Cabecera */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-right i {
+  font-size: 24px;
+  margin-left: 15px;
+}
+
+.header-left i {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
 /* Centra el contenido horizontalmente con un margen de 50px */
 .justify-content-center {
-  margin: 50px;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-bottom: 30%;
+  margin-top: 5%;
   justify-content: center;
 }
 
@@ -31,9 +61,14 @@
 .grid-category {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* Tres columnas para pantallas grandes */
-  gap: 50px;
-  padding: 20px;
+  gap: 20px;
+
+}
+
+/* Estilo del área de texto */
+.custom-text-area {
+  overflow: hidden;
+  width: 100%;
 }
 
 /* Estilos de la tarjeta */
@@ -45,9 +80,10 @@
   justify-content: center;
   border-radius: 10px;
   overflow: hidden;
-  width: 100%;
-  padding-bottom: 100%;
-  height: 0;
+  /*width: 100%;*/
+  /* padding-bottom: 100%;*/
+  /*height: 0;*/
+  padding: 50%;
   transition: transform 0.3s ease;
 }
 
@@ -62,6 +98,8 @@
   left: 0;
   width: 100%;
   height: 100%;
+  /*
+  */
   object-fit: cover;
 }
 
@@ -90,15 +128,9 @@
   pointer-events: none;
 }
 
-/* Información adicional */
-.text-area {
-  display: grid;
-  margin: 20px auto;
-}
 
 /* Flexbox centrado con fondo gris claro */
 .flex {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,39 +144,27 @@
 }
 
 /* Estilo del botón de éxito personalizado */
-.p-button-success {
-  background-color: #F3CC0F;
+.button-flex {
+  text-align: center;
+  display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
+}
+
+.p-button-success {
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
   width: 100%;
-  margin-top: 3rem;
-  border: none;
-  transition: background-color 0.3s ease;
 }
 
 .p-button-success:hover {
   background-color: #e0a517;
+
 }
 
-/* Alinea el contenido de las categorías en un grid */
-.text-category {
-  justify-content: center;
-  display: grid;
-  gap: 30px;
-}
-
-/* Estilos para la sección de subida de imágenes */
-.upload-images {
-  display: grid;
-  grid-auto-flow: inherit;
-  padding-right: 30px;
-}
-
-/* Clase para añadir margen en los bordes verticales y un estilo de borde */
 .mb12 {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -153,74 +173,98 @@
   width: 100%;
 }
 
-/* Media Queries para pantallas pequeñas (móviles) */
-
-/* Ajustes para pantallas con un ancho máximo de 768px */
-@media (max-width: 768px) {
-
-  /* Reducir márgenes en dispositivos móviles */
+/* Configuración responsive */
+@media (max-width: 810px) {
   .justify-content-center {
-    margin: 20px;
+
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 10%;
+    margin-top: 5%;
   }
 
-  /* Ajustar el margen en el centro */
   .center {
     margin: 1rem;
   }
 
-  /* Cambiar la cuadrícula de las categorías a una columna en lugar de tres */
   .grid-category {
-    grid-template-columns: repeat(1, 1fr);
-    /* Una columna en pantallas pequeñas */
-    gap: 10px;
-    /* Reducir el espacio entre los elementos */
-    padding: 10px;
-    /* Reducir el padding */
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Ajustar el tamaño de las tarjetas */
   .card {
-    height: 150px;
-    /* Reducir la altura de la tarjeta */
+    height: 160px;
   }
 
-  /* Reducir el tamaño del título dentro de las tarjetas */
   .card-title {
     font-size: 16px;
-    /* Reducir el tamaño de fuente */
     padding: 3px;
-    /* Reducir el padding */
   }
 
-  /* Reducir el tamaño del botón */
+  .custom-text-area {
+    width: 100%;
+
+  }
+
   .p-button-success {
     margin-top: 1.5rem;
   }
 
-  /* Ajustar los tamaños de las imágenes para móviles */
   .upload-images {
     padding-right: 10px;
   }
+
+  .p-button-success:hover {
+    background-color: #e0a517;
+
+  }
 }
 
-/* Media Query adicional para pantallas aún más pequeñas (480px) */
 @media (max-width: 480px) {
-
-  /* Ajustar las categorías para que ocupen todo el ancho */
   .grid-category {
     grid-template-columns: 1fr;
-    /* Ocupa una columna */
+    gap: 10px;
+
   }
 
-  /* Reducir aún más las tarjetas */
   .card {
     height: 120px;
-    /* Ajusta la altura para móviles pequeños */
   }
 
-  /* Reducir el tamaño del texto en títulos */
   .tittle-1,
   .tittle-2 {
     font-size: 1.2rem;
+  }
+
+  .custom-text-area {
+    width: 100%;
+
+
+  }
+
+  .custom-file-upload {
+    display: flex;
+    gap: 30px;
+    margin: 30px;
+  }
+
+  .button-flex {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .p-button-success {
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+
+  .p-button-success:hover {
+    background-color: #e0a517;
+
   }
 }

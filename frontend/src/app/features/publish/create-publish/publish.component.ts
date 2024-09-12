@@ -1,17 +1,18 @@
-// Importaciones necesarias para el funcionamiento del componente
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RippleModule } from 'primeng/ripple';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { PlacesService } from './services';
+import { MenuModule } from 'primeng/menu';
+import { CheckboxModule } from 'primeng/checkbox';
+
 
 @Component({
   selector: 'app-publish',
@@ -22,22 +23,23 @@ import { PlacesService } from './services';
     ButtonModule,
     InputTextareaModule,
     RippleModule,
-    RadioButtonModule,
     FormsModule,
     FileUploadModule,
     ToastModule,
+    MenuModule,
+    CheckboxModule,
   ],
   templateUrl: './publish.component.html',
   styleUrls: ['./publish.component.css'],
   providers: [MessageService]
 })
 export class PublishComponent implements OnInit {
-
   selectedCategory: string | null = null;
   serviceInfo: string = '';
-  selectedPaymentMethod: string | null = null;
+  selectedPaymentMethod: any[] = [];  // Array para almacenar los métodos seleccionados
   uploadedFiles: any[] = [];
   userLocation: string = '';
+  isMenuVisible = false;
 
   // Lista de categorías disponibles para seleccionar
   categories: any[] = [
@@ -65,7 +67,7 @@ export class PublishComponent implements OnInit {
 
   // Hook que se ejecuta al inicializar el componente
   ngOnInit() {
-    this.selectedCategory = null; // Inicializa la categoría seleccionada a null
+    this.selectedCategory = null;
 
     // Obtener la ubicación del usuario a través del servicio PlacesService
     this.placesService.getUserLocation().then((location: any[]) => {
@@ -77,12 +79,12 @@ export class PublishComponent implements OnInit {
 
   // Método que se ejecuta cuando el formulario es enviado
   onSubmit() {
-    // Crear un objeto con los datos del formulario
     const formData = {
       category: this.selectedCategory,
       serviceInfo: this.serviceInfo,
       userLocation: this.userLocation,
-      uploadedFiles: this.uploadedFiles
+      uploadedFiles: this.uploadedFiles,
+      selectedPaymentMethods: this.selectedPaymentMethod  // Incluye los métodos de pago seleccionados
     };
     console.log(formData);
     // Aquí se puede implementar la lógica para enviar los datos a un servidor o base de datos
@@ -90,36 +92,27 @@ export class PublishComponent implements OnInit {
 
   // Método para seleccionar una categoría
   selectCategory(category: string) {
-    // Si ya ha sido seleccionada, se deselecciona
     if (this.selectedCategory === category) {
       this.selectedCategory = null;
     } else {
-      this.selectedCategory = category; // Si no ha sido seleccionada, se asigna
-    }
-  }
-
-  // Método para seleccionar un método de pago
-  selectPaymentMethod(method: string) {
-    // Si ya ha sido seleccionado, se deselecciona
-    if (this.selectedPaymentMethod === method) {
-      this.selectedPaymentMethod = null;
-    } else {
-      this.selectedPaymentMethod = method; // Si no ha sido seleccionado, se asigna
+      this.selectedCategory = category;
     }
   }
 
   // Método para manejar la subida de archivos
   onUpload(event: any) {
-    // Iterar sobre los archivos subidos y agregarlos al arreglo uploadedFiles
     for (let file of event.files) {
       this.uploadedFiles.push(file);
     }
-    // Mostrar un mensaje de éxito utilizando el MessageService
     this.messageService.add({ severity: 'info', summary: 'Archivo subido', detail: '' });
   }
 
   // Método para navegar a otra página una vez se ha creado la publicación
   navigateTo() {
     this.router.navigate(['/publicacion-creada']);
+  }
+
+  toggleMenu() {
+    this.isMenuVisible = !this.isMenuVisible;
   }
 }
