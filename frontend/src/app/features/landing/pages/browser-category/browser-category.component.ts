@@ -2,7 +2,7 @@ import { ROUTES_PATH } from './../../../../core/routes/routes-path.const';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
@@ -40,7 +40,7 @@ import { CATEGORIES_LIST } from '../../../../shared/const/categoriesList.const';
       </div>
       <div class="flex flex-column gap-3">
         @for (item of listServices(); track $index) {
-          <app-browser-card [data]="item" />
+          <app-browser-card (click)="irDescripcion(item)" [data]="item" />
         } @empty {
           <div class="flex flex-column justify-content-center align-items-center h-30rem">
             <p class="text-2xl">No se encontraron resultados</p>
@@ -48,7 +48,6 @@ import { CATEGORIES_LIST } from '../../../../shared/const/categoriesList.const';
           </div>
         }
       </div>
-      6
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -154,7 +153,7 @@ export default class BrowserCategoryComponent implements OnInit {
     },
   ]);
 
-  constructor() {
+  constructor(private route: Router) {
     this.activatedRoute.params.subscribe(params => {
       const category = this.categoriesLIst.filter(
         category => category.value.url === params['categoryName']
@@ -193,6 +192,13 @@ export default class BrowserCategoryComponent implements OnInit {
           break;
       }
     });
+  }
+
+  irDescripcion(item : any) {
+    console.log("item: ",item);
+    if(item){
+      this.route.navigateByUrl('explorar/post/'+item.categoryId);
+    }
   }
 
   private getRandomInt(min: number, max: number): number {

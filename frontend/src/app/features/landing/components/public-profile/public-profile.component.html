@@ -1,0 +1,69 @@
+<!-- <app-landing-header></app-landing-header> -->
+<main>
+    
+    <div class="profile-header">
+        <img src="../../../../../assets/images/landing-page/Ellipse202.png" alt="José Garcia" class="profile-picture">
+        <div class="profile-info">
+            <h1>José Garcia</h1>
+            <p class="profession">Gasista matriculado</p>
+            <div class="rating">
+                <div class="card flex justify-content-center">
+                    <p-rating [readonly]="true" [(ngModel)]="value4" />
+                </div>
+            </div>
+            <p>Experiencia: 10 años</p>
+            <p>Horario: 10 a 17hs</p>
+        </div>
+    </div>
+
+    <section class="certificates-section">
+        <h3>Certificados y matrículas</h3>
+        <div class="certificates">
+            <img src="" alt="Certificado 1">
+            <img src="" alt="Certificado 2">
+        </div>
+    </section>
+
+    <section class="opinions-section text-align-center">
+        <h3 class="text-align-center">Opiniones de sus clientes</h3>
+        <div class="rating">
+            <div class="card flex justify-content-center">
+                <p-rating [readonly]="true" [(ngModel)]="value5" />
+            </div>
+            <p> Excelente (12)</p>
+        </div>
+        <div class="rating">
+            <div class="card flex justify-content-center">
+                <p-rating [readonly]="true" [(ngModel)]="value4" />
+            </div>
+            <p>Muy buena (6)</p>
+        </div>
+
+        <div class="rating"> 
+            <div class="card flex justify-content-center">
+                <p-rating [readonly]="true" [(ngModel)]="value3" />
+            </div>
+            <p>Buena (4)</p>
+        </div>
+
+        <div class="rating">
+            <div class="card flex justify-content-center">
+                <p-rating [readonly]="true" [(ngModel)]="value2" />
+            </div>
+            <p>Regular (2)</p>
+        </div>
+
+        <div class="rating">
+            <div class="card flex justify-content-center">
+                <p-rating [readonly]="true" [(ngModel)]="value1" />
+            </div>
+            <p>Mala (2)</p>
+        </div>
+        <button pButton label="Ver Opiniones" class="opinions-btn"></button>
+    </section>
+
+    <section class="location-section">
+        <h3>Ubicación</h3>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3143.856699354518!2d-57.545081023345105!3d-38.003802844924245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9584dc19efa31da3%3A0x5f814e9dcf94e81a!2sBelgrano%201727%2C%20B7600GKA%20Mar%20del%20Plata%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1725977524872!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </section> 
+</main>

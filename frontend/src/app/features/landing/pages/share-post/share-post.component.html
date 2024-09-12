@@ -1,63 +1,43 @@
-<!-- Cabecera con menú hamburguesa, iconos de perfil y notificación -->
-<div class="header">
-  <div class="header-left">
-    <i class="pi pi-bars" (click)="toggleMenu()"></i> <!-- Menú hamburguesa -->
-    <p-menu #menu *ngIf="isMenuVisible">
-      <ng-template pTemplate="item">
-        <li><a href="#">Opción 1</a></li>
-        <li><a href="#">Opción 2</a></li>
-      </ng-template>
-    </p-menu>
-  </div>
-  <div class="header-right">
-    <i class="pi pi-user"></i> <!-- Icono de perfil -->
-    <i class="pi pi-bell"></i> <!-- Icono de notificación -->
-  </div>
-</div>
-
 <!-- Icono de desplazamiento a la izquierda -->
-<div class="scroll-icon">
+<div class="mt-5 scroll-icon">
   <i class="pi pi-chevron-left"></i> <!-- Icono de desplazamiento a la izquierda -->
 </div>
 
 <!-- Contenedor principal de la publicación -->
 <div class="publication-container">
   <!-- Título con el nombre del prestador del servicio -->
-  <div class="service-provider">
+  <div class="mt-5 service-provider">
     <h2>Nombre del Prestador del Servicio</h2>
   </div>
 
   <!-- Sección de calificación numérica y estrellas -->
-  <div class="rating">
-    <span class="rating-number">4.5</span> <!-- Valor numérico -->
-    <span class="star">★</span>
-    <span class="star">★</span>
-    <span class="star">★</span>
-    <span class="star">★</span>
-    <span class="star">☆</span> <!-- Ejemplo de una calificación de 4.5/5 -->
+  <div class="mt-4">
+    <div class="mt-rating">
+      <p-rating [readonly]="true" [(ngModel)]="value4" />
+  </div>
   </div>
 
   <!-- Información del precio y enlace Ver Perfil -->
-  <div class="price-and-profile">
+  <div class="mt-3 price-and-profile">
     <span class="price">Precio a convenir</span>
-    <a href="#" class="view-profile">Ver Perfil</a>
+    <a (click)="verPerfil()" class="pl-8">Ver Perfil</a>
   </div>
 
-  <!-- Imágenes desplazables -->
+  <!-- Imágenes desplazables 
   <div class="image-slider">
     <img *ngFor="let image of images; let i = index" [src]="image" [alt]="'Imagen ' + (i + 1)">
-  </div>
+  </div>-->
 
-  <!-- Indicadores de imagen actual -->
+  <!-- Indicadores de imagen actual
   <div class="image-indicators">
     <span *ngFor="let image of images; let i = index" [class]="getIndicatorStyle(i)" (click)="setActiveImage(i)"></span>
-  </div>
+  </div> -->
 
 
   <!-- Descripción del servicio -->
   <div class="service-description">
-    <h3>Descripción</h3>
-    <p>PLOMERIA, GAS Y DESTAPACIONES ***Tu Casa Sin Problemas***PRESUPUESTOS ON LINE AL INSTANTE EN NUESTRO
+    <h3 class="mt-5">Descripción</h3>
+    <p class="mt-0">PLOMERIA, GAS Y DESTAPACIONES ***Tu Casa Sin Problemas***PRESUPUESTOS ON LINE AL INSTANTE EN NUESTRO
       WHATSAPP.CONSULTAS ÚNICAMENTE DE 9 A 18 HS.URGENCIAS LAS 24HS TODOS LOS DIAS.Atendemos toda la capital federal
       y zona
       norte de Bs. As... Consulte si llegamos a su zonaTrabajos garantidos. Realizamos factura consumidor final.o,
@@ -65,22 +45,22 @@
   </div>
 
   <!-- Métodos de pago aceptados con checkboxes marcadas -->
-  <div class="payment-methods">
-    <h3>Métodos de Pago Aceptados</h3>
-    <ul>
-      <li *ngFor="let method of paymentMethods">
-        <label>
-          <input type="checkbox" [checked]="method.selected" disabled>
-          {{ method.name }}
-        </label>
-      </li>
-    </ul>
-  </div>
+  <h3 class="mt-5">Métodos de pago</h3>
+    <div class="card flex justify-content-left">
+      <div class="flex flex-column gap-2">
+          <div *ngFor="let category of categories" class="field-checkbox">
+              <p-checkbox 
+                  [(ngModel)]="selectedCategories"
+                  [label]="category.name"
+                  name="group"
+                  [value]="category" />
+          </div>
+      </div>
+    </div>
 
   <!-- Ubicación del prestador del servicio -->
   <div class="service-location">
-    <h3>Ubicación</h3>
-    <p>Ciudad, País</p>
+    
   </div>
 
   <!-- Enlace para enviar consulta -->

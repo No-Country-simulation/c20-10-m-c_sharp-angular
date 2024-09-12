@@ -13,6 +13,7 @@ export const ROUTES_PATH = {
   DASHBOARD_MESSAGES: 'mensajes',
   DASHBOARD_MESSAGES_INBOX: 'mensajes/:id',
   DASHBOARD_CREATE_POST: 'crear-publicacion',
+  DASHBOARD_PUBLIC_PROFILE: 'perfil-publico',
 
   AUTH_LOGIN: 'iniciar-sesion',
   AUTH_REGISTER: 'registrarse',
