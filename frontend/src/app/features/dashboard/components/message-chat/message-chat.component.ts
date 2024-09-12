@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { gridOffererChats } from '../../../../../assets/demo/grid-offerer-chats';
+import { contractor, gridOffererChats } from '../../../../../assets/demo/grid-offerer-chats';
 import { AvatarModule } from 'primeng/avatar';
 import { DatePipe, JsonPipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { PrimeTemplate } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
 import { UserService } from '../../services/user.service';
 import { UserMessage } from '../../../../core/interfaces';
+import { ProfileAvatarComponent } from '../../../../shared/components/profile-avatar/profile-avatar.component';
 
 @Component({
   selector: 'app-message-chat',
@@ -26,6 +27,7 @@ import { UserMessage } from '../../../../core/interfaces';
     PrimeTemplate,
     NgClass,
     DividerModule,
+    ProfileAvatarComponent,
   ],
   templateUrl: './message-chat.component.html',
   styles: ``,
@@ -89,4 +91,6 @@ export class MessageChatComponent implements OnInit {
     });
   }
 
+  protected readonly owner = contractor;
+  protected readonly ROUTES_PATH = ROUTES_PATH;
 }
