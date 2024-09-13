@@ -15,6 +15,10 @@ export const environment = {
     OFFEROR: 'api/offeror',
     OFFEROR_SPECIALITIES: 'api/offerorspecialities',
   },
+  LOCAL_STORAGE: {
+    ALL_CATEGORIES: 'allCategories',
+    ALL_SPECIALITIES: 'allSpecialities',
+  },
   COOKIES: {
     TOKEN: 'token',
     REFRESH_TOKEN: 'refresh_token',
