@@ -15,11 +15,13 @@ import { ButtonModule } from 'primeng/button';
 import { SearchbarComponent, CardImgComponent } from '../../components';
 import { CategoryResponse } from '../../../../core/interfaces';
 import { ROUTES_PATH } from '../../../../core/routes';
+import { revealAnimation } from '../../../../shared/animations';
 
 @Component({
   selector: 'app-browser',
   standalone: true,
   imports: [CommonModule, RouterLink, SearchbarComponent, CardImgComponent, ButtonModule],
+  animations: [revealAnimation],
   template: `
     <div class="container-c flex flex-column gap-5 py-5">
       <div class="w-full">
@@ -27,7 +29,7 @@ import { ROUTES_PATH } from '../../../../core/routes';
       </div>
       <div>
         <h1 class="text-xl">Todas nuestras categorias</h1>
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3" [@revealAnimation]>
           @for (item of allCategoriesWithRoutes(); track $index) {
             <app-card-img [data]="item" />
           } @empty {
