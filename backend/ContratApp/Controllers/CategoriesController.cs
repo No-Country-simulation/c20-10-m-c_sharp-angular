@@ -37,7 +37,18 @@ public class CategoriesController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> Get()
     {
-        var categories = await _context.Categories.Where(c => c.IsActive).ToListAsync();
+        var categories = await _context.Categories.Where(c => c.IsActive)
+            .Include(c => c.Specialities)
+            .Select(x => new
+            {
+                CategoryId = x.Id,
+                x.Name,
+                x.Description,
+                x.Src,
+                x.CreatedAt,
+                ListSpecialitiesId = x.Specialities.Select(x => x.Id).ToList(),
+            })
+            .ToListAsync();
         return Ok(categories);
     }
 
@@ -60,10 +71,21 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [AllowAnonymous]
-    public async Task<IActionResult> Get(int id)
+    public IActionResult Get(int id)
     {
         if (id <= 0) return BadRequest();
-        var category = await _context.Categories.FirstOrDefaultAsync(o => o.Id == id && o.IsActive);
+        var category = _context.Categories
+            .Include(c => c.Specialities)
+            .Where(o => o.Id == id && o.IsActive)
+            .Select(x => new
+            {
+                CategoryId = x.Id,
+                x.Name,
+                x.Description,
+                x.Src,
+                x.CreatedAt,
+                ListSpecialitiesId = x.Specialities.Select(x => x.Id).ToList(),
+            }).First();
         if (category == null) return NotFound();
         return Ok(category);
     }

@@ -3,6 +3,7 @@ using ContratApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Security.Claims;
 
 namespace ContratApp.Controllers
@@ -59,43 +60,61 @@ namespace ContratApp.Controllers
         /// </remarks>
         /// <returns>Ok</returns>
         [HttpPut]
-        public IActionResult PutUser([FromBody] User profile)
+        public IActionResult PutUser([FromBody] ProfileViewModel profileViewModel)
         {
-            var loggedInUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var loggedInUser = User.FindFirst(ClaimTypes.NameIdentifier);
+            var loggedInUserId = loggedInUser.Value;
             var existingUser = _context.Users.Find(loggedInUserId);
             if (existingUser == null)
             {
-                _context.Entry(profile).State = EntityState.Added;
+                var newUser = new User
+                {
+                    Id=loggedInUserId,
+                    Email = loggedInUser.Subject.Name,
+                    FirstName = profileViewModel.FirstName,
+                    LastName = profileViewModel.LastName,
+                    DNI = profileViewModel.DNI,
+                    BirthDay = profileViewModel.BirthDay,
+                    Country = profileViewModel.Country,
+                    State = profileViewModel.State,
+                    Location = profileViewModel.Location,
+                    Cellphone = profileViewModel.Cellphone
+                };
+                _context.Entry(newUser).State = EntityState.Added;
             }
             else {
 
-                if (!string.IsNullOrWhiteSpace(profile.FirstName))
+                if (!string.IsNullOrWhiteSpace(profileViewModel.FirstName))
                 {
-                    existingUser.FirstName = profile.FirstName;
+                    existingUser.FirstName = profileViewModel.FirstName;
                 }
-                if (!string.IsNullOrWhiteSpace(profile.LastName))
+                if (!string.IsNullOrWhiteSpace(profileViewModel.LastName))
                 {
-                    existingUser.LastName = profile.LastName;
+                    existingUser.LastName = profileViewModel.LastName;
                 }
-                if (!string.IsNullOrWhiteSpace(profile.DNI))
+                if (!string.IsNullOrWhiteSpace(profileViewModel.DNI))
                 {
-                    existingUser.DNI = profile.DNI;
+                    existingUser.DNI = profileViewModel.DNI;
                 }
-                if (profile.BirthDay != null)
+                if (profileViewModel.BirthDay != null)
                 {
-                    existingUser.BirthDay = profile.BirthDay;
+                    existingUser.BirthDay = profileViewModel.BirthDay;
                 }
-                if (!string.IsNullOrWhiteSpace(profile.Country))
+                if (!string.IsNullOrWhiteSpace(profileViewModel.Country))
                 {
-                    existingUser.Country = profile.Country;
+                    existingUser.Country = profileViewModel.Country;
                 }
-                if (!string.IsNullOrWhiteSpace(profile.State))
+                if (!string.IsNullOrWhiteSpace(profileViewModel.State))
                 {
-                    existingUser.State = profile.State;
+                    existingUser.State = profileViewModel.State;
                 }
-                if (!string.IsNullOrWhiteSpace(profile.Location))
+                if (!string.IsNullOrWhiteSpace(profileViewModel.Location))
                 {
-                    existingUser.Location = profile.Location;
+                    existingUser.Location = profileViewModel.Location;
+                }
+                if (!string.IsNullOrWhiteSpace(profileViewModel.Cellphone))
+                {
+                    existingUser.Cellphone = profileViewModel.Cellphone;
                 }
 
                 _context.Entry(existingUser).State = EntityState.Modified;
@@ -136,7 +155,7 @@ namespace ContratApp.Controllers
                 Name = _context.Users.Where(y => y.Id == ((x.IdUser == loggedInUserId) ? x.IdOtherUser : x.IdUser)).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                 x.Image,
                 x.CreatedAt,
-                Messages = x.Messages.Select(x => new
+                Messages = x.Messages.Where(y => y.IdChat == x.Id).Select(x => new
                 {
                     x.Id,
                     Message = x.Text,
@@ -168,7 +187,7 @@ namespace ContratApp.Controllers
                         Name = _context.Users.Where(x => x.Id == idOtherUser).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                         chat.Image,
                         chat.CreatedAt,
-                        Messages = chat.Messages.Select(x => new
+                        Messages = chat.Messages.Where(y => y.IdChat == chat.Id).Select(x => new
                         {
                             x.Id,
                             Message = x.Text,

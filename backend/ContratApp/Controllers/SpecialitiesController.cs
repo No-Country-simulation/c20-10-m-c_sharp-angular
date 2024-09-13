@@ -38,7 +38,17 @@ public class SpecialitiesController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> Get()
     {
-        var specialities = await _context.Specialities.Where(c => c.IsActive).ToListAsync();
+        var specialities = await _context.Specialities.Where(c => c.IsActive)
+            .Select(x => new
+            {
+                x.Name,
+                x.Description,
+                CategoryId = x.CategoryId,
+                SpecialityId = x.Id,
+                x.CreatedAt,
+                x.Src,
+            })
+            .ToListAsync();
         return Ok(specialities);
     }
 
@@ -61,10 +71,19 @@ public class SpecialitiesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [AllowAnonymous]
-    public async Task<IActionResult> Get(int id)
+    public IActionResult Get(int id)
     {
         if (id <= 0) return BadRequest();
-        var speciality = await _context.Specialities.FirstOrDefaultAsync(o => o.Id == id && o.IsActive);
+        var speciality = _context.Specialities.Where(o => o.Id == id && o.IsActive)
+            .Select(x => new
+            {
+                x.Name,
+                x.Description,
+                CategoryId = x.CategoryId,
+                SpecialityId = x.Id,
+                x.CreatedAt,
+                x.Src,
+            }).First();
         if (speciality == null) return NotFound();
         return Ok(speciality);
     }
@@ -84,7 +103,17 @@ public class SpecialitiesController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> GetByCategory(int id)
     {
-        var specialities = await _context.Specialities.Where(c => c.CategoryId == id && c.IsActive).ToListAsync();
+        var specialities = await _context.Specialities.Where(c => c.CategoryId == id && c.IsActive)
+            .Select(x => new
+            {
+                x.Name,
+                x.Description,
+                CategoryId = x.CategoryId,
+                SpecialityId = x.Id,
+                x.CreatedAt,
+                x.Src,
+            })
+            .ToListAsync();
         return Ok(specialities);
     }
 

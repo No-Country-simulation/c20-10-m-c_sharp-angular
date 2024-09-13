@@ -30,9 +30,12 @@ namespace ContratApp.Models
 
         [MaxLength(256)]
         public string? State { get; set; }
-        
+
         [MaxLength(256)]
         public string? Location { get; set; }
+
+        [MaxLength(256)]
+        public string? Cellphone { get; set; }
 
         public ICollection<UserSpeciality>? UserSpecialities { get; set; }
     }

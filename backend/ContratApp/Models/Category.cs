@@ -9,6 +9,9 @@ public class Category : Entity
     public string? Name { get; set; }
     [Required]
     public string? Description { get; set; }
+
+    public string? Src { get; set; }
+
     [JsonIgnore]
     public ICollection<Speciality>? Specialities { get; set; }
 }
