@@ -105,6 +105,9 @@ import { ROUTES_PATH } from '../../../../core/routes';
     .custom-bg {
       background-color: #231f20;
     }
+
+
+
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

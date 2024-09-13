@@ -61,6 +61,13 @@ export const routes: Routes = [
         title: 'publicacion', //TODO: cambiar el title
         loadComponent: () => import('./features/landing/pages/share-post/share-post.component'),
       },
+      {
+        path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE,
+        title: 'Perfil pubico',
+        loadComponent: () => import('./features/landing/components/public-profile/public-profile.component').then(
+          m=> m.PublicProfileComponent
+        ),
+      },
       // {
       //   path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
       //   title: 'Explorar',
@@ -148,6 +155,7 @@ export const routes: Routes = [
         title: 'Crear publicacion',
         loadComponent: () => import('./features/dashboard/pages/create-publish/publish.component'),
       },
+      
 
       //     {
       //       path: 'profile',

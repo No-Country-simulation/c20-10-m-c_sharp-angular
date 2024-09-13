@@ -8,22 +8,18 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
-import { OrderFilterComponent, SearchbarComponent, CardImgComponent } from '../../components';
-import { LandingHeaderComponent } from '../../layout';
+import { ButtonModule } from 'primeng/button';
+
+import { SearchbarComponent, CardImgComponent } from '../../components';
 import { CategoryResponse } from '../../../../core/interfaces';
+import { ROUTES_PATH } from '../../../../core/routes';
 
 @Component({
   selector: 'app-browser',
   standalone: true,
-  imports: [
-    CommonModule,
-    LandingHeaderComponent,
-    OrderFilterComponent,
-    SearchbarComponent,
-    CardImgComponent,
-  ],
+  imports: [CommonModule, RouterLink, SearchbarComponent, CardImgComponent, ButtonModule],
   template: `
     <div class="container-c flex flex-column gap-5 py-5">
       <div class="w-full">
@@ -35,7 +31,10 @@ import { CategoryResponse } from '../../../../core/interfaces';
           @for (item of allCategoriesWithRoutes(); track $index) {
             <app-card-img [data]="item" />
           } @empty {
-            <h2>No hay categorias</h2>
+            <div class="flex flex-column justify-content-center align-items-center h-30rem">
+              <p class="text-2xl">No se encontraron especialidades</p>
+              <p-button label="Volver a las categorias" [routerLink]="routesPath.LANDING_BROWSER" />
+            </div>
           }
         </div>
       </div>
@@ -59,6 +58,7 @@ export default class BrowserComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
 
+  public readonly routesPath = ROUTES_PATH;
   public readonly allCategories = signal<CategoryResponse[]>([]);
   public readonly allCategoriesWithRoutes = signal<CategoryResponse[]>([]);
 
@@ -66,7 +66,7 @@ export default class BrowserComponent implements OnInit {
     this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
       this.allCategories.set(data['data']);
     });
-    const dataWithRoutes = this.allCategories().map((data: any) => {
+    const dataWithRoutes = this.allCategories().map(data => {
       return {
         ...data,
         route: `/explorar/categoria/`,

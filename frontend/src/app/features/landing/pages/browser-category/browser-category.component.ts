@@ -9,47 +9,34 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
-import { RatingModule } from 'primeng/rating';
-import { CardModule } from 'primeng/card';
 
-import {
-  BrowserCardComponent,
-  SearchbarComponent,
-  OrderFilterComponent,
-  CardImgComponent,
-} from '../../components';
+import { SearchbarComponent, CardImgComponent } from '../../components';
+import { ROUTES_PATH } from '../../../../core/routes';
 
 @Component({
   selector: 'app-browser-category',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    OrderFilterComponent,
-    SearchbarComponent,
-    ButtonModule,
-    CardModule,
-    RatingModule,
-    BrowserCardComponent,
-    CardImgComponent,
-  ],
+  imports: [CommonModule, RouterLink, SearchbarComponent, ButtonModule, CardImgComponent],
   template: `
     <div class="container-c flex flex-column gap-5 py-5">
       <div class="w-full">
         <app-searchbar />
       </div>
       <div>
-        <h1 class="text-xl">Todas las especialidades de {{ currentCategory() }}</h1>
+        @if (specialityWithRoutes().length > 0) {
+          <h1 class="text-xl">Todas las especialidades de {{ currentCategory() }}</h1>
+        }
         <div class="flex flex-wrap gap-3">
           @for (item of specialityWithRoutes(); track $index) {
             <app-card-img [data]="item" />
           } @empty {
-            <h2>No hay categorias</h2>
+            <div class="flex flex-column justify-content-center align-items-center h-30rem">
+              <p class="text-2xl">No se encontraron especialidades</p>
+              <p-button label="Volver a las categorias" [routerLink]="routesPath.LANDING_BROWSER" />
+            </div>
           }
         </div>
       </div>
@@ -71,6 +58,7 @@ export default class BrowserCategoryComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
 
+  public readonly routesPath = ROUTES_PATH;
   public readonly currentCategory = signal<string>('');
   public readonly allSpecialityByCategory = signal<any>([]);
   public readonly specialityWithRoutes = signal<any[]>([]);
