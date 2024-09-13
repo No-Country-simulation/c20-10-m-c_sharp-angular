@@ -18,8 +18,10 @@ export class OfferorSpecialitiesService {
    *
    * @returns An Observable containing an array of `OfferorSpecialities` objects.
    */
-  public getOfferorSpecialities(): Observable<OfferorSpecialities[]> {
-    return this.http.get<OfferorSpecialities[]>(this.baseUrl + this.offerorSpecilitiesEndpoint);
+  public getOfferorSpecialities(idSpeciality: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `https://www.contratapp.somee.com/api/userspecialities/search?IdSpeciality=${idSpeciality}`
+    );
   }
 
   /**

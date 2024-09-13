@@ -1,7 +1,12 @@
-import { ROUTES, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { browserCategoriesResolver } from './features/landing/resolver/browser-categories.resolver';
 import { authGuard } from './core/guards/auth.guard';
 import { ROUTES_PATH } from './core/routes';
+import {
+  homeResolver,
+  browserResolver,
+  browserSpecialitiesResolver,
+} from './features/landing/resolver';
 
 export const routes: Routes = [
   {
@@ -17,6 +22,7 @@ export const routes: Routes = [
       {
         path: ROUTES_PATH.LANDING_HOME,
         title: 'Inicio',
+        resolve: [homeResolver],
         loadComponent: () => import('./features/landing/pages/home/home.component'),
       },
       {
@@ -26,7 +32,10 @@ export const routes: Routes = [
       },
       {
         path: ROUTES_PATH.LANDING_BROWSER,
-        title: 'Explorar',
+        title: 'Explorar categorias',
+        resolve: {
+          data: browserResolver,
+        },
         loadComponent: () => import('./features/landing/pages/browser/browser.component'),
       },
       {
@@ -39,7 +48,16 @@ export const routes: Routes = [
           import('./features/landing/pages/browser-category/browser-category.component'),
       },
       {
-        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST + ':postId',
+        path: ROUTES_PATH.LANDING_BROWSER_CATEGORIES_ID_ESPECIALITY,
+        title: 'Explorar',
+        resolve: {
+          data: browserSpecialitiesResolver,
+        },
+        loadComponent: () =>
+          import('./features/landing/pages/browser-speciality/browser-speciality.component'),
+      },
+      {
+        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST + ' ',
         title: 'publicacion', //TODO: cambiar el title
         loadComponent: () => import('./features/landing/pages/share-post/share-post.component'),
       },

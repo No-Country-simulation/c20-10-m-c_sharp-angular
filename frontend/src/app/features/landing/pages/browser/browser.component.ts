@@ -1,12 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { LandingHeaderComponent } from '../../layout/landing-header/landing-header.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CATEGORIES_LIST } from '../../../../shared/const/categoriesList.const';
-import { CardModule } from 'primeng/card';
-import { OrderFilterComponent } from '../../components';
-import { SearchbarComponent } from '../../components/searchbar/searchbar.component';
-import { ROUTES_PATH } from '../../../../core/routes';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
+
+import { OrderFilterComponent, SearchbarComponent, CardImgComponent } from '../../components';
+import { LandingHeaderComponent } from '../../layout';
+import { CategoryResponse } from '../../../../core/interfaces';
 
 @Component({
   selector: 'app-browser',
@@ -14,57 +20,58 @@ import { ROUTES_PATH } from '../../../../core/routes';
   imports: [
     CommonModule,
     LandingHeaderComponent,
-    CardModule,
     OrderFilterComponent,
     SearchbarComponent,
+    CardImgComponent,
   ],
   template: `
-    <div class="container-c flex flex-wrap gap-3 py-5">
-      <div class=" w-full">
+    <div class="container-c flex flex-column gap-5 py-5">
+      <div class="w-full">
         <app-searchbar />
       </div>
-      @for (item of categories; track $index) {
-        <div class="custom-width cursor-pointer">
-          <p-card styleClass="h-full overflow-hidden" (click)="onSelectCategory(item.value.url)">
-            <ng-template pTemplate="header">
-              <img alt="Card" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
-            </ng-template>
-            <p>{{ item.label }}</p>
-          </p-card>
+      <div>
+        <h1 class="text-xl">Todas nuestras categorias</h1>
+        <div class="flex flex-wrap gap-3">
+          @for (item of allCategoriesWithRoutes(); track $index) {
+            <app-card-img [data]="item" />
+          } @empty {
+            <h2>No hay categorias</h2>
+          }
         </div>
-      }
+      </div>
     </div>
+  `,
+  styles: `
+    .custom-w {
+      width: calc(50% - 0.5rem);
+    }
+    .custom-bg {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.1), transparent);
+    }
+    .custom-position {
+      bottom: -0.25rem;
+      left: 1rem;
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class BrowserComponent implements OnInit {
-  private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
-  public readonly categories = CATEGORIES_LIST;
-  filter: string | null = null;
+  private readonly destroyRef = inject(DestroyRef);
+
+  public readonly allCategories = signal<CategoryResponse[]>([]);
+  public readonly allCategoriesWithRoutes = signal<CategoryResponse[]>([]);
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      console.log(params);
+    this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
+      this.allCategories.set(data['data']);
     });
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.filter = params['filtro'];
-      this.aplicarFiltro(this.filter);
-      console.log(params);
+    const dataWithRoutes = this.allCategories().map((data: any) => {
+      return {
+        ...data,
+        route: `/explorar/categoria/`,
+      };
     });
-  }
-
-  aplicarFiltro(filtro: string | null) {
-    if (filtro === 'mejores-calificados') {
-      // Lógica para aplicar filtro de "mejores calificados"
-    } else if (filtro === 'mas-cercanos') {
-      // Lógica para aplicar filtro de "más cercanos"
-    } else {
-      // Lógica para el caso sin filtro o valor no reconocido
-    }
-  }
-
-  onSelectCategory(category: any) {
-    this.router.navigate([ROUTES_PATH.LANDING_BROWSER_CATEGORIES, category]);
+    this.allCategoriesWithRoutes.set(dataWithRoutes);
   }
 }
