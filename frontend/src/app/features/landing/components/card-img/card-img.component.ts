@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
     <button
       class="custom-w relative border-round-md overflow-hidden cursor-pointer reset-btn"
       (click)="onNavigate(data().name)">
-      <img class="w-full" [src]="data().scr" alt="Imagen de la categoria {{ data().name }}" />
+      <img class="w-full" [src]="data().src" alt="Imagen de la categoria {{ data().name }}" />
       <div class="absolute top-0 left-0 w-full h-full custom-bg border-round-md"></div>
       <h2 class="absolute text-white text-xl md:text-3xl custom-position select-none">
         {{ data().name }}
