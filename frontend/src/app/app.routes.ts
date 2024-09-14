@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { browserCategoriesResolver } from './features/landing/resolver/browser-categories.resolver';
 import { authGuard } from './core/guards/auth.guard';
 import { ROUTES_PATH } from './core/routes';
 import {
   homeResolver,
   browserResolver,
-  browserSpecialitiesResolver,
+  browserPostsResolver,
+  browserViewSpecialityResolver,
 } from './features/landing/resolver';
 
 export const routes: Routes = [
@@ -42,7 +42,7 @@ export const routes: Routes = [
         path: ROUTES_PATH.LANDING_BROWSER_CATEGORIES_ID,
         title: 'Explorar',
         resolve: {
-          data: browserCategoriesResolver,
+          data: browserViewSpecialityResolver,
         },
         loadComponent: () => import('./features/landing/pages/browser/browser.component'),
       },
@@ -50,7 +50,7 @@ export const routes: Routes = [
         path: ROUTES_PATH.LANDING_BROWSER_CATEGORIES_ID_ESPECIALITY,
         title: 'Explorar',
         resolve: {
-          data: browserSpecialitiesResolver,
+          data: browserPostsResolver,
         },
         loadComponent: () =>
           import('./features/landing/pages/browser-speciality/browser-speciality.component'),

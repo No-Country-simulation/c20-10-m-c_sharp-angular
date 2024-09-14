@@ -16,7 +16,7 @@ interface CombinedData {
   res: Speciality[];
 }
 
-export const browserCategoriesResolver: ResolveFn<CombinedData> = route => {
+export const browserViewSpecialityResolver: ResolveFn<CombinedData> = route => {
   const sessionStorageService = inject(SessionStorageService);
   const categoriesService = inject(CategoriesService);
   const specialitiesService = inject(SpecialitiesService);

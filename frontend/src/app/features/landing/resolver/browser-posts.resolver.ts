@@ -1,7 +1,7 @@
-import { LocalstorageService } from './../../../core/services/localstorage.service';
+import { LocalstorageService } from '../../../core/services/localstorage.service';
 import { inject } from '@angular/core';
 import type { ResolveFn } from '@angular/router';
-import { OfferorSpecialitiesService, SpecialitiesService } from '../../../core/services';
+import { UserSpecialitiesService, SpecialitiesService } from '../../../core/services';
 import { environment } from '../../../../environments/environment';
 import { Speciality } from '../../../core/interfaces';
 import { map, of, switchMap } from 'rxjs';
@@ -12,8 +12,8 @@ interface CombinedData {
   offerorResults: any;
 }
 
-export const browserSpecialitiesResolver: ResolveFn<CombinedData> = route => {
-  const offerorSearch = inject(OfferorSpecialitiesService);
+export const browserPostsResolver: ResolveFn<CombinedData> = route => {
+  const offerorSearch = inject(UserSpecialitiesService);
   const specialitiesService = inject(SpecialitiesService);
   const localstorageService = inject(LocalstorageService);
 
@@ -27,7 +27,7 @@ export const browserSpecialitiesResolver: ResolveFn<CombinedData> = route => {
       return speciality.name.toLowerCase() === currentSpeciality;
     });
     if (speciality?.specialityId) {
-      return offerorSearch.getOfferorSpecialities(speciality?.specialityId).pipe(
+      return offerorSearch.getPostsBySpeciality(speciality?.specialityId).pipe(
         map(offerorResults => ({
           currentSpeciality: currentSpeciality,
           offerorResults: offerorResults,
@@ -46,7 +46,7 @@ export const browserSpecialitiesResolver: ResolveFn<CombinedData> = route => {
           speciality => speciality.name.toLowerCase() === currentSpeciality
         );
         if (speciality) {
-          return offerorSearch.getOfferorSpecialities(speciality.specialityId).pipe(
+          return offerorSearch.getPostsBySpeciality(speciality.specialityId).pipe(
             map(offerorResults => {
               const dataWithRoutes = offerorResults.map(res => ({
                 ...res,
