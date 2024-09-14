@@ -28,8 +28,8 @@ import { ROUTES_PATH } from '../../../../core/routes';
   ],
   template: `
     <div
-      class="sticky top-0 flex justify-content-center align-items-center w-full h-5rem px-4 py-4 z-5 custom-bg custom-shadow">
-      <div class="container-app flex justify-content-between align-items-center w-full h-full">
+      class="flex justify-content-center align-items-center h-5rem custom-bg custom-shadow w-full">
+      <div class="py-4 pl-2 pr-3 flex justify-content-between align-items-center w-full">
         <p-button icon="pi pi-bars text-2xl text-white" size="small" text="true"> </p-button>
         <img
           src="/assets/icons/contratAppLogo.svg"

@@ -1,0 +1,5 @@
+.inputW {
+  display: flex;
+  justify-content: center;
+  overflow: scroll;
+}

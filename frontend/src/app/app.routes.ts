@@ -54,7 +54,7 @@ export const routes: Routes = [
       {
         path: DASHBOARD_PROFILE,
         title: 'Perfil',
-        loadComponent: () => import('./features/dashboard/profile/layout/layout.component'),
+        loadComponent: () => import('./features/profile/layout/layout.component'),
         //canActivate: [authGuard],
       },
       {
