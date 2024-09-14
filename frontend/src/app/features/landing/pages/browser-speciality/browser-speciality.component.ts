@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { BrowserCardComponent, OrderFilterComponent, SearchbarComponent } from '../../components';
 import { ROUTES_PATH } from '../../../../core/routes';
 
@@ -30,7 +30,7 @@ import { ROUTES_PATH } from '../../../../core/routes';
       </div>
       <div class="flex flex-column gap-3">
         @for (item of data().offerorResults; track $index) {
-          <app-browser-card [data]="item" />
+          <app-browser-card [data]="item" (click)="irDescripcion(item)"/>
         } @empty {
           <div class="flex flex-column justify-content-center align-items-center h-30rem">
             <p class="text-2xl">No se encontraron resultados</p>
@@ -49,9 +49,16 @@ export default class BrowserSpecialityComponent implements OnInit {
   public readonly data = signal<any>([]);
   public readonly routesPath = ROUTES_PATH;
 
+  constructor(private router: Router) {
+  }
+
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
       this.data.set(data['data']);
     });
+  }
+
+  irDescripcion(item : any){
+    this.router.navigate(["/explorar/post",item]);
   }
 }
