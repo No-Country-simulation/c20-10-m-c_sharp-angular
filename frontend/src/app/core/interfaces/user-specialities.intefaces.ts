@@ -1,14 +1,36 @@
-import { Speciality } from './speciality.interface';
-
-export interface OfferorSpecialities {
+export interface UserSpeciality {
   id: number;
   isActive: boolean;
   createdAt: Date;
-  idOfferor: string;
-  offeror: string;
+  idUser: string;
+  user: string;
   idSpeciality: number;
-  speciality: Speciality;
+  speciality: USpeciality;
   title: string;
   text: string;
+  area: string;
+}
+
+export interface USpeciality {
+  id: number;
+  isActive: boolean;
+  createdAt: Date;
+  name: string;
+  description: string;
+  src: string;
+  categoryId: number;
+  userSpecialities: string[];
+}
+
+export interface UserSpecialitySearch {
+  userSpecialityId: number;
+  idUser: string;
+  userName: string;
+  idSpeciality: number;
+  specialityName: string;
+  categoryId: number;
+  title: string;
+  text: string;
+  rating: number;
   area: string;
 }
