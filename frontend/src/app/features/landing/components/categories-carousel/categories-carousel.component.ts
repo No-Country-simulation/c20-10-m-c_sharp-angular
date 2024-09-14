@@ -1,12 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  input,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
 
 import { register } from 'swiper/element/bundle';
 register();
@@ -20,7 +13,7 @@ import { CategoryResponse } from '../../../../core/interfaces';
   imports: [CommonModule, CardImgComponent],
   template: `
     <swiper-container pagination="false" slides-per-view="1.5" space-between="24" free-mode="true">
-      @for (item of dataWithRoutes(); track $index) {
+      @for (item of data(); track $index) {
         <swiper-slide class="relative custom-ml cursor-pointer">
           <app-card-img [data]="item" />
         </swiper-slide>
@@ -44,17 +37,6 @@ import { CategoryResponse } from '../../../../core/interfaces';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoriesCarouselComponent implements OnInit {
+export class CategoriesCarouselComponent {
   public readonly data = input.required<CategoryResponse[]>();
-  public readonly dataWithRoutes = signal<CategoryResponse[]>([]);
-
-  ngOnInit(): void {
-    const dataWithRoutes = this.data().map(data => {
-      return {
-        ...data,
-        route: 'explorar/categoria/',
-      };
-    });
-    this.dataWithRoutes.set(dataWithRoutes);
-  }
 }

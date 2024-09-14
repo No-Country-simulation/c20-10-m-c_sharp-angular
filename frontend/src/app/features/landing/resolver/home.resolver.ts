@@ -33,7 +33,15 @@ export const homeResolver: ResolveFn<AllData> = () => {
     };
     return allData;
   } else {
-    const allCategories$ = categoriesService.getAllCategories();
+    const allCategories$ = categoriesService.getAllCategories().pipe(
+      map(res => {
+        const data = res.map(category => ({
+          ...category,
+          route: 'explorar/categoria/',
+        }));
+        return data;
+      })
+    );
     const allSpecialities$ = specialitiesService.getAllSpecialities();
 
     return forkJoin([allCategories$, allSpecialities$]).pipe(

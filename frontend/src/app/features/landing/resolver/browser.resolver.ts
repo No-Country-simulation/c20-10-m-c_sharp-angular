@@ -30,7 +30,7 @@ export const browserResolver: ResolveFn<CombinedData> = route => {
       map(res => {
         const data = res.map(category => ({
           ...category,
-          route: route.url[0].path + '/categoria/',
+          route: 'explorar/categoria/',
         }));
         return {
           res: data,
