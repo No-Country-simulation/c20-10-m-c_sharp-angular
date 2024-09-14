@@ -69,7 +69,7 @@ export const browserCategoriesResolver: ResolveFn<CombinedData> = route => {
 
             const data = specialities.map(speciality => ({
               ...speciality,
-              route: `${route.url[0].path}/categoria/especialidad/`,
+              route: `${route.url[0].path}/categoria/${currentCategory}/especialidad/`,
             }));
 
             return {

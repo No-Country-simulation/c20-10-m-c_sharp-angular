@@ -30,7 +30,7 @@ import { ROUTES_PATH } from '../../../../core/routes';
       </div>
       <div class="flex flex-column gap-3">
         @for (item of data().offerorResults; track $index) {
-          <app-browser-card [data]="item" (click)="irDescripcion(item)"/>
+          <app-browser-card [data]="item" />
         } @empty {
           <div class="flex flex-column justify-content-center align-items-center h-30rem">
             <p class="text-2xl">No se encontraron resultados</p>
@@ -49,16 +49,16 @@ export default class BrowserSpecialityComponent implements OnInit {
   public readonly data = signal<any>([]);
   public readonly routesPath = ROUTES_PATH;
 
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
       this.data.set(data['data']);
+      console.log(data);
     });
   }
 
-  irDescripcion(item : any){
-    this.router.navigate(["/explorar/post",item]);
+  irDescripcion(item: any) {
+    this.router.navigate(['/explorar/post', item]);
   }
 }

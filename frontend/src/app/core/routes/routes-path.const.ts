@@ -7,6 +7,7 @@ export const ROUTES_PATH = {
     'explorar/categoria/:categoryName/especialidad/:specialityName',
 
   LANDING_BROWSER_DETAILED_POST: 'explorar/post',
+  LANDING_BROWSER_DETAILED_POST_ID: 'explorar/post/:id',
 
   LANDING_PROFILE_PROFESSIONAL: '',
   LANDING_PROFILE_CLIENT: '',

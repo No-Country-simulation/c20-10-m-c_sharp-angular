@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { RatingModule } from 'primeng/rating';
 
 @Component({
@@ -8,7 +9,9 @@ import { RatingModule } from 'primeng/rating';
   standalone: true,
   imports: [CommonModule, FormsModule, RatingModule],
   template: `
-    <div class="flex gap-3 border-round w-full h-14rem px-2 py-3 shadow-5">
+    <div
+      class="flex gap-3 border-round w-full h-14rem px-2 py-3 shadow-5"
+      (click)="onNavigate(data().route)">
       <div class="w-5">
         <div
           class="w-full h-full bg-cover bg-center bg-no-repeat border-round-xs"
@@ -30,10 +33,15 @@ import { RatingModule } from 'primeng/rating';
 })
 export class BrowserCardComponent {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private readonly router = inject(Router);
   public readonly data = input.required<any>();
 
   public get averageRating(): number {
     const rating = this.data().rating;
     return rating.toFixed(1);
+  }
+
+  public onNavigate(route: string): void {
+    this.router.navigate([route]);
   }
 }

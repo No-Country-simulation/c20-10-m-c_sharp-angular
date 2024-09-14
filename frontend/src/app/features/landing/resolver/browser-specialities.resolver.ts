@@ -16,6 +16,7 @@ export const browserSpecialitiesResolver: ResolveFn<CombinedData> = route => {
   const offerorSearch = inject(OfferorSpecialitiesService);
   const specialitiesService = inject(SpecialitiesService);
   const localstorageService = inject(LocalstorageService);
+
   const currentSpeciality = route.params['specialityName'];
 
   const allSpecialitiesKey = environment.SESSION_STORAGE.ALL_SPECIALITIES;
@@ -44,12 +45,18 @@ export const browserSpecialitiesResolver: ResolveFn<CombinedData> = route => {
         const speciality = data.find(
           speciality => speciality.name.toLowerCase() === currentSpeciality
         );
-        if (speciality?.specialityId) {
+        if (speciality) {
           return offerorSearch.getOfferorSpecialities(speciality.specialityId).pipe(
-            map(offerorResults => ({
-              currentSpeciality: currentSpeciality,
-              offerorResults: offerorResults,
-            }))
+            map(offerorResults => {
+              const dataWithRoutes = offerorResults.map(res => ({
+                ...res,
+                route: `explorar/post/${res.userSpecialityId}`,
+              }));
+              return {
+                currentSpeciality: currentSpeciality,
+                offerorResults: dataWithRoutes,
+              };
+            })
           );
         } else {
           return of({

@@ -16,6 +16,7 @@ import { SearchbarComponent, CardImgComponent } from '../../components';
 import { CategoryResponse } from '../../../../core/interfaces';
 import { ROUTES_PATH } from '../../../../core/routes';
 import { revealAnimation } from '../../../../shared/animations';
+import { SpecialitiesService } from '../../../../core/services';
 
 @Component({
   selector: 'app-browser',
@@ -28,10 +29,16 @@ import { revealAnimation } from '../../../../shared/animations';
         <app-searchbar />
       </div>
       <div>
-        <h1 class="text-xl">Todas nuestras categorias</h1>
+        @if (currentRoute() === routesPath.LANDING_BROWSER) {
+          <h1 class="text-xl">Todas nuestras categorias</h1>
+        } @else {
+          <h1 class="text-xl">Todas las especialidades de {{ currentCategory() }}</h1>
+        }
         <div class="flex flex-wrap gap-3" [@revealAnimation]>
-          @for (item of allCategoriesWithRoutes(); track $index) {
-            <app-card-img [data]="item" />
+          @for (item of alldata(); track $index) {
+            <div class="custom-w">
+              <app-card-img [data]="item" />
+            </div>
           } @empty {
             <div class="flex flex-column justify-content-center align-items-center h-30rem">
               <p class="text-2xl">No se encontraron especialidades</p>
@@ -46,12 +53,10 @@ import { revealAnimation } from '../../../../shared/animations';
     .custom-w {
       width: calc(50% - 0.5rem);
     }
-    .custom-bg {
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.1), transparent);
-    }
-    .custom-position {
-      bottom: -0.25rem;
-      left: 1rem;
+    @media (width <= 768px) {
+      .custom-w {
+        width: 100%;
+      }
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,21 +64,20 @@ import { revealAnimation } from '../../../../shared/animations';
 export default class BrowserComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly specialitiesService = inject(SpecialitiesService);
+
+  public readonly currentCategory = signal<string | undefined>(undefined);
+  public readonly currentRoute = signal<string | null>(null);
 
   public readonly routesPath = ROUTES_PATH;
-  public readonly allCategories = signal<CategoryResponse[]>([]);
-  public readonly allCategoriesWithRoutes = signal<CategoryResponse[]>([]);
+  public readonly alldata = signal<CategoryResponse[]>([]);
+  public readonly dataWithRoutes = signal<CategoryResponse[]>([]);
 
   ngOnInit(): void {
     this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
-      this.allCategories.set(data['data']);
+      this.currentCategory.set(data['data']?.currentCategory);
+      this.currentRoute.set(data['data'].currentRoute);
+      this.alldata.set(data['data']?.res);
     });
-    const dataWithRoutes = this.allCategories().map(data => {
-      return {
-        ...data,
-        route: `/explorar/categoria/`,
-      };
-    });
-    this.allCategoriesWithRoutes.set(dataWithRoutes);
   }
 }

@@ -42,10 +42,9 @@ export const routes: Routes = [
         path: ROUTES_PATH.LANDING_BROWSER_CATEGORIES_ID,
         title: 'Explorar',
         resolve: {
-          categories: browserCategoriesResolver,
+          data: browserCategoriesResolver,
         },
-        loadComponent: () =>
-          import('./features/landing/pages/browser-category/browser-category.component'),
+        loadComponent: () => import('./features/landing/pages/browser/browser.component'),
       },
       {
         path: ROUTES_PATH.LANDING_BROWSER_CATEGORIES_ID_ESPECIALITY,
@@ -57,16 +56,18 @@ export const routes: Routes = [
           import('./features/landing/pages/browser-speciality/browser-speciality.component'),
       },
       {
-        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
+        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST_ID,
         title: 'publicacion', //TODO: cambiar el title
+        resolve: [],
         loadComponent: () => import('./features/landing/pages/share-post/share-post.component'),
       },
       {
         path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE,
         title: 'Perfil pubico',
-        loadComponent: () => import('./features/landing/pages/public-profile/public-profile.component').then(
-          m=> m.PublicProfileComponent
-        ),
+        loadComponent: () =>
+          import('./features/landing/pages/public-profile/public-profile.component').then(
+            m => m.PublicProfileComponent
+          ),
       },
       // {
       //   path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
@@ -155,7 +156,6 @@ export const routes: Routes = [
         title: 'Crear publicacion',
         loadComponent: () => import('./features/dashboard/pages/create-publish/publish.component'),
       },
-      
 
       //     {
       //       path: 'profile',

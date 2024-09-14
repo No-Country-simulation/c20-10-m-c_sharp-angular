@@ -2,11 +2,12 @@ export interface Speciality {
   name: string;
   description: string;
   categoryId: number;
-  specialityId: number; // nombre nuevo
+  specialityId: number;
   isActive: boolean;
   createdAt: Date;
-  src: string; // propiedad nueva
-  offerorSpecialities?: string[]; // propiedad nueva -> apunta a los post de los oferentes
+  route?: string;
+  src: string;
+  offerorSpecialities?: string[];
 }
 
 export interface PostSpecialityFormValue {
