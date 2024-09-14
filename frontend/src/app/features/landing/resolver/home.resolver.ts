@@ -6,7 +6,7 @@ import { environment } from '../../../../environments/environment';
 import {
   CategoriesService,
   SpecialitiesService,
-  LocalstorageService,
+  SessionStorageService,
 } from '../../../core/services';
 import { CategoryResponse, Speciality } from '../../../core/interfaces';
 
@@ -18,13 +18,13 @@ interface AllData {
 export const homeResolver: ResolveFn<AllData> = () => {
   const categoriesService = inject(CategoriesService);
   const specialitiesService = inject(SpecialitiesService);
-  const localstorageService = inject(LocalstorageService);
+  const sessionStorageService = inject(SessionStorageService);
 
-  const allCategoriesKey = environment.LOCAL_STORAGE.ALL_CATEGORIES;
-  const allSpecialitiesKey = environment.LOCAL_STORAGE.ALL_SPECIALITIES;
+  const allCategoriesKey = environment.SESSION_STORAGE.ALL_CATEGORIES;
+  const allSpecialitiesKey = environment.SESSION_STORAGE.ALL_SPECIALITIES;
 
-  const allCategories = localstorageService.get(allCategoriesKey);
-  const allSpecialities = localstorageService.get(allSpecialitiesKey);
+  const allCategories = sessionStorageService.get(allCategoriesKey);
+  const allSpecialities = sessionStorageService.get(allSpecialitiesKey);
 
   if (allCategories && allSpecialities) {
     const allData = {
@@ -38,8 +38,8 @@ export const homeResolver: ResolveFn<AllData> = () => {
 
     return forkJoin([allCategories$, allSpecialities$]).pipe(
       map(([allCategories, allSpecialities]) => {
-        localstorageService.set(allCategoriesKey, allCategories);
-        localstorageService.set(allSpecialitiesKey, allSpecialities);
+        sessionStorageService.set(allCategoriesKey, allCategories);
+        sessionStorageService.set(allSpecialitiesKey, allSpecialities);
         return { allCategories, allSpecialities };
       })
     );

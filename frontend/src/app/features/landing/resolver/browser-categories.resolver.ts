@@ -1,49 +1,88 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
+import { map, switchMap, of, tap } from 'rxjs';
+
 import { environment } from '../../../../environments/environment';
-import { CategoryResponse, Speciality } from '../../../core/interfaces';
 import {
-  LocalstorageService,
   CategoriesService,
   SpecialitiesService,
+  SessionStorageService,
 } from '../../../core/services';
+import { CategoryResponse, Speciality } from '../../../core/interfaces';
 
 interface CombinedData {
   currentCategory: string;
-  specialitiesByCategory: Speciality[];
+  currentRoute: string;
+  res: Speciality[];
 }
 
-export const browserCategoriesResolver: ResolveFn<any> = route => {
-  const localstorageService = inject(LocalstorageService);
+export const browserCategoriesResolver: ResolveFn<CombinedData> = route => {
+  const sessionStorageService = inject(SessionStorageService);
   const categoriesService = inject(CategoriesService);
   const specialitiesService = inject(SpecialitiesService);
 
+  const allCategoriesKey = environment.SESSION_STORAGE.ALL_CATEGORIES;
+  const allSpecialitiesKey = environment.SESSION_STORAGE.ALL_SPECIALITIES;
+
   const currentCategory = route.params['categoryName'];
 
-  const allCategoriesKey = environment.LOCAL_STORAGE.ALL_CATEGORIES;
-  const allSpecialitiesKey = environment.LOCAL_STORAGE.ALL_SPECIALITIES;
+  const specialitiesByCategory: Speciality[] = sessionStorageService.get(`${currentCategory}Key`);
+  const allCategories: CategoryResponse[] = sessionStorageService.get(allCategoriesKey);
+  const allSpecialities: Speciality[] = sessionStorageService.get(allSpecialitiesKey);
 
-  const allCategories: CategoryResponse[] = localstorageService.get(allCategoriesKey) || [];
-  const allSpecialities: Speciality[] = localstorageService.get(allSpecialitiesKey) || [];
-
-  if (allCategories && allSpecialities) {
+  if (specialitiesByCategory) {
+    return of({
+      currentCategory: currentCategory,
+      currentRoute: route.url[0].path,
+      res: specialitiesByCategory,
+    });
+  } else if (false) {
     const matchingCategory = allCategories.find(
       category => category.name.toLowerCase() === currentCategory.toLowerCase()
     );
     const specialitiesByCategory = allSpecialities.filter(
-      specialities => specialities.categoryId === matchingCategory?.categoryId
+      speciality => speciality.categoryId === matchingCategory?.categoryId
     );
-    const combinedData = {
+    return of({
       currentCategory: currentCategory,
-      specialitiesByCategory: specialitiesByCategory,
-    };
-    return combinedData;
+      currentRoute: route.url[0].path,
+      res: specialitiesByCategory,
+    });
   } else {
-    /**
-     * @todo hacer las peticiones
-     *
-     */
-    console.log('No hay categorías disponibles.');
-    return null;
+    return categoriesService.getAllCategories().pipe(
+      switchMap(categories => {
+        const matchingCategory = categories.find(
+          category => category.name.toLowerCase() === currentCategory.toLowerCase()
+        );
+        if (!matchingCategory) {
+          console.error('Categoría no encontrada:', currentCategory);
+          return of({
+            currentCategory: currentCategory,
+            currentRoute: route.url[0].path,
+            res: [],
+          });
+        }
+        return specialitiesService.getSpecialitiesByCategoryId(matchingCategory.categoryId).pipe(
+          map(res => {
+            console.log(res);
+            const specialities = Array.isArray(res) ? res : [res];
+
+            const data = specialities.map(speciality => ({
+              ...speciality,
+              route: `${route.url[0].path}/categoria/especialidad/`,
+            }));
+
+            return {
+              currentCategory: currentCategory,
+              currentRoute: route.url[0].path,
+              res: data,
+            };
+          }),
+          tap(res => {
+            sessionStorageService.set(allCategoriesKey, res.res);
+          })
+        );
+      })
+    );
   }
 };

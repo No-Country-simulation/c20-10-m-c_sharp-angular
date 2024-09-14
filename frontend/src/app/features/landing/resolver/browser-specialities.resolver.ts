@@ -18,7 +18,7 @@ export const browserSpecialitiesResolver: ResolveFn<CombinedData> = route => {
   const localstorageService = inject(LocalstorageService);
   const currentSpeciality = route.params['specialityName'];
 
-  const allSpecialitiesKey = environment.LOCAL_STORAGE.ALL_SPECIALITIES;
+  const allSpecialitiesKey = environment.SESSION_STORAGE.ALL_SPECIALITIES;
   const allSpecialities: Speciality[] = localstorageService.get(allSpecialitiesKey);
 
   if (allSpecialities) {

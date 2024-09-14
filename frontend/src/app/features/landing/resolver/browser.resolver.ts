@@ -1,24 +1,44 @@
+import { SessionStorageService } from './../../../core/services/session-storage.service';
 import { inject } from '@angular/core';
 import { type ResolveFn } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
-import { CategoriesService, LocalstorageService } from '../../../core/services';
+import { CategoriesService } from '../../../core/services';
 import { CategoryResponse } from '../../../core/interfaces';
-import { tap } from 'rxjs';
+import { map, tap, of } from 'rxjs';
 
-export const browserResolver: ResolveFn<CategoryResponse[]> = () => {
+interface CombinedData {
+  res: CategoryResponse[];
+  currentRoute: string;
+}
+
+export const browserResolver: ResolveFn<CombinedData> = route => {
   const categoriesService = inject(CategoriesService);
-  const localstorageService = inject(LocalstorageService);
+  const sessionStorageService = inject(SessionStorageService);
 
-  const allCategoriesKey = environment.LOCAL_STORAGE.ALL_CATEGORIES;
-  const allCategories = localstorageService.get(allCategoriesKey);
+  const allCategoriesKey = environment.SESSION_STORAGE.ALL_CATEGORIES;
+  const allCategories = sessionStorageService.get(allCategoriesKey);
 
   if (allCategories) {
-    return allCategories;
+    const combinedData = {
+      res: allCategories,
+      currentRoute: route.url[0].path,
+    };
+    return of(combinedData);
   } else {
     return categoriesService.getAllCategories().pipe(
-      tap(data => {
-        localstorageService.set(allCategoriesKey, data);
+      map(res => {
+        const data = res.map(category => ({
+          ...category,
+          route: route.url[0].path + '/categoria/',
+        }));
+        return {
+          res: data,
+          currentRoute: route.url[0].path,
+        };
+      }),
+      tap(res => {
+        sessionStorageService.set(allCategoriesKey, res.res);
       })
     );
   }
