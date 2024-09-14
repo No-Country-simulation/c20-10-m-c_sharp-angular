@@ -93,53 +93,14 @@ export const routes: Routes = [
     ],
   },
   {
-    path: ROUTES_PATH.DASHBOARD_HOME,
-    loadComponent: () => import('./features/dashboard/layout/layout-dashboard/layout-dashboard.component'),
-  //   canActivate: [dashboardGuard],
+    path: '',
     children: [
       {
-        path: '',
-        redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES, //TODO: cambiar al perfil o ruta que estaría por defecto
-        pathMatch: 'full',
+        path: ROUTES_PATH.DASHBOARD_HOME,
+        loadComponent: () =>
+          import('./features/dashboard/layout/layout-dashboard/layout-dashboard.component'),
+        loadChildren: () => import('./features/dashboard/dashboard.routes'),
       },
-      {
-        path: ROUTES_PATH.DASHBOARD_MESSAGES,
-        title: 'Mensajes',
-        loadComponent: () => import('./features/dashboard/pages/dashboard-messages/dashboard-messages.component'),
-      },
-      {
-        path: ROUTES_PATH.DASHBOARD_MESSAGES_INBOX,
-        title: 'Mensajes',
-        loadComponent: () => import('./features/dashboard/pages/dashboard-messages/dashboard-messages.component'),
-      },
-      {
-        path: '**',
-        redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES,
-        pathMatch: 'full',
-      },
-  //     {
-  //       path: 'profile',
-  //       title: 'Perfil',
-  //       loadComponent: () => import('./features/dashboard/pages/profile/profile.component'),
-  //     },
-  //     {
-  //       path: 'rating-history',
-  //       title: 'Historial de calificaciones',
-  //       loadComponent: () =>
-  //         import('./features/dashboard/pages/rating-history/rating-history.component'),
-  //     },LANDING_HOME
-  //     {
-  //       path: 'mis-servicios',
-  //       title: 'Mis Servicios',
-  //       loadComponent: () =>
-  //         import('./features/dashboard/pages/management-services/management-services.component'),
-  //     },
-  //     {
-  //       path: 'gestionar-servicios/:serviceId',
-  //       title: 'Servicios',
-  //       loadComponent: () =>
-  //         import('./features/dashboard/pages/management-services/management-services.component'),
-  //     },
     ],
   },
   // {

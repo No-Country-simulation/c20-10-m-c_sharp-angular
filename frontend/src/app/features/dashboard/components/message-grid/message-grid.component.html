@@ -1,58 +1,68 @@
 <div
   class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
+  style="min-width: 250px"
 >
 
-  <div class="col-12 flex flex-column align-items-center">
-    <p-avatar image="{{ owner.image }}" size="xlarge" shape="circle"></p-avatar>
-    <span class="font-bold text-xl">
-        {{ owner.name }}
-    </span>
-  </div>
-  <div>
-
-  </div>
+  @if(this.owner()) {
+    <app-profile-avatar
+      [user]="owner"
+      [classes]="{
+        'mainContainer': 'col-12 flex flex-column align-items-center',
+      }"
+      [ratingValue]="4"
+      [message]="'Mi perfil'"
+      [toLink]="this.owner()!.id"
+      [isPrivate]="true"
+    />
+  }
   <p-divider />
 
-  <div class="col-12 w-full">
-    <p-inputGroup>
-      <p-inputGroupAddon>
-        <i class="pi pi-search"></i>
-      </p-inputGroupAddon>
-      <input type="text" pInputText placeholder="Buscar" />
-    </p-inputGroup>
-  </div>
+  @if ( (this.userService.userMessages().length > 0 || this.paramId() !== null ) ) {
+    <div class="col-12 w-full">
+      <p-inputGroup>
+        <p-inputGroupAddon>
+          <i class="pi pi-search"></i>
+        </p-inputGroupAddon>
+        <input type="text" pInputText placeholder="Buscar" />
+      </p-inputGroup>
+    </div>
 
-  <p-dataView
-    #dv_chats
-    [value]="users()"
-    [rows]="5"
-    [paginator]="true"
-  >
-    <ng-template pTemplate="list" let-users>
-      <div
-        [routerLink]="['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, user.id]"
-        class="col-12 cursor-pointer"
-        *ngFor="let user of users; let first = first"
-      >
-        <li
-          class="p-2 hover:surface-hover border-round border-1 border-transparent transition-all transition-duration-200"
+    <p-dataView
+      #dv_chats
+      [value]="this.messages()"
+      [rows]="5"
+      [paginator]="true"
+    >
+      <ng-template pTemplate="list" let-users>
+        <div
+          [routerLink]="['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, user.id]"
+          class="col-12 cursor-pointer"
+          *ngFor="let user of users; let first = first"
         >
-          <div class="flex flex-wrap p-2 align-items-center gap-3">
-            <p-avatar image="{{ user.image }}" size="normal" shape="circle"></p-avatar>
-            <div class="flex-1 flex flex-column gap-1">
+          <li
+            class="p-2 hover:surface-hover border-round border-1 border-transparent transition-all transition-duration-200"
+          >
+            <div class="flex flex-wrap p-2 align-items-center gap-3">
+              <p-avatar image="{{ user.image ? user.image : '/assets/avatar/stephenshaw.png' }}" size="normal" shape="circle"></p-avatar>
+              <div class="flex-1 flex flex-column gap-1">
               <span class="font-bold">
                   {{ user.name }}
               </span>
-              <div class="flex align-items-center gap-2">
-                <i class="pi pi-calendar-times text-sm"></i>
-                <span>
+                <div class="flex align-items-center gap-2">
+                  <i class="pi pi-calendar-times text-sm"></i>
+                  <span>
                 {{ user.createdAt | date: 'dd/MM/yyyy' }}
               </span>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-      </div>
-    </ng-template>
-  </p-dataView>
+          </li>
+        </div>
+      </ng-template>
+    </p-dataView>
+  } @else {
+    <div class="col-12 flex justify-content-center align-items-center" style="min-height: 250px">
+      <p-message severity="info" text="No tienes mensajes"></p-message>
+    </div>
+  }
 </div>

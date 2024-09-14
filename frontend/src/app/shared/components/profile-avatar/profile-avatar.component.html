@@ -1,0 +1,22 @@
+<div [class]="classes.mainContainer">
+  <p-avatar image="{{ user?.image ? user?.image : '' }}" size="xlarge" shape="circle"></p-avatar>
+  <div class="flex flex-column">
+      <span class="font-bold text-xl">
+          {{ user?.name }}
+      </span>
+    <div class="flex flex-column mt-2 gap-1">
+      <p-rating [ngModel]="ratingValue" [readonly]="true" [cancel]="false"></p-rating>
+      <a
+        class="font-medium text-sm cursor-pointer hover:text-primary transition-all transition-duration-200 no-underline"
+        [routerLink]="[
+          !isPrivate
+              ? '/' + ROUTES_PATH.DASHBOARD_HOME + '/' + ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_USER
+              : '/' + ROUTES_PATH.DASHBOARD_HOME + '/' + ROUTES_PATH.DASHBOARD_PROFILE,
+          !isPrivate ? toLink : []
+        ]"
+      >
+        {{ message }}
+      </a>
+    </div>
+  </div>
+</div>
