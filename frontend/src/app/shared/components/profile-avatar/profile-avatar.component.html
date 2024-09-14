@@ -1,8 +1,8 @@
 <div [class]="classes.mainContainer">
-  <p-avatar image="{{ user.image }}" size="xlarge" shape="circle"></p-avatar>
+  <p-avatar image="{{ user?.image ? user?.image : '' }}" size="xlarge" shape="circle"></p-avatar>
   <div class="flex flex-column">
       <span class="font-bold text-xl">
-          {{ user.name }}
+          {{ user?.name }}
       </span>
     <div class="flex flex-column mt-2 gap-1">
       <p-rating [ngModel]="ratingValue" [readonly]="true" [cancel]="false"></p-rating>

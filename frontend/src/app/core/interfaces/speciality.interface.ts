@@ -5,7 +5,7 @@ export interface Speciality {
   name: string;
   description: string;
   categoryId: number;
-  offerorSpecialities: string[];
+  userSpecialities: string[];
 }
 
 export interface PostSpecialityFormValue {
