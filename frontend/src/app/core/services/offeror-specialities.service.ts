@@ -3,67 +3,67 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { OfferorSpecialities } from '../interfaces';
+import { UserSpecialities } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OfferorSpecialitiesService {
+export class UserSpecialitiesService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.BASE_URL;
-  private readonly offerorSpecilitiesEndpoint = environment.ENDPOINT.OFFEROR_SPECIALITIES;
+  private readonly userSpecilitiesEndpoint = environment.ENDPOINT.USER_SPECIALITIES;
 
   /**
-   * Retrieves all offeror specialities.
+   * Retrieves all user specialities.
    *
-   * @returns An Observable containing an array of `OfferorSpecialities` objects.
+   * @returns An Observable containing an array of `UserSpecialities` objects.
    */
-  public getOfferorSpecialities(idSpeciality: number): Observable<any[]> {
+  public getUserSpecialities(idSpeciality: number): Observable<any[]> {
     return this.http.get<any[]>(
       `https://www.contratapp.somee.com/api/userspecialities/search?IdSpeciality=${idSpeciality}`
     );
   }
 
   /**
-   * Creates a new offeror speciality.
+   * Creates a new user speciality.
    *
-   * @param formValue - The data of the new offeror speciality to be created.
-   * @returns An Observable containing the created `OfferorSpecialities` object.
+   * @param formValue - The data of the new user speciality to be created.
+   * @returns An Observable containing the created `UserSpecialities` object.
    */
-  public createOfferorSpecialities(
-    formValue: OfferorSpecialities
-  ): Observable<OfferorSpecialities> {
-    return this.http.post<OfferorSpecialities>(
-      this.baseUrl + this.offerorSpecilitiesEndpoint,
+  public createUserSpecialities(
+    formValue: UserSpecialities
+  ): Observable<UserSpecialities> {
+    return this.http.post<UserSpecialities>(
+      this.baseUrl + this.userSpecilitiesEndpoint,
       formValue
     );
   }
 
   /**
-   * Retrieves a specific offeror speciality by its ID.
+   * Retrieves a specific user speciality by its ID.
    *
-   * @param id - The unique identifier of the offeror speciality.
-   * @returns An Observable containing the `OfferorSpecialities` object.
+   * @param id - The unique identifier of the user speciality.
+   * @returns An Observable containing the `UserSpecialities` object.
    */
-  public getOfferorSpecialitiesById(id: number): Observable<OfferorSpecialities> {
-    return this.http.get<OfferorSpecialities>(
-      this.baseUrl + this.offerorSpecilitiesEndpoint + '/' + id
+  public getUserSpecialitiesById(id: number): Observable<UserSpecialities> {
+    return this.http.get<UserSpecialities>(
+      this.baseUrl + this.userSpecilitiesEndpoint + '/' + id
     );
   }
 
   /**
-   * Updates an existing offeror speciality by its ID.
+   * Updates an existing user speciality by its ID.
    *
-   * @param formValue - The updated data for the offeror speciality.
-   * @param id - The unique identifier of the offeror speciality to be updated.
-   * @returns An Observable containing the updated `OfferorSpecialities` object.
+   * @param formValue - The updated data for the user speciality.
+   * @param id - The unique identifier of the user speciality to be updated.
+   * @returns An Observable containing the updated `UserSpecialities` object.
    */
-  public updateOfferorSpecialitiesById(
-    formValue: OfferorSpecialities,
+  public updateUserSpecialitiesById(
+    formValue: UserSpecialities,
     id: number
-  ): Observable<OfferorSpecialities> {
-    return this.http.put<OfferorSpecialities>(
-      this.baseUrl + this.offerorSpecilitiesEndpoint + '/' + id,
+  ): Observable<UserSpecialities> {
+    return this.http.put<UserSpecialities>(
+      this.baseUrl + this.userSpecilitiesEndpoint + '/' + id,
       formValue
     );
   }

@@ -1,16 +1,16 @@
 import { Speciality } from './speciality.interface';
 
-export interface Offeror {
+export interface UserSpecialities {
   id: string;
   geolocation: string;
-  offerorSpecialities: OfferorSpeciality[];
+  offerorSpecialities: UserSpeciality[];
 }
 
-export interface OfferorSpeciality {
+export interface UserSpeciality {
   id: number;
   isActive: boolean;
   createdAt: Date;
-  idOfferor: string;
+  idUser: string;
   offeror: string;
   idSpeciality: number;
   speciality: Speciality;
@@ -19,4 +19,4 @@ export interface OfferorSpeciality {
   area: string;
 }
 
-export type OfferorFormValue = Omit<Offeror, 'id' | 'offerorSpecialities'>;
+export type UserFormValue = Omit<UserSpecialities, 'id' | 'offerorSpecialities'>;
