@@ -1,9 +1,9 @@
-/** Temporal */ /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { User, UserMessage, UserUpdate } from '../interfaces';
+import { User, UserMessages, UserUpdate } from '../interfaces';
+import { Message } from '../interfaces/message.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +12,8 @@ export class UserService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.BASE_URL;
   private readonly userEndpoint = environment.ENDPOINT.USER;
-  private readonly userMessagesOneEndpoint = environment.ENDPOINT.USER_MESSAGES_ONE;
-  private readonly userMessagesAll = environment.ENDPOINT.USER_MESSAGES_ALL;
-  private readonly createUserMessage = environment.ENDPOINT.CREATE_USER_MESSAGE;
+  private readonly userMessagesEndpoint = environment.ENDPOINT.USER_MESSAGES;
+  private readonly userProfiles = environment.ENDPOINT.USERS_PROFILE;
 
   /**
    * Gets the user data.
@@ -42,8 +41,8 @@ export class UserService {
    *
    * @returns An observable that emits the server response.
    */
-  public getUserMessagesFromOneUser(id: string): Observable<any> {
-    return this.http.get<any>(this.baseUrl + this.userMessagesOneEndpoint.replace(':idOtherUser', id));
+  public getUserMessagesFromOneUser(id: string): Observable<UserMessages> {
+    return this.http.get<UserMessages>(`${ this.baseUrl }${ this.userMessagesEndpoint }/${id}` );
   }
 
   /**
@@ -51,20 +50,30 @@ export class UserService {
    *
    * @returns An observable that emits the server response.
    */
-  public getAllUserMessages(): Observable<any> {
-    return this.http.get<any>(this.baseUrl + this.userMessagesAll);
+  public getAllUserMessages(): Observable<UserMessages[]> {
+    return this.http.get<UserMessages[]>(this.baseUrl + this.userMessagesEndpoint);
   }
 
   /**
    * Create a message from a user.
    *
-   * @param formValue
+   * @param userId
+   * @param message
    *  - message: string
    *  - createdAt: Date
    *  - userId: string
    * @returns An observable that emits the server response.
    */
-  public addNewUserMessage(formValue: UserMessage): Observable<any> {
-    return this.http.put<any>(this.baseUrl + this.createUserMessage, formValue);
+  public addNewUserMessage(userId: string, message: Message): Observable<any> {
+    return this.http.post<any>(`${ this.baseUrl }${ this.userMessagesEndpoint }/${userId} `, message);
+  }
+
+  /**
+   * Gets a list with all user's profile.
+   *
+   * @returns An observable that emits the server response.
+   */
+  public getProfilesList(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + this.userProfiles);
   }
 }

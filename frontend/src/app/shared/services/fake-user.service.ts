@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserMessage } from '../../core/interfaces';
+import { MessageResponse } from '../../core/interfaces/message.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +13,17 @@ export class FakeUserService {
     return this.http.get<any>('assets/demo/messages.json')
       .toPromise()
       .then( res => res.data.filter((userMessage: any) => userMessage.id === id))
-      .then( data => data as UserMessage);
+      .then( data => data as MessageResponse);
   }
 
   getAllUserMessages() {
     return this.http.get<any>('assets/demo/messages.json')
       .toPromise()
-      .then( res => res.data as UserMessage[] )
+      .then( res => res.data as MessageResponse[] )
       .then( data => data );
   }
 
-  addNewUserMessage(idUser: string, message: UserMessage) {
+  addNewUserMessage(idUser: string, message: MessageResponse) {
     return this.http.get<any>('assets/demo/messages.json')
       .toPromise()
       .then( res => {
@@ -34,7 +34,7 @@ export class FakeUserService {
         });
         return res.data;
       })
-      .then( data => data as UserMessage[] );
+      .then( data => data as MessageResponse[] );
   }
 
 }
