@@ -79,7 +79,7 @@ export const browserCategoriesResolver: ResolveFn<CombinedData> = route => {
             };
           }),
           tap(res => {
-            sessionStorageService.set(allCategoriesKey, res.res);
+            sessionStorageService.set(`${currentCategory}Key`, res.res);
           })
         );
       })
