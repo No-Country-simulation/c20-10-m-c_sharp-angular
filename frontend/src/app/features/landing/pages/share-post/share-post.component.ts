@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuModule } from 'primeng/menu';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -42,14 +42,21 @@ export default class SharePostComponent {
     { itemImageSrc: 'imagen3.jpg', alt: 'Imagen 3' },
   ];
   activeImageIndex = 0;
+  jsonData: any;
 
-  constructor(private router:Router) {
-    
+  constructor(private router:Router,
+              private activatedRoute: ActivatedRoute) 
+  {
+    this.activatedRoute.params.subscribe( params => {
+      this.jsonData = params;
+      console.log("aca recibimos la info en el componete share-post: ",this.jsonData);
+    })
   }
 
-  verPerfil() {
+  verPerfil(item : any) {
     console.log("quiso ver su perfil");
-    this.router.navigateByUrl('perfil-publico');
+    this.router.navigate(["/perfil-publico",item]);
+
   }
 
   toggleMenu() {
@@ -63,4 +70,5 @@ export default class SharePostComponent {
   getIndicatorStyle(index: number) {
     return index === this.activeImageIndex ? 'indicator active' : 'indicator';
   }
+
 }

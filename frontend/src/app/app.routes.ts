@@ -57,14 +57,14 @@ export const routes: Routes = [
           import('./features/landing/pages/browser-speciality/browser-speciality.component'),
       },
       {
-        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST + ' ',
+        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
         title: 'publicacion', //TODO: cambiar el title
         loadComponent: () => import('./features/landing/pages/share-post/share-post.component'),
       },
       {
         path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE,
         title: 'Perfil pubico',
-        loadComponent: () => import('./features/landing/components/public-profile/public-profile.component').then(
+        loadComponent: () => import('./features/landing/pages/public-profile/public-profile.component').then(
           m=> m.PublicProfileComponent
         ),
       },

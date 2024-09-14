@@ -1,26 +1,24 @@
-<!-- Icono de desplazamiento a la izquierda -->
 <div class="mt-5 scroll-icon">
-  <i class="pi pi-chevron-left"></i> <!-- Icono de desplazamiento a la izquierda -->
+  <i class="pi pi-chevron-left"></i> 
 </div>
 
-<!-- Contenedor principal de la publicación -->
 <div class="publication-container">
-  <!-- Título con el nombre del prestador del servicio -->
   <div class="mt-5 service-provider">
-    <h2>Nombre del Prestador del Servicio</h2>
+    <h2>{{this.jsonData.specialityName}}</h2>
   </div>
 
-  <!-- Sección de calificación numérica y estrellas -->
   <div class="mt-4">
     <div class="mt-rating">
       <p-rating [readonly]="true" [(ngModel)]="value4" />
   </div>
   </div>
 
-  <!-- Información del precio y enlace Ver Perfil -->
   <div class="mt-3 price-and-profile">
     <span class="price">Precio a convenir</span>
-    <a (click)="verPerfil()" class="pl-8">Ver Perfil</a>
+    <div class="contenedor-boton">
+      <a (click)="verPerfil(this.jsonData)" class="ver-perfil">Ver Perfil</a>
+    </div>
+    
   </div>
 
   <!-- Imágenes desplazables 
@@ -33,18 +31,11 @@
     <span *ngFor="let image of images; let i = index" [class]="getIndicatorStyle(i)" (click)="setActiveImage(i)"></span>
   </div> -->
 
-
-  <!-- Descripción del servicio -->
   <div class="service-description">
     <h3 class="mt-5">Descripción</h3>
-    <p class="mt-0">PLOMERIA, GAS Y DESTAPACIONES ***Tu Casa Sin Problemas***PRESUPUESTOS ON LINE AL INSTANTE EN NUESTRO
-      WHATSAPP.CONSULTAS ÚNICAMENTE DE 9 A 18 HS.URGENCIAS LAS 24HS TODOS LOS DIAS.Atendemos toda la capital federal
-      y zona
-      norte de Bs. As... Consulte si llegamos a su zonaTrabajos garantidos. Realizamos factura consumidor final.o,
-      cambio..¨</p>
+    <p class="mt-0">{{this.jsonData.text}}</p>
   </div>
 
-  <!-- Métodos de pago aceptados con checkboxes marcadas -->
   <h3 class="mt-5">Métodos de pago</h3>
     <div class="card flex justify-content-left">
       <div class="flex flex-column gap-2">
@@ -58,12 +49,10 @@
       </div>
     </div>
 
-  <!-- Ubicación del prestador del servicio -->
   <div class="service-location">
     
   </div>
 
-  <!-- Enlace para enviar consulta -->
   <div class="contact-link">
     <a href="#">Envíame una consulta</a>
   </div>
