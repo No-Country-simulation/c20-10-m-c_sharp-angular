@@ -78,11 +78,11 @@ export default class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUserData().subscribe({
-      next: (user) => {
+      next: user => {
         this.currentUser = user;
-        //this.profileForm.patchValue(user);
+        this.profileForm.patchValue(user);
       },
-      error: (error) => {
+      error: error => {
         console.error('Error fetching user data', error);
         this.errorRequest = true;
       },
@@ -103,7 +103,7 @@ export default class PerfilComponent implements OnInit {
       birthDate: ['', Validators.required],
       dni: ['', Validators.required],
       country: ['', Validators.required],
-      city: ['', Validators.required],
+      state: ['', Validators.required],
       cellphone: ['', Validators.required],
       contactByPhone: [false],
       email: ['', [Validators.required, Validators.email]],
@@ -140,7 +140,7 @@ export default class PerfilComponent implements OnInit {
 
   onCountryChange() {
     if (this.profileForm.controls['country'].value.country) {
-      this.profileForm.controls['city'].disable();
+      this.profileForm.controls['state'].disable();
       this.countriesServices
         .getCitiesByCountry(this.profileForm.controls['country'].value.code)
         .subscribe(data => {
@@ -149,7 +149,7 @@ export default class PerfilComponent implements OnInit {
               city: city.toponymName,
             }))
             .sort((a: any, b: any) => a.city.localeCompare(b.city));
-          this.profileForm.controls['city'].enable();
+          this.profileForm.controls['state'].enable();
         });
     }
   }

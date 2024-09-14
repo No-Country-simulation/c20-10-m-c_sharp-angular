@@ -1,6 +1,6 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <div
-  class="profile-form flex flex-column gap-3 justify-content-center align-items-center mt-7 mr-2 w-full" >
+  class="profile-form flex flex-column gap-3 justify-content-center align-items-center mt-7 mr-2 w-full">
   <form [formGroup]="profileForm">
     <!-- Foto -->
     <p-fieldset class="w-12 pr-1" legend="Configuración de perfil">
@@ -100,13 +100,13 @@
 
       <!-- Localidad -->
       <div class="flex flex-column w-full">
-        <label for="city">Ciudades</label>
+        <label for="state">Ciudades</label>
         <p-dropdown
           [options]="cities"
-          formControlName="city"
-          optionLabel="city"
+          formControlName="state"
+          optionLabel="state"
           [filter]="true"
-          filterBy="city"
+          filterBy="state"
           styleClass="w-full"
           placeholder="Seleccione una ciudad" />
       </div>
@@ -127,7 +127,7 @@
           inputStyleClass="w-full"
           inputId="integeronly"
           mode="decimal"
-          formControlName="phone" />
+          formControlName="cellphone" />
       </div>
       <br />
 
