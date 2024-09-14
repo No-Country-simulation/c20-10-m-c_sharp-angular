@@ -25,6 +25,10 @@ export class UserService {
     return this.http.get<User>(this.baseUrl + this.userEndpoint);
   }
 
+  public getUserProfileData(): Observable<User> {
+    return this.http.get<User>(this.baseUrl + this.userEndpoint);
+  }
+
   /**
    * Updates the user data.
    *
@@ -43,7 +47,9 @@ export class UserService {
    * @returns An observable that emits the server response.
    */
   public getUserMessagesFromOneUser(id: string): Observable<any> {
-    return this.http.get<any>(this.baseUrl + this.userMessagesOneEndpoint.replace(':idOtherUser', id));
+    return this.http.get<any>(
+      this.baseUrl + this.userMessagesOneEndpoint.replace(':idOtherUser', id)
+    );
   }
 
   /**

@@ -80,7 +80,7 @@ export default class PerfilComponent implements OnInit {
     this.userService.getUserData().subscribe({
       next: (user) => {
         this.currentUser = user;
-        this.profileForm.patchValue(user);
+        //this.profileForm.patchValue(user);
       },
       error: (error) => {
         console.error('Error fetching user data', error);
@@ -104,14 +104,14 @@ export default class PerfilComponent implements OnInit {
       dni: ['', Validators.required],
       country: ['', Validators.required],
       city: ['', Validators.required],
-      phone: ['', Validators.required],
+      cellphone: ['', Validators.required],
       contactByPhone: [false],
       email: ['', [Validators.required, Validators.email]],
       contactByEmail: [false],
       password: ['', Validators.required],
       mercadoPago: [false],
       creditCard: [false],
-      money: [false],
+      cash: [false],
     });
 
     this.profileForm.disable();
