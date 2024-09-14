@@ -51,5 +51,5 @@ packages/
 #Ignorar archivos subidos por la API
 ContratApp/wwwroot/Uploads/
 
-ContratApp/appsettings.Development.json
-ContratApp/appsettings.json
+appsettings.Development.json
+appsettings.json

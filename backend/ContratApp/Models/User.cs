@@ -33,9 +33,21 @@ namespace ContratApp.Models
 
         [MaxLength(256)]
         public string? Location { get; set; }
+        public string? SrcImage { get; set; }
 
         [MaxLength(256)]
         public string? Cellphone { get; set; }
+        public Boolean? ContactByPhone { get; set; } = true;
+        public Boolean? ContactByEmail { get; set; } = true;
+        public Boolean? MercadoPago { get; set; } = false;
+        public Boolean? CreditCard { get; set; } = false;
+        public Boolean? Cash { get; set; } = false;
+
+        public string? Latitude { get; set; }
+        public string? Longitude { get; set; }
+
+        [MaxLength(256)]
+        public string? Price { get; set; }
 
         public ICollection<UserSpeciality>? UserSpecialities { get; set; }
     }

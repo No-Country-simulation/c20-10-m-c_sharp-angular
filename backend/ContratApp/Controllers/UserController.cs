@@ -33,9 +33,47 @@ namespace ContratApp.Controllers
         [HttpGet]
         public ActionResult<User> GetUser()
         {
-            var user = _context.Users.Find(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var user = _context.Users
+                .Include(ue => ue.UserSpecialities)
+                .First(x => x.Id == User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                
             if (user == null)
                 return NotFound(new { Msg = "No se encontraron los datos complementarios del usuario. Use PUT:api/User para complementar datos" });
+            if (user.UserSpecialities != null)
+            {
+                foreach (var us in user.UserSpecialities)
+                {
+                    us.Speciality = null;
+                    us.User = null;
+                }
+            }
+            return user;
+        }
+
+        // GET: api/User/id
+        /// <summary>
+        /// Datos de un usuario pasando su id
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Ok. Id, email y demás datos del perfil del usuario</response>
+        /// <response code="404">No se encontraron los datos complementarios del usuario.</response>
+        [HttpGet("{id}")]
+        public ActionResult<User> GetUser(string id)
+        {
+            var user = _context.Users
+                .Include(ue => ue.UserSpecialities)
+                .First(x => x.Id == id);
+
+            if (user == null)
+                return NotFound(new { Msg = "No se encontraron los datos complementarios del usuario." });
+            if (user.UserSpecialities != null)
+            {
+                foreach (var us in user.UserSpecialities)
+                {
+                    us.Speciality = null;
+                    us.User = null;
+                }
+            }
             return user;
         }
 
@@ -112,9 +150,41 @@ namespace ContratApp.Controllers
                 {
                     existingUser.Location = profileViewModel.Location;
                 }
+                if (!string.IsNullOrWhiteSpace(profileViewModel.SrcImage))
+                {
+                    existingUser.SrcImage = profileViewModel.SrcImage;
+                }
                 if (!string.IsNullOrWhiteSpace(profileViewModel.Cellphone))
                 {
                     existingUser.Cellphone = profileViewModel.Cellphone;
+                }
+                if (profileViewModel.ContactByPhone != null)
+                {
+                    existingUser.ContactByPhone = profileViewModel.ContactByPhone;
+                }
+                if (profileViewModel.ContactByEmail != null)
+                {
+                    existingUser.ContactByEmail = profileViewModel.ContactByEmail;
+                }
+                if (profileViewModel.MercadoPago != null)
+                {
+                    existingUser.MercadoPago = profileViewModel.MercadoPago;
+                }
+                if (profileViewModel.CreditCard != null)
+                {
+                    existingUser.CreditCard = profileViewModel.CreditCard;
+                }
+                if (profileViewModel.Cash != null)
+                {
+                    existingUser.Cash = profileViewModel.Cash;
+                }
+                if (!string.IsNullOrWhiteSpace(profileViewModel.Latitude))
+                {
+                    existingUser.Latitude = profileViewModel.Latitude;
+                }
+                if (!string.IsNullOrWhiteSpace(profileViewModel.Longitude))
+                {
+                    existingUser.Longitude = profileViewModel.Longitude;
                 }
 
                 _context.Entry(existingUser).State = EntityState.Modified;
@@ -251,14 +321,6 @@ namespace ContratApp.Controllers
 
 
         }
-
-        //private String userNameFound(string id)
-        //{
-        //    var res = _context.Users.FirstOrDefault(x =>  x.Id == id);
-        //    if (res == null)
-        //        return "";
-        //    return $"{res.FirstName} {res.LastName}";
-        //}
 
         #endregion
 

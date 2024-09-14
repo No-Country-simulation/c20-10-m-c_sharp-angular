@@ -22,9 +22,20 @@ namespace ContratApp.ViewModels
 
         [MaxLength(256)]
         public string? Location { get; set; }
+        public string? SrcImage { get; set; }
 
         [MaxLength(256)]
         public string? Cellphone { get; set; }
+        public Boolean? ContactByPhone { get; set; }
+        public Boolean? ContactByEmail { get; set; }
+        public Boolean? MercadoPago { get; set; } 
+        public Boolean? CreditCard { get; set; }
+        public Boolean? Cash { get; set; } 
+        public string? Latitude { get; set; }
+        public string? Longitude { get; set; }
+
+        [MaxLength(256)]
+        public string? Price { get; set; }
 
     }
 }

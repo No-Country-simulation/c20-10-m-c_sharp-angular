@@ -19,10 +19,10 @@ namespace ContratApp.Controllers
             _context = context;
         }
 
-        // GET: api/OfferorSpecialities
+        // GET: api/UserSpecialities
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<UserSpeciality>>> GetOfferorSpecialities()
+        public async Task<ActionResult<IEnumerable<UserSpeciality>>> GetUserSpecialities()
         {
             return await _context.UserSpecialities
                                  //.Include(oe => oe.Offeror)
@@ -30,9 +30,10 @@ namespace ContratApp.Controllers
                                  .ToListAsync();
         }
 
-        // GET: api/OfferorSpecialities/5
+        // GET: api/UserSpecialities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserSpeciality>> GetOfferorSpeciality(int id)
+        [AllowAnonymous]
+        public async Task<ActionResult<UserSpeciality>> GetUserSpeciality(int id)
         {
             var oferenteEspecialidad = await _context.UserSpecialities
                                                      //.Include(oe => oe.Offeror)
@@ -47,10 +48,10 @@ namespace ContratApp.Controllers
             return oferenteEspecialidad;
         }
 
-        // GET: api/OfferorSpecialities/Search
+        // GET: api/UserSpecialities/Search
         [HttpGet("Search")]
         [AllowAnonymous]
-        public IActionResult GetOfferorSpecialitiesSearch([FromQuery] UserSpecialitiesSearchViewModel offerorSpecialitiesSearchViewModel)
+        public IActionResult GetUserSpecialitiesSearch([FromQuery] UserSpecialitiesSearchViewModel userSpecialitiesSearchViewModel)
         {
 
             var result = _context.UserSpecialities
@@ -58,21 +59,21 @@ namespace ContratApp.Controllers
                 .Include(oe => oe.User)
                 .AsQueryable()
                 ;
-            if (!string.IsNullOrWhiteSpace(offerorSpecialitiesSearchViewModel.Criteria))
+            if (!string.IsNullOrWhiteSpace(userSpecialitiesSearchViewModel.Criteria))
             {
                 result = result.Where(x => 
-                    x.Title.ToLower().Contains(offerorSpecialitiesSearchViewModel.Criteria.ToLower())
+                    x.Title.ToLower().Contains(userSpecialitiesSearchViewModel.Criteria.ToLower())
                     ||
-                    x.Text.ToLower().Contains(offerorSpecialitiesSearchViewModel.Criteria.ToLower())
+                    x.Text.ToLower().Contains(userSpecialitiesSearchViewModel.Criteria.ToLower())
                 );
             }
-            if (offerorSpecialitiesSearchViewModel.IdSpeciality != null)
+            if (userSpecialitiesSearchViewModel.IdSpeciality != null)
             {
-                result = result.Where(x => x.IdSpeciality == offerorSpecialitiesSearchViewModel.IdSpeciality);
+                result = result.Where(x => x.IdSpeciality == userSpecialitiesSearchViewModel.IdSpeciality);
             }
-            if (offerorSpecialitiesSearchViewModel.IdCategory != null)
+            if (userSpecialitiesSearchViewModel.IdCategory != null)
             {
-                result = result.Where(x => x.Speciality.CategoryId == offerorSpecialitiesSearchViewModel.IdCategory);
+                result = result.Where(x => x.Speciality.CategoryId == userSpecialitiesSearchViewModel.IdCategory);
             }
 
             return Ok(result.Select(x => new
@@ -92,21 +93,21 @@ namespace ContratApp.Controllers
             );
         }
 
-        // POST: api/OfferorSpecialities
+        // POST: api/UserSpecialities
         [HttpPost]
-        public async Task<ActionResult<UserSpeciality>> PostOfferorSpeciality(UserSpeciality offerorSpeciality)
+        public async Task<ActionResult<UserSpeciality>> PostUserSpeciality(UserSpeciality userSpeciality)
         {
-            _context.UserSpecialities.Add(offerorSpeciality);
+            _context.UserSpecialities.Add(userSpeciality);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetOfferorSpeciality), new { id = offerorSpeciality.Id }, offerorSpeciality);
+            return CreatedAtAction(nameof(userSpeciality), new { id = userSpeciality.Id }, userSpeciality);
         }
 
-        // PUT: api/OfferorSpecialities/5
+        // PUT: api/UserSpecialities/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOfferorSpeciality(int id, UserSpeciality offerorSpeciality)
+        public async Task<IActionResult> PutUserSpeciality(int id, UserSpeciality userSpeciality)
         {
-            if (id != offerorSpeciality.Id)
+            if (id != userSpeciality.Id)
             {
                 return BadRequest();
             }
@@ -118,17 +119,17 @@ namespace ContratApp.Controllers
             }
 
             // Modificar sólo los campos enviados en el body
-            if (!string.IsNullOrWhiteSpace(offerorSpeciality.Title))
+            if (!string.IsNullOrWhiteSpace(userSpeciality.Title))
             {
-                existingEntity.Title = offerorSpeciality.Title;
+                existingEntity.Title = userSpeciality.Title;
             }
-            if (!string.IsNullOrWhiteSpace(offerorSpeciality.Text))
+            if (!string.IsNullOrWhiteSpace(userSpeciality.Text))
             {
-                existingEntity.Text = offerorSpeciality.Text;
+                existingEntity.Text = userSpeciality.Text;
             }
-            if (!string.IsNullOrWhiteSpace(offerorSpeciality.Area))
+            if (!string.IsNullOrWhiteSpace(userSpeciality.Area))
             {
-                existingEntity.Area = offerorSpeciality.Area;
+                existingEntity.Area = userSpeciality.Area;
             }
 
             _context.Entry(existingEntity).State = EntityState.Modified;
