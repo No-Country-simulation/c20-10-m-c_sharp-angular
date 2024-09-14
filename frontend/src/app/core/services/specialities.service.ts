@@ -85,6 +85,8 @@ export class SpecialitiesService {
    * @returns An observable containing an array of `Speciality` objects.
    */
   public getSpecialitiesByCategoryId(id: number): Observable<Speciality[]> {
-    return this.http.get<Speciality[]>(this.baseUrl + this.specialitiesEndpoint + '/' + id);
+    return this.http.get<Speciality[]>(
+      this.baseUrl + this.specialitiesEndpoint + '/bycategory/' + id
+    );
   }
 }
