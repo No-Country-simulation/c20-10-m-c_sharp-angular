@@ -46,32 +46,17 @@ export class UserService {
   }
 
   getUserMessagesFromOneUser(idUser: string): Observable<UserMessages> { //Promise<UserMessages>
-
-    //DEMO, cambiar por el servicio real
-    // return this.fakeUserService.getUserMessagesFromOneUser(idUser);
-    console.log('Disparando peticion', idUser);
-
     return this.userApi.getUserMessagesFromOneUser(idUser).pipe(
-      tap((user) => {
-        console.log('Mensajes de usuario', user);
-      }),
       catchError((error) => {
-        console.error('Error al obtener los mensajes de usuario', error);
-        this.messageService.add({
-          key: 'toast',
-          severity: 'error',
-          summary: 'Error al obtener los mensajes de usuario',
-          detail: ``,
-        });
-        return throwError(() => 'Error al obtener los mensajes de usuario');
+
+        if( error.includes('404') ) throwError(() => ({ 'errorStatus': 404, 'errorMessage': 'Mensajes del usuario no encontrados' }));
+
+        return throwError(() => error);
       })
     );
   }
 
   getAllUserMessages(): Observable<UserMessages[]> { //Promise<any>
-
-    //DEMO, cambiar por el servicio real
-    // return this.fakeUserService.getAllUserMessages();
 
     return this.userApi.getAllUserMessages().pipe(
       tap( userMessages => this.userMessages.set(userMessages) ),

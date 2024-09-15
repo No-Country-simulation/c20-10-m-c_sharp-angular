@@ -23,6 +23,7 @@ import { UserMessages } from '../../../../core/interfaces';
 import { ProfileAvatarComponent } from '../../../../shared/components/profile-avatar/profile-avatar.component';
 import { Message } from '../../../../core/interfaces/message.interface';
 import { MessageModule } from 'primeng/message';
+import { catchError, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-message-chat',
@@ -70,6 +71,16 @@ export class MessageChatComponent implements OnInit {
       this.router.navigate(['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, firstChat]);*/
       return;
     }
+
+    this.userService.getUserMessagesFromOneUser(this.offererParamId()!).pipe(
+      tap( usersMessages => {
+        this.offererMessages.set(usersMessages);
+      }),
+      catchError((error) => {
+        this.offererMessages.set(undefined);
+        return throwError(() => error);
+      })
+    ).subscribe();
 
     /*this.route.paramMap.subscribe( params => {
       const id = params.get('id');

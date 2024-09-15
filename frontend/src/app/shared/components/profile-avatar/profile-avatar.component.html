@@ -1,8 +1,17 @@
 <div [class]="classes.mainContainer">
-  <p-avatar image="{{ user?.image ? user?.image : '' }}" size="xlarge" shape="circle"></p-avatar>
+  @if (user()?.srcImage) {
+    <p-avatar image="{{ user()?.srcImage }}" size="xlarge" shape="circle"></p-avatar>
+  } @else {
+    <p-avatar
+      [label]="user()?.firstName ? user()!.firstName.at(0) : 'U'"
+      size="xlarge"
+      shape="circle"
+      [style]="styleAvatar"
+    ></p-avatar>
+  }
   <div class="flex flex-column">
       <span class="font-bold text-xl">
-          {{ user?.name }}
+          {{ user()?.firstName }} {{ user()?.lastName }}
       </span>
     <div class="flex flex-column mt-2 gap-1">
       <p-rating [ngModel]="ratingValue" [readonly]="true" [cancel]="false"></p-rating>
@@ -19,4 +28,6 @@
       </a>
     </div>
   </div>
+
+  User: {{ user()?.firstName | json }}
 </div>

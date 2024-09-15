@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { Button, ButtonDirective } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
-import { gridOffererChats, contractor } from '../../../../../assets/demo/grid-offerer-chats';
 import { DatePipe, JsonPipe, NgClass, NgForOf } from '@angular/common';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { AvatarModule } from 'primeng/avatar';
@@ -70,22 +69,18 @@ export class MessageGridComponent implements OnInit {
   readonly paramId = signal<string | null>(null);
 
   @ViewChild('cm') cm!: ContextMenu;
-  owner = signal<User | undefined>( undefined );
+  // owner = signal<User | undefined>( undefined );
   value!: number;
 
   protected readonly ROUTES_PATH = ROUTES_PATH;
   protected readonly messages = signal<UserMessages[]>([]);
 
-  constructor() {
-  }
-
   ngOnInit(): void {
-    console.log('MessageGridComponent ngOnInit');
     this.paramId.set(this.offererParamId());
-    this.userService.getAllUserMessages().subscribe();
+    this.userService.getAllUserMessages().pipe().subscribe();
 
-    console.log('this.userService.user()', this.userService.user());
-    this.owner.update( () => this.userService.user() );
+    // console.log('this.userService.user()', this.userService.user());
+    // this.owner.update( () => this.userService.user() );
 
     if (this.offererParamId()) {
       this.userService

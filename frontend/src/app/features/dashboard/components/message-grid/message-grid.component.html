@@ -3,18 +3,19 @@
   style="min-width: 250px"
 >
 
-  @if(this.owner()) {
+  @if (this.userService.user()) {
     <app-profile-avatar
-      [user]="owner"
       [classes]="{
         'mainContainer': 'col-12 flex flex-column align-items-center',
       }"
       [ratingValue]="4"
       [message]="'Mi perfil'"
-      [toLink]="this.owner()!.id"
+      [toLink]="this.userService.user()?.id || ''"
       [isPrivate]="true"
+      [styleAvatar]="{'background-color':'#2196F3', 'color': '#ffffff'}"
     />
   }
+
   <p-divider />
 
   @if ( (this.userService.userMessages().length > 0 || this.paramId() !== null ) ) {

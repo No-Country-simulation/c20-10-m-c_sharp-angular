@@ -12,6 +12,7 @@ export interface User {
   state:            string;
   location:         string;
   userSpecialities: UserSpeciality[];
+  srcImage:         string;
 }
 
 export type UserUpdate = Omit<User, 'id' | 'email'>;
