@@ -10,8 +10,7 @@ import { RatingModule } from 'primeng/rating';
   imports: [CommonModule, FormsModule, RatingModule],
   template: `
     <div
-      class="flex gap-3 border-round w-full h-14rem px-2 py-3 shadow-5"
-      (click)="onNavigate(data().route)">
+      class="flex gap-3 border-round w-full h-14rem px-2 py-3 shadow-5">
       <div class="w-5">
         <div
           class="w-full h-full bg-cover bg-center bg-no-repeat border-round-xs"

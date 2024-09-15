@@ -56,7 +56,7 @@ export const routes: Routes = [
           import('./features/landing/pages/browser-speciality/browser-speciality.component'),
       },
       {
-        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST_ID,
+        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
         title: 'publicacion', //TODO: cambiar el title
         resolve: [],
         loadComponent: () => import('./features/landing/pages/share-post/share-post.component'),
