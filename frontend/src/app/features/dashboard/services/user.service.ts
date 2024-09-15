@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User, UserMessages } from '../../../core/interfaces';
-import { Message } from '../../../core/interfaces/message.interface';
+import { Message, MessageCreatedResponse } from '../../../core/interfaces/message.interface';
 import { ROUTES_PATH } from '../../../core/routes';
 import { FakeUserService } from '../../../shared/services/fake-user.service';
 
@@ -57,7 +57,6 @@ export class UserService {
   }
 
   getAllUserMessages(): Observable<UserMessages[]> { //Promise<any>
-
     return this.userApi.getAllUserMessages().pipe(
       tap( userMessages => this.userMessages.set(userMessages) ),
       catchError((error) => {
@@ -73,13 +72,9 @@ export class UserService {
     );
   }
 
-  addNewUserMessage(idUser: string, message: Message): Observable<any> { //Promise<any>
-
-    //DEMO, cambiar por el servicio real
-    // return this.fakeUserService.addNewUserMessage(idUser, message);
+  addNewUserMessage(idUser: string, message: Message): Observable<MessageCreatedResponse> {
 
     return this.userApi.addNewUserMessage(idUser, message).pipe(
-      tap( userMessages => console.log('Mensaje agregado', userMessages) ),
       catchError((error) => {
         console.error('Error al agregar el mensaje', error);
         this.messageService.add({

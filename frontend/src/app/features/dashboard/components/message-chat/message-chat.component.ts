@@ -8,7 +8,7 @@ import {
   signal,
   ViewChild, WritableSignal,
 } from '@angular/core';
-import { contractor, gridOffererChats } from '../../../../../assets/demo/grid-offerer-chats';
+import { contractor } from '../../../../../assets/demo/grid-offerer-chats';
 import { AvatarModule } from 'primeng/avatar';
 import { DatePipe, JsonPipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,6 +24,7 @@ import { ProfileAvatarComponent } from '../../../../shared/components/profile-av
 import { Message } from '../../../../core/interfaces/message.interface';
 import { MessageModule } from 'primeng/message';
 import { catchError, tap, throwError } from 'rxjs';
+import { getStyleAvatar } from '../../../../shared/utils/stringToColor';
 
 @Component({
   selector: 'app-message-chat',
@@ -104,7 +105,19 @@ export class MessageChatComponent implements OnInit {
       userId: this.userService.user()!.id,
     }
 
-    this.userService.addNewUserMessage(this.offererParamId()!, message);
+    console.log('Message', message);
+
+    this.userService.addNewUserMessage(this.offererParamId()!, message).pipe(
+      tap( message => {
+        console.log('Message added', message);
+        /*this.offererMessages.update( userMsgs => {
+          return {
+            ...userMsgs,
+            messages: [...userMsgs.messages, message]
+          }
+        } );*/
+      }),
+    ).subscribe();
 
     /*const msgs: MessageResponse[] = [...this.offererMessages()!.messages, message] as MessageResponse[];
 
@@ -122,4 +135,6 @@ export class MessageChatComponent implements OnInit {
       }
     });*/
   }
+
+  protected readonly getStyleAvatar = getStyleAvatar;
 }

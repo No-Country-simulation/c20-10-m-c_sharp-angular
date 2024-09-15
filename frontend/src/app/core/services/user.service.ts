@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { User, UserMessages, UserUpdate } from '../interfaces';
-import { Message } from '../interfaces/message.interface';
+import { Message, MessageCreatedResponse } from '../interfaces/message.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -64,8 +64,8 @@ export class UserService {
    *  - userId: string
    * @returns An observable that emits the server response.
    */
-  public addNewUserMessage(userId: string, message: Message): Observable<any> {
-    return this.http.post<any>(`${ this.baseUrl }${ this.userMessagesEndpoint }/${userId} `, message);
+  public addNewUserMessage(userId: string, message: Message): Observable<MessageCreatedResponse> {
+    return this.http.post<MessageCreatedResponse>(`${ this.baseUrl }${ this.userMessagesEndpoint }/${userId} `, message);
   }
 
   /**

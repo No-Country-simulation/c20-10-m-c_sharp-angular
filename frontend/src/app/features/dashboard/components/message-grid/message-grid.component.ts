@@ -20,16 +20,18 @@ import { DividerModule } from 'primeng/divider';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { ROUTES_PATH } from '../../../../core/routes';
 import { UserService } from '../../services/user.service';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
-import { ProfileAvatarComponent } from '../../../../shared/components/profile-avatar/profile-avatar.component';
 import { MessageModule } from 'primeng/message';
-import { tap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { Router } from '@angular/router';
-import { User, UserMessages } from '../../../../core/interfaces';
 import { MessageService } from 'primeng/api';
+import { map } from 'rxjs/operators';
+import { ROUTES_PATH } from '../../../../core/routes';
+import { ProfileAvatarComponent } from '../../../../shared/components/profile-avatar/profile-avatar.component';
+import { UserMessages } from '../../../../core/interfaces';
+import { getStyleAvatar } from '../../../../shared/utils/stringToColor';
 
 @Component({
   selector: 'app-message-grid',
@@ -69,7 +71,6 @@ export class MessageGridComponent implements OnInit {
   readonly paramId = signal<string | null>(null);
 
   @ViewChild('cm') cm!: ContextMenu;
-  // owner = signal<User | undefined>( undefined );
   value!: number;
 
   protected readonly ROUTES_PATH = ROUTES_PATH;
@@ -77,52 +78,68 @@ export class MessageGridComponent implements OnInit {
 
   ngOnInit(): void {
     this.paramId.set(this.offererParamId());
-    this.userService.getAllUserMessages().pipe().subscribe();
 
-    // console.log('this.userService.user()', this.userService.user());
-    // this.owner.update( () => this.userService.user() );
+    if(!this.offererParamId()) {
+      this.userService.getAllUserMessages().subscribe( res => this.messages.set(res) );
+      return;
+    }
+
 
     if (this.offererParamId()) {
       this.userService
         .getProfilesList()
         .pipe(
-          tap(profiles => {
-            const profile = profiles.find(profile => profile.id === this.offererParamId());
-
+          map( profiles => {
+            return profiles.find(profile => profile.id === this.offererParamId());
+          }),
+          switchMap( profile => {
             if (!profile) {
-              this.offererParamId.set(null);
-              this.userService.userMessages.set([]);
-              this.router.navigate([
-                '/',
-                ROUTES_PATH.DASHBOARD_HOME,
-                ROUTES_PATH.DASHBOARD_MESSAGES,
-                '',
-              ]);
-
-              this.messageService.add({
-                key: 'toast',
-                severity: 'error',
-                summary: 'Error al obtener los mensajes de usuario',
-                detail: `No se ha encontrado el usuario con id: ${this.paramId()}`,
-              });
-
-              this.paramId.set( null );
-              return;
+              throw new Error('Perfil no encontrado');
             }
 
+            return this.userService.getAllUserMessages().pipe(
+              map(userMessages => ({ profile, userMessages }))
+            );
+          })
+        )
+        .subscribe({
+          next: ({ profile, userMessages }) => {
             const newUserMsg: UserMessages = {
-              id: profile.id,
+              id: 0,
+              idOtherUser: profile.id,
               name: `${profile.firstName} ${profile.lastName}`,
               image: '',
               createdAt: new Date(),
               messages: [],
             };
 
-            this.userService.userMessages.update( msgs => [...msgs, newUserMsg] );
-            this.messages.set([...this.userService.userMessages()]);
-          })
-        )
-        .subscribe();
+            const userMessagesFiltered = userMessages.find(msg => msg.idOtherUser === newUserMsg.idOtherUser);
+            this.messages.set( !userMessagesFiltered ? [...userMessages, newUserMsg] : userMessages );
+            this.userService.userMessages.set(!userMessagesFiltered ? [...userMessages, newUserMsg] : userMessages);
+          },
+          error: () => {
+            this.offererParamId.set(null);
+            this.userService.userMessages.set([]);
+            this.router.navigate([
+              '/',
+              ROUTES_PATH.DASHBOARD_HOME,
+              ROUTES_PATH.DASHBOARD_MESSAGES,
+              '',
+            ]);
+
+            this.messageService.add({
+              key: 'toast',
+              severity: 'error',
+              summary: 'Error al obtener los mensajes de usuario',
+              detail: `No se ha encontrado el usuario con id: ${this.paramId()}`,
+            });
+
+            this.paramId.set( null );
+            return;
+          }
+        });
     }
   }
+
+  protected readonly getStyleAvatar = getStyleAvatar;
 }

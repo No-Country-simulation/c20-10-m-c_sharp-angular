@@ -31,7 +31,8 @@ export interface UserSpeciality {
 }
 
 export interface UserMessages {
-  id:        string;
+  id:        number;
+  idOtherUser: string;
   name:      string;
   image:     string;
   createdAt: Date;

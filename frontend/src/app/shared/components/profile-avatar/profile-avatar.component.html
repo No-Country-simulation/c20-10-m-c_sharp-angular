@@ -6,7 +6,7 @@
       [label]="user()?.firstName ? user()!.firstName.at(0) : 'U'"
       size="xlarge"
       shape="circle"
-      [style]="styleAvatar"
+      [style]="getStyleAvatar(user()?.firstName ? user()!.firstName + ' ' + user()!.lastName : 'Usuario Sin Nombre')"
     ></p-avatar>
   }
   <div class="flex flex-column">
@@ -28,6 +28,4 @@
       </a>
     </div>
   </div>
-
-  User: {{ user()?.firstName | json }}
 </div>

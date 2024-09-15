@@ -8,6 +8,7 @@ import { UserService } from '../../../features/dashboard/services/user.service';
 import { User } from '../../../core/interfaces';
 import { tap } from 'rxjs';
 import { JsonPipe } from '@angular/common';
+import { getStyleAvatar } from '../../utils/stringToColor';
 
 @Component({
   selector: 'app-profile-avatar',
@@ -45,4 +46,6 @@ export class ProfileAvatarComponent implements OnInit {
         .subscribe();
     }
   }
+
+  protected readonly getStyleAvatar = getStyleAvatar;
 }

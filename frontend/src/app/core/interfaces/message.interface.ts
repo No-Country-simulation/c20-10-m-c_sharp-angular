@@ -10,3 +10,8 @@ export interface MessageResponse {
   createdAt: string;
   userId:    string;
 }
+
+export interface MessageCreatedResponse {
+  "chatId": number,
+  "messageId": number
+}

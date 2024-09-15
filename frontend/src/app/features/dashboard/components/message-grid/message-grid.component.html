@@ -12,10 +12,9 @@
       [message]="'Mi perfil'"
       [toLink]="this.userService.user()?.id || ''"
       [isPrivate]="true"
-      [styleAvatar]="{'background-color':'#2196F3', 'color': '#ffffff'}"
+      [styleAvatar]="getStyleAvatar(this.userService.user()?.firstName + ' ' + this.userService.user()?.lastName)"
     />
   }
-
   <p-divider />
 
   @if ( (this.userService.userMessages().length > 0 || this.paramId() !== null ) ) {
@@ -36,7 +35,7 @@
     >
       <ng-template pTemplate="list" let-users>
         <div
-          [routerLink]="['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, user.id]"
+          [routerLink]="['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, user.idOtherUser]"
           class="col-12 cursor-pointer"
           *ngFor="let user of users; let first = first"
         >
@@ -44,7 +43,16 @@
             class="p-2 hover:surface-hover border-round border-1 border-transparent transition-all transition-duration-200"
           >
             <div class="flex flex-wrap p-2 align-items-center gap-3">
-              <p-avatar image="{{ user.image ? user.image : '/assets/avatar/stephenshaw.png' }}" size="normal" shape="circle"></p-avatar>
+              @if (this.userService.user()?.srcImage) {
+                <p-avatar image="{{ user.name.srcImage }}" size="normal" shape="circle"></p-avatar>
+              } @else {
+                <p-avatar
+                  [label]="user.name ? user.name.at(0) : 'U'"
+                  size="normal"
+                  shape="circle"
+                  [style]="getStyleAvatar(user.name)"
+                ></p-avatar>
+              }
               <div class="flex-1 flex flex-column gap-1">
               <span class="font-bold">
                   {{ user.name }}
