@@ -1,9 +1,10 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { UserService as UserApiService } from '../../../core/services';
+import { JwtService, UserService as UserApiService } from '../../../core/services';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { User, UserMessage } from '../../../core/interfaces';
+import { User, UserMessages } from '../../../core/interfaces';
+import { Message, MessageCreatedResponse } from '../../../core/interfaces/message.interface';
 import { ROUTES_PATH } from '../../../core/routes';
 import { FakeUserService } from '../../../shared/services/fake-user.service';
 
@@ -15,8 +16,10 @@ export class UserService {
   private userApi = inject(UserApiService);
   private fakeUserService = inject(FakeUserService);
   private messageService = inject(MessageService);
+  private jwtService = inject(JwtService);
   private router = inject(Router);
   user = signal<User | undefined>(undefined);
+  userMessages = signal<UserMessages[]>([]);
 
   getUserData(): Observable<User> {
     return this.userApi.getUserData().pipe(
@@ -25,43 +28,37 @@ export class UserService {
       }),
       catchError((error) => {
         console.error('Error al obtener los datos de usuario', error);
+        this.jwtService.clearTokens();
         this.messageService.add({
           key: 'toast',
           severity: 'error',
           summary: 'Error al obtener los datos de usuario',
           detail: `Inicie sesión nuevamente`,
         });
-        this.router.navigate(['/', ROUTES_PATH.AUTH_LOGIN]);
+
+        setTimeout(() => {
+          this.router.navigate(['/', ROUTES_PATH.AUTH_LOGIN]);
+        }, 500);
+
         return throwError(() => 'Error al obtener los datos de usuario');
       })
     );
   }
 
-  getUserMessagesFromOneUser(idUser: string): Promise<any> { //Observable<any>
-
-    //DEMO, cambiar por el servicio real
-    return this.fakeUserService.getUserMessagesFromOneUser(idUser);
-
-    /*return this.userApi.getUserMessagesFromOneUser(idUser).pipe(
+  getUserMessagesFromOneUser(idUser: string): Observable<UserMessages> {
+    return this.userApi.getUserMessagesFromOneUser(idUser).pipe(
       catchError((error) => {
-        console.error('Error al obtener los mensajes de usuario', error);
-        this.messageService.add({
-          key: 'toast',
-          severity: 'error',
-          summary: 'Error al obtener los mensajes de usuario',
-          detail: ``,
-        });
-        return throwError(() => 'Error al obtener los mensajes de usuario');
+
+        if( error.includes('404') ) throwError(() => ({ 'errorStatus': 404, 'errorMessage': 'Mensajes del usuario no encontrados' }));
+
+        return throwError(() => error);
       })
-    );*/
+    );
   }
 
-  getAllUserMessages(): Promise<any> { //Observable<any>
-
-    //DEMO, cambiar por el servicio real
-    return this.fakeUserService.getAllUserMessages();
-
-    /*return this.userApi.getAllUserMessages().pipe(
+  getAllUserMessages(): Observable<UserMessages[]> { //Promise<any>
+    return this.userApi.getAllUserMessages().pipe(
+      tap( userMessages => this.userMessages.set(userMessages) ),
       catchError((error) => {
         console.error('Error al obtener la lista de chats', error);
         this.messageService.add({
@@ -70,28 +67,42 @@ export class UserService {
           summary: 'Error al obtener la lista de chats',
           detail: ``,
         });
-        return throwError(() => 'Error al obtener la lista de chats');
+        return throwError(() => error);
       })
-    );*/
+    );
   }
 
-  addNewUserMessage(idUser: string, message: UserMessage): Promise<any> { //Observable<any>
+  addNewUserMessage(idUser: string, message: Message): Observable<MessageCreatedResponse> {
 
-    //DEMO, cambiar por el servicio real
-    return this.fakeUserService.addNewUserMessage(idUser, message);
-
-    /*return this.userApi.getAllUserMessages().pipe(
+    return this.userApi.addNewUserMessage(idUser, message).pipe(
       catchError((error) => {
-        console.error('Error al agregar el nuevo mensaje', error);
+        console.error('Error al agregar el mensaje', error);
         this.messageService.add({
           key: 'toast',
           severity: 'error',
-          summary: 'Error al agregar el nuevo mensaje',
+          summary: 'Error al agregar el mensaje',
           detail: ``,
         });
-        return throwError(() => 'Error al agregar el nuevo mensaje');
+        return throwError(() => 'Error al agregar el mensaje');
       })
-    );*/
+    );
+  }
+
+  getProfilesList(): Observable<User[]> {
+    return this.userApi.getProfilesList().pipe(
+      catchError((error) => {
+        console.error('Error la lista de perfiles de usuario', error);
+        this.jwtService.clearTokens();
+        this.messageService.add({
+          key: 'toast',
+          severity: 'error',
+          summary: 'Error la lista de perfiles de usuario',
+          detail: `Verifique con el administrador`,
+        });
+
+        return throwError(() => 'Error la lista de perfiles de usuario');
+      })
+    );
   }
 
 }

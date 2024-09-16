@@ -13,6 +13,11 @@ export const ROUTES_PATH = {
   LANDING_PROFILE_CLIENT: '',
 
   DASHBOARD_HOME: 'dashboard',
+
+  DASHBOARD_PROFILE: 'perfil',
+  DASHBOARD_PUBLIC_PROFILE_USER: 'perfil/publico',
+  DASHBOARD_PUBLIC_PROFILE_USER_ID: 'perfil/publico/:id',
+
   DASHBOARD_MESSAGES: 'mensajes',
   DASHBOARD_MESSAGES_INBOX: 'mensajes/:id',
   DASHBOARD_CREATE_POST: 'crear-publicacion',

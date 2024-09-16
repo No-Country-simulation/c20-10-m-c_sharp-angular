@@ -10,7 +10,7 @@ import { RouterOutlet } from '@angular/router';
   imports: [CommonModule, RouterOutlet, LandingFooterComponent, LandingHeaderComponent],
   template: `
     <app-landing-header />
-    <div class="container-app c-min-h px-4">
+    <div class="container-app">
       <router-outlet></router-outlet>
     </div>
     <!-- <app-landing-footer /> -->
