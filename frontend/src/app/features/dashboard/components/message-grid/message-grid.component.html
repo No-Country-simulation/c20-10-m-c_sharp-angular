@@ -18,14 +18,11 @@
   <p-divider />
 
   @if ( (this.userService.userMessages().length > 0 || this.paramId() !== null ) ) {
-    <div class="col-12 w-full">
-      <p-inputGroup>
-        <p-inputGroupAddon>
-          <i class="pi pi-search"></i>
-        </p-inputGroupAddon>
-        <input type="text" pInputText placeholder="Buscar" />
-      </p-inputGroup>
-    </div>
+    <app-search-box
+      [placeholder]="'Buscar usuario'"
+      (onValue)="searchChatUser($event)"
+      [initialValue]="initialValue"
+    ></app-search-box>
 
     <p-dataView
       #dv_chats

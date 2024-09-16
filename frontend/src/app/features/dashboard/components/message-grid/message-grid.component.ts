@@ -30,6 +30,7 @@ import { ROUTES_PATH } from '../../../../core/routes';
 import { ProfileAvatarComponent } from '../../../../shared/components/profile-avatar/profile-avatar.component';
 import { UserMessages } from '../../../../core/interfaces';
 import { getStyleAvatar } from '../../../../shared/utils/stringToColor';
+import { SearchBoxComponent } from '../../../../shared/components/search-box/search-box.component';
 
 @Component({
   selector: 'app-message-grid',
@@ -55,6 +56,7 @@ import { getStyleAvatar } from '../../../../shared/utils/stringToColor';
     ProfileAvatarComponent,
     MessageModule,
     JsonPipe,
+    SearchBoxComponent,
   ],
   templateUrl: './message-grid.component.html',
   styles: ``,
@@ -65,11 +67,14 @@ export class MessageGridComponent implements OnInit {
   private messageService = inject(MessageService);
   private route = inject(ActivatedRoute);
 
+  protected readonly getStyleAvatar = getStyleAvatar;
+
   readonly userService = inject(UserService);
   readonly paramId = signal<string | null>(null);
 
   @ViewChild('cm') cm!: ContextMenu;
   value!: number;
+  initialValue = '';
 
   protected readonly ROUTES_PATH = ROUTES_PATH;
   protected readonly messages = signal<UserMessages[]>([]);
@@ -78,13 +83,13 @@ export class MessageGridComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.paramId.set(id);
 
-    this.route.paramMap.subscribe( params => {
+    this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.paramId.set(id);
     });
 
-    if(!id) {
-      this.userService.getAllUserMessages().subscribe( res => this.messages.set(res) );
+    if (!id) {
+      this.userService.getAllUserMessages().subscribe(res => this.messages.set(res));
       return;
     }
 
@@ -92,17 +97,17 @@ export class MessageGridComponent implements OnInit {
       this.userService
         .getProfilesList()
         .pipe(
-          map( profiles => {
+          map(profiles => {
             return profiles.find(profile => profile.id === id);
           }),
-          switchMap( profile => {
+          switchMap(profile => {
             if (!profile) {
               throw new Error('Perfil no encontrado');
             }
 
-            return this.userService.getAllUserMessages().pipe(
-              map(userMessages => ({ profile, userMessages }))
-            );
+            return this.userService
+              .getAllUserMessages()
+              .pipe(map(userMessages => ({ profile, userMessages })));
           })
         )
         .subscribe({
@@ -116,12 +121,16 @@ export class MessageGridComponent implements OnInit {
               messages: [],
             };
 
-            const userMessagesFiltered = userMessages.find(msg => msg.idOtherUser === newUserMsg.idOtherUser);
-            this.messages.set( !userMessagesFiltered ? [...userMessages, newUserMsg] : userMessages );
-            this.userService.userMessages.set(!userMessagesFiltered ? [...userMessages, newUserMsg] : userMessages);
+            const userMessagesFiltered = userMessages.find(
+              msg => msg.idOtherUser === newUserMsg.idOtherUser
+            );
+            this.messages.set(!userMessagesFiltered ? [...userMessages, newUserMsg] : userMessages);
+            this.userService.userMessages.set(
+              !userMessagesFiltered ? [...userMessages, newUserMsg] : userMessages
+            );
           },
           error: () => {
-            this.userService.getAllUserMessages().subscribe( res => this.messages.set(res) );
+            this.userService.getAllUserMessages().subscribe(res => this.messages.set(res));
             this.router.navigate([
               '/',
               ROUTES_PATH.DASHBOARD_HOME,
@@ -136,12 +145,14 @@ export class MessageGridComponent implements OnInit {
               detail: `No se ha encontrado el usuario con id: ${this.paramId()}`,
             });
 
-            this.paramId.set( null );
+            this.paramId.set(null);
             return;
-          }
+          },
         });
     }
   }
 
-  protected readonly getStyleAvatar = getStyleAvatar;
+  searchChatUser(value: string): void {
+    this.messages.set( this.userService.userMessages().filter( userMsg => userMsg.name.toLocaleLowerCase().includes(value.toLocaleLowerCase()) ) );
+  }
 }
