@@ -2,11 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  Input,
   OnInit,
   signal,
   ViewChild,
-  WritableSignal,
 } from '@angular/core';
 import { Button, ButtonDirective } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
@@ -25,7 +23,7 @@ import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
 import { switchMap } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { map } from 'rxjs/operators';
 import { ROUTES_PATH } from '../../../../core/routes';
@@ -65,8 +63,8 @@ import { getStyleAvatar } from '../../../../shared/utils/stringToColor';
 export class MessageGridComponent implements OnInit {
   private router = inject(Router);
   private messageService = inject(MessageService);
+  private route = inject(ActivatedRoute);
 
-  @Input() offererParamId!: WritableSignal<string | null>;
   readonly userService = inject(UserService);
   readonly paramId = signal<string | null>(null);
 
@@ -77,20 +75,25 @@ export class MessageGridComponent implements OnInit {
   protected readonly messages = signal<UserMessages[]>([]);
 
   ngOnInit(): void {
-    this.paramId.set(this.offererParamId());
+    const id = this.route.snapshot.paramMap.get('id');
+    this.paramId.set(id);
 
-    if(!this.offererParamId()) {
+    this.route.paramMap.subscribe( params => {
+      const id = params.get('id');
+      this.paramId.set(id);
+    });
+
+    if(!id) {
       this.userService.getAllUserMessages().subscribe( res => this.messages.set(res) );
       return;
     }
 
-
-    if (this.offererParamId()) {
+    if (id) {
       this.userService
         .getProfilesList()
         .pipe(
           map( profiles => {
-            return profiles.find(profile => profile.id === this.offererParamId());
+            return profiles.find(profile => profile.id === id);
           }),
           switchMap( profile => {
             if (!profile) {
@@ -118,8 +121,7 @@ export class MessageGridComponent implements OnInit {
             this.userService.userMessages.set(!userMessagesFiltered ? [...userMessages, newUserMsg] : userMessages);
           },
           error: () => {
-            this.offererParamId.set(null);
-            this.userService.userMessages.set([]);
+            this.userService.getAllUserMessages().subscribe( res => this.messages.set(res) );
             this.router.navigate([
               '/',
               ROUTES_PATH.DASHBOARD_HOME,

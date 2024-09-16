@@ -1,6 +1,6 @@
 <div
-  class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
-  style="min-width: 250px"
+  class="border-1 border-blue-50 grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
+  style="min-width: 250px; min-height: calc(100vh - 50px);"
 >
 
   @if (this.userService.user()) {
@@ -10,7 +10,7 @@
       }"
       [ratingValue]="4"
       [message]="'Mi perfil'"
-      [toLink]="this.userService.user()?.id || ''"
+      [offererParamId]="this.paramId"
       [isPrivate]="true"
       [styleAvatar]="getStyleAvatar(this.userService.user()?.firstName + ' ' + this.userService.user()?.lastName)"
     />

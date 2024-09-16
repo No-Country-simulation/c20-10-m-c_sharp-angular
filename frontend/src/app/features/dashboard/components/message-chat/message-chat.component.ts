@@ -3,12 +3,10 @@ import {
   Component,
   ElementRef,
   inject,
-  Input,
   OnInit,
   signal,
-  ViewChild, WritableSignal,
+  ViewChild,
 } from '@angular/core';
-import { contractor } from '../../../../../assets/demo/grid-offerer-chats';
 import { AvatarModule } from 'primeng/avatar';
 import { DatePipe, JsonPipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,7 +21,8 @@ import { UserMessages } from '../../../../core/interfaces';
 import { ProfileAvatarComponent } from '../../../../shared/components/profile-avatar/profile-avatar.component';
 import { Message } from '../../../../core/interfaces/message.interface';
 import { MessageModule } from 'primeng/message';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { getStyleAvatar } from '../../../../shared/utils/stringToColor';
 
 @Component({
@@ -49,8 +48,8 @@ import { getStyleAvatar } from '../../../../shared/utils/stringToColor';
 })
 export class MessageChatComponent implements OnInit {
 
-  protected readonly owner = contractor;
   protected readonly ROUTES_PATH = ROUTES_PATH;
+  protected readonly getStyleAvatar = getStyleAvatar;
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -58,42 +57,36 @@ export class MessageChatComponent implements OnInit {
 
   @ViewChild('textChat') textChat!: ElementRef;
 
-  // offererParamId = signal<string | null>(this.route.snapshot.paramMap.get('id'));
-  @Input() offererParamId!: WritableSignal<string | null>;
+  offererParamId = signal<string | null>(null);
   offererMessages = signal<UserMessages | undefined>( undefined );
 
   messageNotData = [{ severity: 'info', summary: 'No hay mensajes que mostrar', detail: '' }];
 
   ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.offererParamId.set(id);
 
-    if(!this.offererParamId()) {
-      //Redirect to the first chat if there is one
-      /*const firstChat = this.userService.userMessages().length > 0 && this.userService.userMessages()[0].id;
-      this.router.navigate(['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, firstChat]);*/
-      return;
-    }
-
-    this.userService.getUserMessagesFromOneUser(this.offererParamId()!).pipe(
-      tap( usersMessages => {
-        this.offererMessages.set(usersMessages);
-      }),
-      catchError((error) => {
-        this.offererMessages.set(undefined);
-        return throwError(() => error);
-      })
-    ).subscribe();
-
-    /*this.route.paramMap.subscribe( params => {
+    this.route.paramMap.subscribe( params => {
       const id = params.get('id');
       this.offererParamId.set(id);
-      const dataOfferer = this.userService.getUserMessagesFromOneUser(this.offererParamId()!);
-      const updatedMessages = gridOffererChats.find(offerer => dataOfferer[0].id === offerer.id);
-      dataOfferer[0].messages = updatedMessages?.messages;
-      this.offererMessages.set(dataOfferer[0]);
-    });*/
+      this.userService.getUserMessagesFromOneUser(id!).pipe(
+        tap( usersMessages => {
+          this.offererMessages.set(usersMessages);
+        }),
+        catchError((error) => {
+          this.offererMessages.set(undefined);
+          return throwError(() => error);
+        })
+      ).subscribe();
+    });
+
+    if(!id) {
+      this.router.navigate(['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, '']);
+      return;
+    }
   }
 
-  async getInputValue() {
+  getInputValue() {
 
     if(!this.textChat.nativeElement.value) {
       return;
@@ -105,36 +98,23 @@ export class MessageChatComponent implements OnInit {
       userId: this.userService.user()!.id,
     }
 
-    console.log('Message', message);
-
     this.userService.addNewUserMessage(this.offererParamId()!, message).pipe(
-      tap( message => {
-        console.log('Message added', message);
-        /*this.offererMessages.update( userMsgs => {
-          return {
-            ...userMsgs,
-            messages: [...userMsgs.messages, message]
-          }
-        } );*/
-      }),
-    ).subscribe();
-
-    /*const msgs: MessageResponse[] = [...this.offererMessages()!.messages, message] as MessageResponse[];
-
-    const actualOfferer: UserMessages = {
-      ...this.offererMessages(),
-      messages: msgs
-    }
-
-    this.textChat.nativeElement.value = '';
-    this.textChat.nativeElement.focus();
-    this.offererMessages.set(actualOfferer);
-    gridOffererChats.forEach( (offerer, index) => {
-      if(offerer.id === actualOfferer.id) {
-        gridOffererChats[index] = actualOfferer;
+      map( res => res),
+      switchMap( () => this.userService.getUserMessagesFromOneUser(this.offererParamId()!) ),
+    ).subscribe({
+      next: (res) => {
+        this.offererMessages.set(res);
+        this.textChat.nativeElement.value = '';
+      },
+      error: () => {
+        this.offererParamId.set(null);
       }
-    });*/
+    });
   }
 
-  protected readonly getStyleAvatar = getStyleAvatar;
+  onGetUserMessages() {
+    this.userService.getUserMessagesFromOneUser(this.offererParamId()!).pipe(
+      tap( res => this.offererMessages.set(res) ),
+    ).subscribe();
+  }
 }

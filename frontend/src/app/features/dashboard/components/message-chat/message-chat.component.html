@@ -1,37 +1,50 @@
 <div
-  class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full h-full"
-  style="position: relative;"
+  class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
+  style="position: relative; min-height: calc(100vh - 50px);"
+
 >
   @if ( this.userService.userMessages().length > 0 || this.offererParamId() ) {
-    <div class="col-12 flex justify-content-between align-items-center">
-      <app-profile-avatar
-        [classes]="{
+
+    @if( this.offererParamId() ) {
+      <div class="col-12 flex justify-content-between align-items-center">
+        <app-profile-avatar
+          [classes]="{
           'mainContainer': 'col-12 flex align-items-center gap-3',
         }"
-        [ratingValue]="3"
-        [toLink]="offererParamId!() || ''"
-      />
-      <div>
-        <p-button
-          size="large"
-          label=""
-          icon="pi pi-refresh"
-          styleClass="p-button-text"
-        ></p-button>
+          [ratingValue]="3"
+          [offererParamId]="this.offererParamId"
+        />
+        <div>
+          <p-button
+            size="large"
+            label=""
+            icon="pi pi-refresh"
+            styleClass="p-button-text"
+            (click)="onGetUserMessages()"
+          ></p-button>
+        </div>
       </div>
-    </div>
-
-    <p-divider />
+      <p-divider />
+    }
 
     <div
-      class="col-12 -my-2"
-      style="flex-basis: 70%;"
+      class="col-12 overflow-y-auto"
+      style="max-height: calc(80dvh - 200px);"
     >
-      <div class="overflow-y-auto" style="max-height: 550px; min-height: 550px">
+      <div>
         @for (message of offererMessages()?.messages; track $index) {
           <div class="col-12 gap-2 flex align-items-center pr-3 {{ message.userId === this.userService.user()?.id ? 'justify-content-end' : 'justify-content-start'}}">
             @if( message.userId !== this.userService.user()?.id ) {
-              <p-avatar image="{{ (offererMessages()?.image || offererMessages()?.image === '/assets/avatar/annafali.png') ? offererMessages()?.image : '/assets/avatar/onyamalimba.png'  }}" size="normal" shape="circle"></p-avatar>
+              @if ( offererMessages()?.image ) {
+                <p-avatar image="{{ offererMessages()?.image }}" size="normal" shape="circle"></p-avatar>
+              } @else {
+                <p-avatar
+                  [label]="offererMessages()?.name ? offererMessages()!.name.at(0) : 'U'"
+                  size="normal"
+                  shape="circle"
+                  [style]="getStyleAvatar(offererMessages()?.name ? offererMessages()!.name : 'Usuario Sin Nombre')"
+                ></p-avatar>
+              }
               <span class="font-light">{{ offererMessages()?.name }}</span>
             } @else {
               <span class="font-light font-italic text-right">Tu</span>

@@ -45,7 +45,7 @@ export class UserService {
     );
   }
 
-  getUserMessagesFromOneUser(idUser: string): Observable<UserMessages> { //Promise<UserMessages>
+  getUserMessagesFromOneUser(idUser: string): Observable<UserMessages> {
     return this.userApi.getUserMessagesFromOneUser(idUser).pipe(
       catchError((error) => {
 
