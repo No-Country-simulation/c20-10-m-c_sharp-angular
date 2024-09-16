@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User, UserMessages } from '../../../core/interfaces';
-import { Message } from '../../../core/interfaces/message.interface';
+import { Message, MessageCreatedResponse } from '../../../core/interfaces/message.interface';
 import { ROUTES_PATH } from '../../../core/routes';
 import { FakeUserService } from '../../../shared/services/fake-user.service';
 
@@ -45,34 +45,18 @@ export class UserService {
     );
   }
 
-  getUserMessagesFromOneUser(idUser: string): Observable<UserMessages> { //Promise<UserMessages>
-
-    //DEMO, cambiar por el servicio real
-    // return this.fakeUserService.getUserMessagesFromOneUser(idUser);
-    console.log('Disparando peticion', idUser);
-
+  getUserMessagesFromOneUser(idUser: string): Observable<UserMessages> {
     return this.userApi.getUserMessagesFromOneUser(idUser).pipe(
-      tap((user) => {
-        console.log('Mensajes de usuario', user);
-      }),
       catchError((error) => {
-        console.error('Error al obtener los mensajes de usuario', error);
-        this.messageService.add({
-          key: 'toast',
-          severity: 'error',
-          summary: 'Error al obtener los mensajes de usuario',
-          detail: ``,
-        });
-        return throwError(() => 'Error al obtener los mensajes de usuario');
+
+        if( error.includes('404') ) throwError(() => ({ 'errorStatus': 404, 'errorMessage': 'Mensajes del usuario no encontrados' }));
+
+        return throwError(() => error);
       })
     );
   }
 
   getAllUserMessages(): Observable<UserMessages[]> { //Promise<any>
-
-    //DEMO, cambiar por el servicio real
-    // return this.fakeUserService.getAllUserMessages();
-
     return this.userApi.getAllUserMessages().pipe(
       tap( userMessages => this.userMessages.set(userMessages) ),
       catchError((error) => {
@@ -88,13 +72,9 @@ export class UserService {
     );
   }
 
-  addNewUserMessage(idUser: string, message: Message): Observable<any> { //Promise<any>
-
-    //DEMO, cambiar por el servicio real
-    // return this.fakeUserService.addNewUserMessage(idUser, message);
+  addNewUserMessage(idUser: string, message: Message): Observable<MessageCreatedResponse> {
 
     return this.userApi.addNewUserMessage(idUser, message).pipe(
-      tap( userMessages => console.log('Mensaje agregado', userMessages) ),
       catchError((error) => {
         console.error('Error al agregar el mensaje', error);
         this.messageService.add({

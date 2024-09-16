@@ -1,31 +1,28 @@
 <div
-  class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
-  style="min-width: 250px"
+  class="border-1 border-blue-50 grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
+  style="min-width: 250px; min-height: calc(100vh - 50px);"
 >
 
-  @if(this.owner()) {
+  @if (this.userService.user()) {
     <app-profile-avatar
-      [user]="owner"
       [classes]="{
         'mainContainer': 'col-12 flex flex-column align-items-center',
       }"
       [ratingValue]="4"
       [message]="'Mi perfil'"
-      [toLink]="this.owner()!.id"
+      [offererParamId]="this.paramId"
       [isPrivate]="true"
+      [styleAvatar]="getStyleAvatar(this.userService.user()?.firstName + ' ' + this.userService.user()?.lastName)"
     />
   }
   <p-divider />
 
   @if ( (this.userService.userMessages().length > 0 || this.paramId() !== null ) ) {
-    <div class="col-12 w-full">
-      <p-inputGroup>
-        <p-inputGroupAddon>
-          <i class="pi pi-search"></i>
-        </p-inputGroupAddon>
-        <input type="text" pInputText placeholder="Buscar" />
-      </p-inputGroup>
-    </div>
+    <app-search-box
+      [placeholder]="'Buscar usuario'"
+      (onValue)="searchChatUser($event)"
+      [initialValue]="initialValue"
+    ></app-search-box>
 
     <p-dataView
       #dv_chats
@@ -35,22 +32,34 @@
     >
       <ng-template pTemplate="list" let-users>
         <div
-          [routerLink]="['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, user.id]"
-          class="col-12 cursor-pointer"
+          [routerLink]="['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, user.idOtherUser]"
+          class="col-12"
+          [ngClass]="{'cursor-pointer': !isMobile}"
           *ngFor="let user of users; let first = first"
         >
           <li
-            class="p-2 hover:surface-hover border-round border-1 border-transparent transition-all transition-duration-200"
+            class="p-2 hover:surface-hover border-round border-1 border-transparent transition-all transition-duration-200 mobile-clickable"
+            [ngClass]="{'mobile-clickable': isMobile}"
+            (click)="emitDisplayModal()"
           >
             <div class="flex flex-wrap p-2 align-items-center gap-3">
-              <p-avatar image="{{ user.image ? user.image : '/assets/avatar/stephenshaw.png' }}" size="normal" shape="circle"></p-avatar>
+              @if (this.userService.user()?.srcImage) {
+                <p-avatar image="{{ user.name.srcImage }}" size="normal" shape="circle"></p-avatar>
+              } @else {
+                <p-avatar
+                  [label]="user.name ? user.name.at(0) : 'U'"
+                  size="normal"
+                  shape="circle"
+                  [style]="getStyleAvatar(user.name)"
+                ></p-avatar>
+              }
               <div class="flex-1 flex flex-column gap-1">
-              <span class="font-bold">
+              <span class="font-bold text-sm">
                   {{ user.name }}
               </span>
                 <div class="flex align-items-center gap-2">
-                  <i class="pi pi-calendar-times text-sm"></i>
-                  <span>
+                  <i class="pi pi-calendar-times text-xs"></i>
+                  <span class="text-xs">
                 {{ user.createdAt | date: 'dd/MM/yyyy' }}
               </span>
                 </div>

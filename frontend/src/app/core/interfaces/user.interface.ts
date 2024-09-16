@@ -18,6 +18,7 @@ export interface User {
   creditCard: boolean;
   cash: boolean;
   userSpecialities: UserSpeciality[];
+  srcImage:         string;
 }
 
 export type UserUpdate = Omit<User, 'id' | 'email'>;
@@ -36,7 +37,8 @@ export interface UserSpeciality {
 }
 
 export interface UserMessages {
-  id:        string;
+  id:        number;
+  idOtherUser: string;
   name:      string;
   image:     string;
   createdAt: Date;
