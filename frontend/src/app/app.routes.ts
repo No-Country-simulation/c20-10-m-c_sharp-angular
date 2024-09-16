@@ -12,7 +12,6 @@ const {
   AUTH_FORGOT_PASSWORD,
   AUTH_REGISTER,
   AUTH_REGISTER_PROFESSIONAL,
-  DASHBOARD_PROFILE,
 } = ROUTES_PATH;
 
 export const routes: Routes = [
@@ -51,12 +50,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/landing/pages/browser-category/browser-category.component'),
       },
-      {
+      /*{
         path: DASHBOARD_PROFILE,
         title: 'Perfil',
         loadComponent: () => import('./features/profile/layout/layout.component'),
         //canActivate: [authGuard],
-      },
+      },*/
       {
         path: '',
         loadComponent: () => import('./features/auth/layout/layout.component'),
@@ -103,8 +102,8 @@ export const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: '**',
-  //   loadComponent: () => import('./features/landing/pages/not-found/not-found.component'),
-  // },
+  {
+    path: '**',
+      redirectTo: ROUTES_PATH.LANDING_HOME,
+  },
 ];

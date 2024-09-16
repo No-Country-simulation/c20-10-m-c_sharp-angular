@@ -5,7 +5,7 @@ export default [
   {
     path: ROUTES_PATH.DASHBOARD_PROFILE, // 'dashboard/perfil'
     title: 'Mi perfil',
-    loadComponent: () => import('./pages/profile/profile.component'),
+    loadComponent: () => import('../profile/layout/layout.component'),
   },
   {
     path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_USER_ID, // 'dashboard/perfil/publico/:id'
