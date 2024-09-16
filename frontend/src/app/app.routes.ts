@@ -3,34 +3,47 @@ import { browserCategoriesResolver } from './features/landing/resolver/browser-c
 import { authGuard } from './core/guards/auth.guard';
 import { ROUTES_PATH } from './core/routes';
 
+const {
+  LANDING_HOME,
+  LANDING_BROWSER,
+  LANDING_BROWSER_CATEGORIES_ID,
+
+  AUTH_LOGIN,
+  AUTH_FORGOT_PASSWORD,
+  AUTH_REGISTER,
+  AUTH_REGISTER_PROFESSIONAL,
+  DASHBOARD_PROFILE,
+} = ROUTES_PATH;
+
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: ROUTES_PATH.LANDING_HOME,
+    redirectTo: LANDING_HOME,
     pathMatch: 'full',
   },
   {
     path: '',
     loadComponent: () =>
+      //import(LANDING_PATH_LAYOUT),
       import('./features/landing/layout/landing-layout/landing-layout.component'),
     children: [
       {
-        path: ROUTES_PATH.LANDING_HOME,
+        path: LANDING_HOME,
         title: 'Inicio',
         loadComponent: () => import('./features/landing/pages/home/home.component'),
       },
       {
         path: '',
-        redirectTo: ROUTES_PATH.LANDING_BROWSER,
+        redirectTo: LANDING_BROWSER,
         pathMatch: 'full',
       },
       {
-        path: ROUTES_PATH.LANDING_BROWSER,
+        path: LANDING_BROWSER,
         title: 'Explorar',
         loadComponent: () => import('./features/landing/pages/browser/browser.component'),
       },
       {
-        path: ROUTES_PATH.LANDING_BROWSER_CATEGORIES_ID,
+        path: LANDING_BROWSER_CATEGORIES_ID,
         title: 'Explorar',
         resolve: {
           categories: browserCategoriesResolver,
@@ -38,17 +51,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/landing/pages/browser-category/browser-category.component'),
       },
-      // {
-      //   path: 'como-funciona',
-      //   title: 'Como funciona',
-      //   loadComponent: () => import('./features/landing/pages/how-it-works/how-it-works.component'),
-      // },
-      // {
-      //   path: 'professional-profile/:professionalId/:professionalName',
-      //   title: 'Perfil profesional',
-      //   loadComponent: () =>
-      //     import('./features/landing/pages/professional-profile/professional-profile.component'),
-      // },
+      {
+        path: DASHBOARD_PROFILE,
+        title: 'Perfil',
+        loadComponent: () => import('./features/profile/layout/layout.component'),
+        //canActivate: [authGuard],
+      },
       {
         path: '',
         loadComponent: () => import('./features/auth/layout/layout.component'),
@@ -56,27 +64,27 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: ROUTES_PATH.AUTH_LOGIN,
+            redirectTo: AUTH_LOGIN,
             pathMatch: 'full',
           },
           {
-            path: ROUTES_PATH.AUTH_LOGIN,
+            path: AUTH_LOGIN,
             title: 'Iniciar sesión',
             loadComponent: () => import('./features/auth/pages/login/login.component'),
           },
           {
-            path: ROUTES_PATH.AUTH_REGISTER,
+            path: AUTH_REGISTER,
             title: 'Registrarse',
             loadComponent: () => import('./features/auth/pages/register/register.component'),
           },
           {
-            path: ROUTES_PATH.AUTH_REGISTER_PROFESSIONAL,
+            path: AUTH_REGISTER_PROFESSIONAL,
             title: 'Registrarse como profesional',
             loadComponent: () =>
               import('./features/auth/pages/register-professional/register-professional.component'),
           },
           {
-            path: ROUTES_PATH.AUTH_FORGOT_PASSWORD,
+            path: AUTH_FORGOT_PASSWORD,
             title: 'Restablecer contraseña',
             loadComponent: () => import('./features/auth/pages/forgot/forgot.component'),
           },
@@ -89,10 +97,11 @@ export const routes: Routes = [
     children: [
       {
         path: ROUTES_PATH.DASHBOARD_HOME,
-        loadComponent: () => import('./features/dashboard/layout/layout-dashboard/layout-dashboard.component'),
+        loadComponent: () =>
+          import('./features/dashboard/layout/layout-dashboard/layout-dashboard.component'),
         loadChildren: () => import('./features/dashboard/dashboard.routes'),
-      }
-    ]
+      },
+    ],
   },
   // {
   //   path: '**',

@@ -6,11 +6,17 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
-  dni:              string;
-  birthDay:         Date;
-  country:          string;
-  state:            string;
-  location:         string;
+  dni: string;
+  birthDay: Date;
+  country: string;
+  state: string;
+  location: string;
+  cellphone: string;
+  contactByPhone: boolean;
+  contactByEmail: boolean;
+  mercadoPago: boolean;
+  creditCard: boolean;
+  cash: boolean;
   userSpecialities: UserSpeciality[];
   srcImage:         string;
 }

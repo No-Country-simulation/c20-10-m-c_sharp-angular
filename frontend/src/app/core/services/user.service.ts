@@ -24,6 +24,10 @@ export class UserService {
     return this.http.get<User>(this.baseUrl + this.userEndpoint);
   }
 
+  public getUserProfileData(): Observable<User> {
+    return this.http.get<User>(this.baseUrl + this.userEndpoint);
+  }
+
   /**
    * Updates the user data.
    *
