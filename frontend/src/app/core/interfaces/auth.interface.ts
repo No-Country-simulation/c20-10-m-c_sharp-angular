@@ -33,3 +33,10 @@ export interface RegisterErrors {
 }
 
 export type RefreshTokenResponse = AuthLoginResponse;
+
+export interface ForgotPassword {
+  email: string;
+  resetCode: string;
+  newPassword: string;
+}
+export type ForgotPasswordResponse = AuthRegisterResponse;

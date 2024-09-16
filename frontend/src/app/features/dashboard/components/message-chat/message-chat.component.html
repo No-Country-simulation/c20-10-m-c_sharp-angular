@@ -1,0 +1,102 @@
+<div
+  class="grid grid-nogutter m-0 p-0 list-none border-1 surface-border border-round-2xl p-3 flex flex-column gap-2 w-full"
+  style="position: relative; min-height: calc(100vh - 50px);"
+
+>
+  @if ( this.userService.userMessages().length > 0 || this.offererParamId() ) {
+
+    @if( this.offererParamId() ) {
+      <div class="col-12 flex justify-content-between align-items-center">
+        <app-profile-avatar
+          [classes]="{
+          'mainContainer': 'col-12 flex align-items-center gap-3',
+        }"
+          [ratingValue]="3"
+          [offererParamId]="this.offererParamId"
+        />
+        <div>
+          <p-button
+            size="large"
+            severity="primary"
+            label=""
+            icon="pi pi-refresh"
+            styleClass="p-button-text"
+            (click)="onGetUserMessages()"
+          ></p-button>
+        </div>
+      </div>
+      <p-divider />
+    }
+
+    <div
+      class="col-12 overflow-y-auto"
+      style="max-height: calc(80dvh - 200px);"
+    >
+      <div>
+        @for (message of offererMessages()?.messages; track $index) {
+          <div class="col-12 gap-2 flex align-items-center pr-3 {{ message.userId === this.userService.user()?.id ? 'justify-content-end' : 'justify-content-start'}}">
+            @if( message.userId !== this.userService.user()?.id ) {
+              @if ( offererMessages()?.image ) {
+                <p-avatar image="{{ offererMessages()?.image }}" size="normal" shape="circle"></p-avatar>
+              } @else {
+                <p-avatar
+                  [label]="offererMessages()?.name ? offererMessages()!.name.at(0) : 'U'"
+                  size="normal"
+                  shape="circle"
+                  [style]="getStyleAvatar(offererMessages()?.name ? offererMessages()!.name : 'Usuario Sin Nombre')"
+                ></p-avatar>
+              }
+              <span class="font-semibold text-xs">{{ offererMessages()?.name }}</span>
+            } @else {
+              <span class="font-semibold font-italic text-right text-xs">Tu</span>
+            }
+          </div>
+
+          <div class="col-12 -my-2 flex {{ message.userId === this.userService.user()?.id ? 'justify-content-end' : 'align-items-start'}}">
+
+            <div class="-my-2 {{ message.userId === this.userService.user()?.id ? '' : 'ml-5'}}" style="min-width: 80%">
+              @if( message.userId === this.userService.user()?.id ) {
+                <p-messages severity="info">
+                  <ng-template pTemplate>
+                    <span class="text-sm sm:text-xs">{{ message.message }}</span>
+                  </ng-template>
+                </p-messages>
+              } @else {
+
+                <p-messages severity="secondary">
+                  <ng-template pTemplate>
+                    <span class="ml-2 text-sm sm:text-xs">{{ message.message }}</span>
+                  </ng-template>
+                </p-messages>
+              }
+              <span class="text-xs w-full flex {{ message.userId === this.userService.user()?.id ? ' justify-content-end' : ''}}">
+                {{ message.createdAt | date:'dd/MMM hh:mm' }}
+              </span>
+            </div>
+          </div>
+      } @empty {
+        <div class="col-12 flex justify-content-center align-items-center">
+          <p-messages [(value)]="messageNotData" [enableService]="false" [closable]="false"></p-messages>
+        </div>
+      }
+      </div>
+    </div>
+
+    <div class="col-12" style="position: absolute; bottom: 0; left: 0; width: 100%;">
+      <div class="gap-2 flex align-items-center justify-content-between h-full p-3">
+        <div class="flex-grow-1">
+          <input #textChat class="w-full" pInputText id="text-chat" type="text" placeholder="Escribe tu mensaje" />
+        </div>
+        <div class="">
+          <p-button label="Enviar" icon="pi pi-send" styleClass="p-button-info hidden md:inline-flex" (click)="getInputValue()"></p-button>
+          <p-button icon="pi pi-send" styleClass="p-button-info inline-flex md:hidden" (click)="getInputValue()"></p-button>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="col-12 flex justify-content-center align-items-center" style="min-height: 250px">
+      <p-message severity="info" text="Elige a otro usuario y envíale un mensaje"></p-message>
+      {{ this.offererParamId() }}
+    </div>
+  }
+</div>

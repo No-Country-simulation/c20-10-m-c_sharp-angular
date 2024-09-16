@@ -3,8 +3,16 @@ export const environment = {
   ENDPOINT: {
     LOGIN: 'identity/login',
     REGISTER: 'identity/register',
-    USER: 'api/Usuario',
+    USER: 'api/user',
     REFRESH_TOKEN: 'identity/refresh',
+    FORGOT_SEND_EMAIL: 'identity/forgotPassword',
+    FORGOT_CONFIRM: 'identity/resetPassword',
+    USER_MESSAGES: 'api/user/messages',
+    USERS_PROFILE: 'api/user/list',
+    CATEGORIES: 'api/categories',
+    SPECIALITIES: 'api/specialities',
+    OFFEROR: 'api/offeror',
+    OFFEROR_SPECIALITIES: 'api/offerorspecialities',
   },
   COOKIES: {
     TOKEN: 'token',

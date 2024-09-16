@@ -1,21 +1,18 @@
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal, DestroyRef } from '@angular/core';
-
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DividerModule } from 'primeng/divider';
+import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
 
-import { Router, RouterModule } from '@angular/router';
+import { AuthFormBase, FormBaseComponent } from '../../components/form-base/form-base.component';
 import { AuthService } from '../../../../core/services/auth.service';
-import { AuthLogin, AuthRegister } from '../../../../core/interfaces/auth.interface';
-import { uppercaseValidator } from '../../validators/uppercase.validator';
-import { specialCharacterValidator } from '../../validators/special-character.validator';
-import { numberValidator } from '../../validators/number.validator';
+import { AuthLogin } from '../../../../core/interfaces/auth.interface';
 
 @Component({
   selector: 'app-register',
@@ -23,52 +20,37 @@ import { numberValidator } from '../../validators/number.validator';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule,
     InputTextModule,
-    PasswordModule,
     ButtonModule,
     CheckboxModule,
     DividerModule,
+    FormBaseComponent,
   ],
-  templateUrl: './register.component.html',
+  template: `
+    <app-form-base
+      [isLogin]="false"
+      [buttonDisabled]="isButtonDisabled()"
+      (formOutput)="handleRegisterWithEmail($event)" />
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class RegisterComponent {
+  private readonly messageService = inject(MessageService);
   private readonly authService = inject(AuthService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
-  public readonly isSubmitted = signal<boolean>(true);
 
-  public readonly registerForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-      specialCharacterValidator(),
-      uppercaseValidator(),
-      numberValidator(),
-    ]),
-    // terms: new FormControl(false, [Validators.requiredTrue]),
-  });
+  public isButtonDisabled = signal<boolean>(false);
 
-  public handleRegisterWithEmail(): void {
-    if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched();
-      return;
-    }
-
-    this.isSubmitted.set(true);
-    const formValue = this.registerForm.value as AuthRegister;
+  public handleRegisterWithEmail(event: AuthFormBase): void {
     this.authService
-      .registerWithEmail(formValue)
+      .registerWithEmail(event)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
-          this.isSubmitted.set(false);
-          this.handleLoginWithEmail(formValue);
+          this.handleLoginWithEmail(event);
         },
         error: err => {
-          this.isSubmitted.set(false);
           console.error('Error', err);
         },
       });
@@ -78,20 +60,26 @@ export default class RegisterComponent {
     this.authService
       .loginWithEmail(formValue)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.router.navigate(['home']));
-  }
-
-  public handleRegisterWithGoogle(): void {
-    console.log('Google!');
-  }
-
-  public get email() {
-    return this.registerForm.get('email');
-  }
-  public get password() {
-    return this.registerForm.get('password');
-  }
-  public get terms() {
-    return this.registerForm.get('terms');
+      .subscribe({
+        next: () => {
+          this.isButtonDisabled.set(false);
+          this.messageService.add({
+            key: 'toast',
+            severity: 'success',
+            summary: 'Sesión iniciada correctamente',
+            detail: `Bienvenido, puedes terminar de llenar tus datos personales`,
+          });
+          this.router.navigate(['/']);
+        },
+        error: err => {
+          this.isButtonDisabled.set(false);
+          this.messageService.add({
+            key: 'toast',
+            severity: 'error',
+            summary: 'Error',
+            detail: `${err}`,
+          });
+        },
+      });
   }
 }

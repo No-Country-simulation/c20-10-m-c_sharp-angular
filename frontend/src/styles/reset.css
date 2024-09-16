@@ -30,13 +30,6 @@ canvas {
   background-size: cover;
 }
 
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;
@@ -55,6 +48,9 @@ select {
 body,
 html {
   margin: 0;
-  height: 100%;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
   scroll-behavior: auto;
 }

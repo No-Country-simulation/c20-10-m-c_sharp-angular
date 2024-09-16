@@ -1,0 +1,15 @@
+<div class="col-12 w-full">
+  <p-inputGroup>
+    <p-inputGroupAddon>
+      <i class="pi pi-search"></i>
+    </p-inputGroupAddon>
+    <input
+      type="text"
+      pInputText
+      [placeholder]="placeholder"
+      (keyup)="onKeyPress()"
+      [value]="initialValue"
+      #txt_search
+    />
+  </p-inputGroup>
+</div>

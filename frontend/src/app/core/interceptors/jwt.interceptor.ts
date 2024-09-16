@@ -37,7 +37,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    authService.authStatus.set(accessToken);
+    authService.isAuthenticated.set(accessToken);
     return next(clonedRequest);
   }
 
@@ -48,7 +48,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
         const body = event.body as AuthLoginResponse;
         if (body?.accessToken) {
           jwtService.setAccessToken(body.accessToken);
-          authService.authStatus.set(body?.accessToken);
+          authService.isAuthenticated.set(body?.accessToken);
         }
         if (body?.refreshToken) {
           jwtService.setRefreshToken(body.refreshToken);
@@ -64,7 +64,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
         return jwtService.refreshAccessToken().pipe(
           switchMap(res => {
             jwtService.setAccessToken(res.accessToken);
-            authService.authStatus.set(res.accessToken);
+            authService.isAuthenticated.set(res.accessToken);
             const clonedRequest = req.clone({
               setHeaders: {
                 Authorization: `Bearer ${res.accessToken}`,
