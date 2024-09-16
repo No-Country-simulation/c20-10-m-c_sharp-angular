@@ -8,9 +8,12 @@ export default [
     loadComponent: () => import('../profile/layout/layout.component'),
   },
   {
-    path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_USER_ID, // 'dashboard/perfil/publico/:id'
+    path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_USER_ID,
     title: 'Perfil de usuario',
-    loadComponent: () => import('./pages/profile/profile.component'),
+    loadComponent: () =>
+      import('../landing/pages/public-profile/public-profile.component').then(
+        m => m.PublicProfileComponent
+      ),
   },
   {
     path: ROUTES_PATH.DASHBOARD_MESSAGES, // 'dashboard/mensajes'
