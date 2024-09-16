@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
+  Component, ElementRef, EventEmitter,
+  inject, OnDestroy,
+  OnInit, Output,
   signal,
   ViewChild,
 } from '@angular/core';
@@ -59,10 +59,20 @@ import { SearchBoxComponent } from '../../../../shared/components/search-box/sea
     SearchBoxComponent,
   ],
   templateUrl: './message-grid.component.html',
-  styles: ``,
+  styles: `
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-clickable {
+        pointer-events: none;
+      }
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MessageGridComponent implements OnInit {
+export class MessageGridComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private messageService = inject(MessageService);
   private route = inject(ActivatedRoute);
@@ -78,6 +88,13 @@ export class MessageGridComponent implements OnInit {
 
   protected readonly ROUTES_PATH = ROUTES_PATH;
   protected readonly messages = signal<UserMessages[]>([]);
+
+  @Output()
+  displayModal: EventEmitter<boolean> = new EventEmitter<boolean>();
+  isMobile: boolean = false;
+  private resizeObserver: ResizeObserver | null = null;
+
+  constructor(private el: ElementRef) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -150,9 +167,66 @@ export class MessageGridComponent implements OnInit {
           },
         });
     }
+
+    this.checkScreenSize();
+    this.setupResizeObserver();
+  }
+
+  ngOnDestroy() {
+    this.cleanupResizeObserver();
+  }
+
+  private checkScreenSize() {
+    this.isMobile = window.innerWidth < 768;
+  }
+
+  private setupResizeObserver() {
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.checkScreenSize();
+        if (!this.isMobile) {
+          this.closeModal();
+        }
+      });
+      this.resizeObserver.observe(document.body);
+    } else {
+      window.addEventListener('resize', this.handleResize);
+    }
+  }
+
+  private handleResize = () => {
+    this.checkScreenSize();
+    if (!this.isMobile) {
+      this.closeModal();
+    }
   }
 
   searchChatUser(value: string): void {
-    this.messages.set( this.userService.userMessages().filter( userMsg => userMsg.name.toLocaleLowerCase().includes(value.toLocaleLowerCase()) ) );
+    this.messages.set(
+      this.userService.userMessages().filter( userMsg =>
+        userMsg.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+      )
+    );
+  }
+
+  private cleanupResizeObserver() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    } else {
+      window.removeEventListener('resize', this.handleResize);
+    }
+  }
+
+  emitDisplayModal(): void {
+    if (this.isMobile) {
+      this.displayModal.emit(true);
+      document.body.classList.add('modal-open');
+    }
+  }
+
+  closeModal() {
+    this.displayModal.emit(false);
+    document.body.classList.remove('modal-open');
   }
 }

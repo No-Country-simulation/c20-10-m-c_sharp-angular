@@ -17,6 +17,7 @@
         <div>
           <p-button
             size="large"
+            severity="primary"
             label=""
             icon="pi pi-refresh"
             styleClass="p-button-text"
@@ -45,33 +46,32 @@
                   [style]="getStyleAvatar(offererMessages()?.name ? offererMessages()!.name : 'Usuario Sin Nombre')"
                 ></p-avatar>
               }
-              <span class="font-light">{{ offererMessages()?.name }}</span>
+              <span class="font-semibold text-xs">{{ offererMessages()?.name }}</span>
             } @else {
-              <span class="font-light font-italic text-right">Tu</span>
+              <span class="font-semibold font-italic text-right text-xs">Tu</span>
             }
           </div>
 
           <div class="col-12 -my-2 flex {{ message.userId === this.userService.user()?.id ? 'justify-content-end' : 'align-items-start'}}">
 
-            <div class="-my-2 {{ message.userId === this.userService.user()?.id ? '' : 'ml-5'}}" style="min-width: 400px">
+            <div class="-my-2 {{ message.userId === this.userService.user()?.id ? '' : 'ml-5'}}" style="min-width: 80%">
               @if( message.userId === this.userService.user()?.id ) {
                 <p-messages severity="info">
                   <ng-template pTemplate>
-                    <div>{{ message.message }}</div>
+                    <span class="text-sm sm:text-xs">{{ message.message }}</span>
                   </ng-template>
                 </p-messages>
               } @else {
 
                 <p-messages severity="secondary">
                   <ng-template pTemplate>
-                    <div class="ml-2">{{ message.message }}</div>
+                    <span class="ml-2 text-sm sm:text-xs">{{ message.message }}</span>
                   </ng-template>
                 </p-messages>
               }
               <span class="text-xs w-full flex {{ message.userId === this.userService.user()?.id ? ' justify-content-end' : ''}}">
                 {{ message.createdAt | date:'dd/MMM hh:mm' }}
               </span>
-
             </div>
           </div>
       } @empty {

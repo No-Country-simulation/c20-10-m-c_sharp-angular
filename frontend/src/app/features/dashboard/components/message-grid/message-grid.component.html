@@ -33,11 +33,14 @@
       <ng-template pTemplate="list" let-users>
         <div
           [routerLink]="['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, user.idOtherUser]"
-          class="col-12 cursor-pointer"
+          class="col-12"
+          [ngClass]="{'cursor-pointer': !isMobile}"
           *ngFor="let user of users; let first = first"
         >
           <li
-            class="p-2 hover:surface-hover border-round border-1 border-transparent transition-all transition-duration-200"
+            class="p-2 hover:surface-hover border-round border-1 border-transparent transition-all transition-duration-200 mobile-clickable"
+            [ngClass]="{'mobile-clickable': isMobile}"
+            (click)="emitDisplayModal()"
           >
             <div class="flex flex-wrap p-2 align-items-center gap-3">
               @if (this.userService.user()?.srcImage) {
@@ -51,12 +54,12 @@
                 ></p-avatar>
               }
               <div class="flex-1 flex flex-column gap-1">
-              <span class="font-bold">
+              <span class="font-bold text-sm">
                   {{ user.name }}
               </span>
                 <div class="flex align-items-center gap-2">
-                  <i class="pi pi-calendar-times text-sm"></i>
-                  <span>
+                  <i class="pi pi-calendar-times text-xs"></i>
+                  <span class="text-xs">
                 {{ user.createdAt | date: 'dd/MM/yyyy' }}
               </span>
                 </div>
