@@ -32,7 +32,8 @@ import { ROUTES_PATH } from '../../../../core/routes';
           emptyMessage="No se encontró la categoría"
           [group]="true"
           [suggestions]="filteredSuggestions"
-          (completeMethod)="onSearch($event)">
+          (completeMethod)="onSearch($event)"
+          (onSelect)="onSearch($event)">
           <ng-template let-category pTemplate="group">
             <div class="text-color cursor-pointer" (click)="onSelectCategory(category)">
               {{ category.name }}
@@ -99,7 +100,7 @@ export class SearchbarComponent implements OnInit {
     this.allData = data;
   }
 
-  public onSearch(event: AutoCompleteCompleteEvent): void {
+  public onSearch(event: any): void {
     this.filteredSuggestions = this.filterSuggestions(event.query);
   }
 
