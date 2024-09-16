@@ -1,20 +1,3 @@
-<!-- Cabecera con menú hamburguesa, iconos de perfil y notificación -->
-<div class="header">
-  <div class="header-left">
-    <i class="pi pi-bars" (click)="toggleMenu()"></i> <!-- Menú hamburguesa -->
-    <p-menu #menu *ngIf="isMenuVisible">
-      <ng-template pTemplate="item">
-        <li><a href="#">Opción 1</a></li>
-        <li><a href="#">Opción 2</a></li>
-      </ng-template>
-    </p-menu>
-  </div>
-  <div class="header-right">
-    <i class="pi pi-user"></i> <!-- Icono de perfil -->
-    <i class="pi pi-bell"></i> <!-- Icono de notificación -->
-  </div>
-</div>
-
 <!-- Formulario que maneja el evento de envío a través de (ngSubmit)="onSubmit()" -->
 <form class="justify-content-center" (ngSubmit)="onSubmit()">
 

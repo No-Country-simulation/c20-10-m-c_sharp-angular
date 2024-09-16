@@ -1,24 +1,3 @@
-/* Cabecera con menú hamburguesa, iconos de perfil y notificación */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #000;
-  /* Fondo negro */
-  padding: 10px;
-  color: #fff;
-}
-
-.header-left {
-  font-size: 24px;
-}
-
-.header-right i {
-  font-size: 24px;
-  margin-left: 20px;
-  cursor: pointer;
-}
-
 /* Icono de desplazamiento a la izquierda */
 .scroll-icon {
   text-align: left;
