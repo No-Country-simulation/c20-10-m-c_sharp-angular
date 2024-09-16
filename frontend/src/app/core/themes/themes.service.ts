@@ -27,9 +27,9 @@ export class ThemesService {
    * Current theme state, including name, color, and mode
    */
   public currentTheme = signal<Theme>({
-    name: 'lara',
-    color: 'blue',
-    mode: 'dark',
+    name: 'aura',
+    color: 'amber',
+    mode: 'light',
   });
 
   constructor() {

@@ -1,6 +1,7 @@
 export const environment = {
   BASE_URL: 'https://www.contratapp.somee.com/',
   ENDPOINT: {
+    USER_SPECIALITIES: 'api/userspecialities/',
     LOGIN: 'identity/login',
     REGISTER: 'identity/register',
     USER: 'api/user',
@@ -13,6 +14,10 @@ export const environment = {
     SPECIALITIES: 'api/specialities',
     OFFEROR: 'api/offeror',
     OFFEROR_SPECIALITIES: 'api/offerorspecialities',
+  },
+  SESSION_STORAGE: {
+    ALL_CATEGORIES: 'allCategories',
+    ALL_SPECIALITIES: 'allSpecialities',
   },
   COOKIES: {
     TOKEN: 'token',

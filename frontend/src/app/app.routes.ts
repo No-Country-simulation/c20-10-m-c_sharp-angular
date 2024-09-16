@@ -1,7 +1,13 @@
 import { Routes } from '@angular/router';
-import { browserCategoriesResolver } from './features/landing/resolver/browser-categories.resolver';
 import { authGuard } from './core/guards/auth.guard';
 import { ROUTES_PATH } from './core/routes';
+
+import {
+  homeResolver,
+  browserResolver,
+  browserPostsResolver,
+  browserViewSpecialityResolver,
+} from './features/landing/resolver';
 
 const {
   LANDING_HOME,
@@ -12,6 +18,7 @@ const {
   AUTH_FORGOT_PASSWORD,
   AUTH_REGISTER,
   AUTH_REGISTER_PROFESSIONAL,
+  LANDING_BROWSER_DETAILED_POST,
 } = ROUTES_PATH;
 
 export const routes: Routes = [
@@ -29,6 +36,7 @@ export const routes: Routes = [
       {
         path: LANDING_HOME,
         title: 'Inicio',
+        resolve: [homeResolver],
         loadComponent: () => import('./features/landing/pages/home/home.component'),
       },
       {
@@ -37,25 +45,55 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: LANDING_BROWSER,
-        title: 'Explorar',
+        path: ROUTES_PATH.LANDING_BROWSER,
+        title: 'Explorar categorias',
+        resolve: {
+          data: browserResolver,
+        },
         loadComponent: () => import('./features/landing/pages/browser/browser.component'),
       },
       {
         path: LANDING_BROWSER_CATEGORIES_ID,
         title: 'Explorar',
         resolve: {
-          categories: browserCategoriesResolver,
+          data: browserViewSpecialityResolver,
+        },
+        loadComponent: () => import('./features/landing/pages/browser/browser.component'),
+      },
+      {
+        path: ROUTES_PATH.LANDING_BROWSER_CATEGORIES_ID_ESPECIALITY,
+        title: 'Explorar',
+        resolve: {
+          data: browserPostsResolver,
         },
         loadComponent: () =>
-          import('./features/landing/pages/browser-category/browser-category.component'),
+          import('./features/landing/pages/browser-speciality/browser-speciality.component'),
       },
-      /*{
-        path: DASHBOARD_PROFILE,
-        title: 'Perfil',
-        loadComponent: () => import('./features/profile/layout/layout.component'),
-        //canActivate: [authGuard],
-      },*/
+      {
+        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
+        title: 'publicacion', //TODO: cambiar el title
+        resolve: [],
+        loadComponent: () => import('./features/landing/pages/share-post/share-post.component'),
+      },
+      {
+        path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE,
+        title: 'Perfil pubico',
+        loadComponent: () =>
+          import('./features/landing/pages/public-profile/public-profile.component').then(
+            m => m.PublicProfileComponent
+          ),
+      },
+      // {
+      //   path: 'como-funciona',
+      //   title: 'Como funciona',
+      //   loadComponent: () => import('./features/landing/pages/how-it-works/how-it-works.component'),
+      // },
+      // {
+      //   path: 'professional-profile/:professionalId/:professionalName',
+      //   title: 'Perfil profesional',
+      //   loadComponent: () =>
+      //     import('./features/landing/pages/professional-profile/professional-profile.component'),
+      // },
       {
         path: '',
         loadComponent: () => import('./features/auth/layout/layout.component'),
@@ -92,18 +130,60 @@ export const routes: Routes = [
     ],
   },
   {
-    path: '',
+    path: ROUTES_PATH.DASHBOARD_HOME,
+    loadComponent: () =>
+      import('./features/dashboard/layout/layout-dashboard/layout-dashboard.component'),
+    //   canActivate: [dashboardGuard],
     children: [
       {
-        path: ROUTES_PATH.DASHBOARD_HOME,
-        loadComponent: () =>
-          import('./features/dashboard/layout/layout-dashboard/layout-dashboard.component'),
-        loadChildren: () => import('./features/dashboard/dashboard.routes'),
+        path: '',
+        redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES, //TODO: cambiar al perfil o ruta que estaría por defecto
+        pathMatch: 'full',
       },
+      {
+        path: ROUTES_PATH.DASHBOARD_MESSAGES,
+        title: 'Mensajes',
+        loadComponent: () =>
+          import('./features/dashboard/pages/dashboard-messages/dashboard-messages.component'),
+      },
+      {
+        path: ROUTES_PATH.DASHBOARD_MESSAGES_INBOX,
+        title: 'Mensajes',
+        loadComponent: () =>
+          import('./features/dashboard/pages/dashboard-messages/dashboard-messages.component'),
+      },
+      {
+        path: '**',
+        redirectTo: ROUTES_PATH.DASHBOARD_MESSAGES,
+        pathMatch: 'full',
+      },
+      //     {
+      //       path: 'profile',
+      //       title: 'Perfil',
+      //       loadComponent: () => import('./features/dashboard/pages/profile/profile.component'),
+      //     },
+      //     {
+      //       path: 'rating-history',
+      //       title: 'Historial de calificaciones',
+      //       loadComponent: () =>
+      //         import('./features/dashboard/pages/rating-history/rating-history.component'),
+      //     },
+      //     {
+      //       path: 'mis-servicios',
+      //       title: 'Mis Servicios',
+      //       loadComponent: () =>
+      //         import('./features/dashboard/pages/management-services/management-services.component'),
+      //     },
+      //     {
+      //       path: 'gestionar-servicios/:serviceId',
+      //       title: 'Servicios',
+      //       loadComponent: () =>
+      //         import('./features/dashboard/pages/management-services/management-services.component'),
+      //     },
     ],
   },
-  {
-    path: '**',
-      redirectTo: ROUTES_PATH.LANDING_HOME,
-  },
+  // {
+  //   path: '**',
+  //   loadComponent: () => import('./features/landing/pages/not-found/not-found.component'),
+  // },
 ];

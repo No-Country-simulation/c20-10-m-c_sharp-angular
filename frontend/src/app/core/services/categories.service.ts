@@ -14,65 +14,55 @@ export class CategoriesService {
   private readonly categoryEndpoint = environment.ENDPOINT.CATEGORIES;
 
   /**
-   * Builds the URL for category API requests.
-   * If a category with an `id` is provided, the URL is built with the category's ID.
-   * Otherwise, the URL is built for fetching all categories.
-   *
-   * @param category - The category object (optional).
-   * @returns The complete URL as a string.
-   */
-  private buildUrl(category?: Category): string {
-    return category && category.id
-      ? `${this.baseUrl}${this.categoryEndpoint}/${category.id}`
-      : `${this.baseUrl}${this.categoryEndpoint}`;
-  }
-
-  /**
    * Retrieves all categories.
    *
    * @returns An Observable containing an array of `CategoryResponse` objects.
    */
   public getAllCategories(): Observable<CategoryResponse[]> {
-    return this.http.get<CategoryResponse[]>(this.buildUrl());
+    return this.http.get<CategoryResponse[]>(this.baseUrl + this.categoryEndpoint);
   }
 
   /**
    * Creates a new category.
    *
-   * @param category - The category object to be created.
+   * @param formValue - The category data to create.
    * @returns An Observable containing the created `CategoryResponse` object.
    */
-  public createCategory(category: Category): Observable<CategoryResponse> {
-    return this.http.post<CategoryResponse>(this.buildUrl(), category);
+  public createCategory(formValue: Category): Observable<CategoryResponse> {
+    return this.http.post<CategoryResponse>(this.baseUrl + this.categoryEndpoint, formValue);
   }
 
   /**
    * Retrieves a category by its ID.
    *
-   * @param category - The category object with the ID to fetch.
+   * @param id - The ID of the category to retrieve.
    * @returns An Observable containing the fetched `CategoryResponse` object.
    */
-  public getCategoryById(category: Category): Observable<CategoryResponse> {
-    return this.http.get<CategoryResponse>(this.buildUrl(category));
+  public getCategoryById(id: number): Observable<CategoryResponse> {
+    return this.http.get<CategoryResponse>(this.baseUrl + this.categoryEndpoint + '/' + id);
   }
 
   /**
    * Updates a category by its ID.
    *
-   * @param category - The category object with updated data.
+   * @param formValue - The updated category data.
+   * @param id - The ID of the category to update.
    * @returns An Observable containing the updated `CategoryResponse` object.
    */
-  public updateCategoryById(category: Category): Observable<CategoryResponse> {
-    return this.http.put<CategoryResponse>(this.buildUrl(category), category);
+  public updateCategoryById(formValue: Category, id: number): Observable<CategoryResponse> {
+    return this.http.put<CategoryResponse>(
+      this.baseUrl + this.categoryEndpoint + '/' + id,
+      formValue
+    );
   }
 
   /**
    * Deletes a category by its ID.
    *
-   * @param category - The category object with the ID to delete.
+   * @param id - The ID of the category to delete.
    * @returns An Observable that emits `true` if the deletion was successful, otherwise `false`.
    */
-  public deleteCategoryById(category: Category): Observable<boolean> {
-    return this.http.delete<boolean>(this.buildUrl(category));
+  public deleteCategoryById(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(this.baseUrl + this.categoryEndpoint + '/' + id);
   }
 }

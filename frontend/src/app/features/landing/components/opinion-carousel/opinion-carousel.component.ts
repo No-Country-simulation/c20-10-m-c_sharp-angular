@@ -20,16 +20,16 @@ export class OpinionCarouselComponent {
     {
       id: '1000',
       code: 'f230fh0g3',
-      name: 'Hogar',
-      description: 'Hogar',
+      name: 'Martin (Plomero)',
+      description: 'La aplicación facilita la comunicacion con los clientes. Es mas facil tener mas clientes.',
       image: 'assets/images/landing-page/Ellipse202.png',
     },
     {
       id: '1001',
       code: 'f230fh0g3',
       name: 'José (Gasista)',
-      description: 'La aplicación es muy útil. Conseguí diez nuevos clientes en menos de un mes José (Gasista)',
-      image: 'assets/images/landing-page/Ellipse204.png',
+      description: 'La aplicación es muy útil. Conseguí diez nuevos clientes en menos de un mes',
+      image: 'assets/images/landing-page/Ellipse202.png',
     }
   ];
 
