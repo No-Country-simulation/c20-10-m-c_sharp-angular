@@ -28,10 +28,16 @@ export const browserPostsResolver: ResolveFn<CombinedData> = route => {
     });
     if (speciality?.specialityId) {
       return offerorSearch.getPostsBySpeciality(speciality?.specialityId).pipe(
-        map(offerorResults => ({
-          currentSpeciality: currentSpeciality,
-          offerorResults: offerorResults,
-        }))
+        map(offerorResults => {
+          const dataWithRoutes = offerorResults.map(res => ({
+            ...res,
+            route: `explorar/post/${res.userSpecialityId}`,
+          }));
+          return {
+            currentSpeciality: currentSpeciality,
+            offerorResults: dataWithRoutes,
+          };
+        })
       );
     } else {
       return of({

@@ -1,7 +1,7 @@
 export const environment = {
   BASE_URL: 'https://www.contratapp.somee.com/',
   ENDPOINT: {
-    USER_SPECIALITIES: 'api/userspecialities/',
+    USER_SPECIALITIES: 'api/userspecialities',
     LOGIN: 'identity/login',
     REGISTER: 'identity/register',
     USER: 'api/user',

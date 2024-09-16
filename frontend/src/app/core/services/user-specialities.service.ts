@@ -38,7 +38,9 @@ export class UserSpecialitiesService {
    * @returns An Observable containing the `UserSpecialities` object.
    */
   public getUserSpecialitiesById(id: number): Observable<UserSpeciality> {
-    return this.http.get<UserSpeciality>(this.baseUrl + this.userSpecilitiesEndpoint + '/' + id);
+    return this.http.get<UserSpeciality>(
+      `https://www.contratapp.somee.com/api/userspecialities/${id}`
+    );
   }
 
   /**

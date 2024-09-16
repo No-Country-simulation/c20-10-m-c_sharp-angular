@@ -46,7 +46,7 @@ export class UserService {
    * @returns An observable that emits the server response.
    */
   public getUserMessagesFromOneUser(id: string): Observable<UserMessages> {
-    return this.http.get<UserMessages>(`${ this.baseUrl }${ this.userMessagesEndpoint }/${id}` );
+    return this.http.get<UserMessages>(`${this.baseUrl}${this.userMessagesEndpoint}/${id}`);
   }
 
   /**
@@ -69,7 +69,10 @@ export class UserService {
    * @returns An observable that emits the server response.
    */
   public addNewUserMessage(userId: string, message: Message): Observable<MessageCreatedResponse> {
-    return this.http.post<MessageCreatedResponse>(`${ this.baseUrl }${ this.userMessagesEndpoint }/${userId} `, message);
+    return this.http.post<MessageCreatedResponse>(
+      `${this.baseUrl}${this.userMessagesEndpoint}/${userId} `,
+      message
+    );
   }
 
   /**

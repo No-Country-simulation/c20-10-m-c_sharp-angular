@@ -22,6 +22,7 @@ export const ROUTES_PATH = {
   DASHBOARD_MESSAGES_INBOX: 'mensajes/:id',
   DASHBOARD_CREATE_POST: 'crear-publicacion',
   DASHBOARD_PUBLIC_PROFILE: 'perfil-publico',
+  DASHBOARD_PUBLIC_PROFILE_ID: 'perfil-publico/:id',
 
   AUTH_LOGIN: 'iniciar-sesion',
   AUTH_REGISTER: 'registrarse',
