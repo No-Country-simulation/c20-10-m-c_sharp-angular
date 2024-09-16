@@ -7,6 +7,7 @@ import {
   browserResolver,
   browserPostsResolver,
   browserViewSpecialityResolver,
+  postDetailed,
 } from './features/landing/resolver';
 
 const {
@@ -70,14 +71,15 @@ export const routes: Routes = [
           import('./features/landing/pages/browser-speciality/browser-speciality.component'),
       },
       {
-        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST,
+        path: ROUTES_PATH.LANDING_BROWSER_DETAILED_POST_ID,
         title: 'publicacion', //TODO: cambiar el title
-        resolve: [],
+        resolve: [postDetailed],
         loadComponent: () => import('./features/landing/pages/share-post/share-post.component'),
       },
       {
-        path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE,
-        title: 'Perfil pubico',
+        path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_ID,
+        title: 'Perfil publico',
+        resolve: {},
         loadComponent: () =>
           import('./features/landing/pages/public-profile/public-profile.component').then(
             m => m.PublicProfileComponent
