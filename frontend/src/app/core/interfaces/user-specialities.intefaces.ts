@@ -33,4 +33,5 @@ export interface UserSpecialitySearch {
   text: string;
   rating: number;
   area: string;
+  src?: string;
 }
