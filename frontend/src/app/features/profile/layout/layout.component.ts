@@ -88,6 +88,10 @@ export default class PerfilComponent implements OnInit {
   router = inject(Router);
 
   ngOnInit(): void {
+    if (!this.jwtService.getAccessToken()) {
+      debugger;
+      this.router.navigateByUrl(AUTH_LOGIN);
+    }
     this.userService.getUserData().subscribe({
       next: user => {
         console.log('Datos recibidos por la API', user);
