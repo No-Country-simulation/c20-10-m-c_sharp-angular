@@ -33,9 +33,11 @@ namespace ContratApp.Controllers
         [HttpGet]
         public ActionResult<User> GetUser()
         {
+            var loggedUser = User.FindFirst(ClaimTypes.NameIdentifier);
+            var loggedUserId = loggedUser.Value;
             var user = _context.Users
                 .Include(ue => ue.UserSpecialities)
-                .First(x => x.Id == User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                .FirstOrDefault(x => x.Id == loggedUserId);
                 
             if (user == null)
                 return NotFound(new { Msg = "No se encontraron los datos complementarios del usuario. Use PUT:api/User para complementar datos" });
@@ -58,11 +60,12 @@ namespace ContratApp.Controllers
         /// <response code="200">Ok. Id, email y demás datos del perfil del usuario</response>
         /// <response code="404">No se encontraron los datos complementarios del usuario.</response>
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public ActionResult<User> GetUser(string id)
         {
             var user = _context.Users
                 .Include(ue => ue.UserSpecialities)
-                .First(x => x.Id == id);
+                .FirstOrDefault(x => x.Id == id);
 
             if (user == null)
                 return NotFound(new { Msg = "No se encontraron los datos complementarios del usuario." });
@@ -83,6 +86,7 @@ namespace ContratApp.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("List")]
+        [AllowAnonymous]
         public ActionResult<IEnumerable<User>> GetUsersList()
         {
             return _context.Users.ToList();

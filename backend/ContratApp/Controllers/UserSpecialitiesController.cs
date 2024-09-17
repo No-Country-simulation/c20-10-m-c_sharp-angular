@@ -1,4 +1,5 @@
-﻿using ContratApp.Models;
+﻿using AutoMapper;
+using ContratApp.Models;
 using ContratApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,10 +14,12 @@ namespace ContratApp.Controllers
     public class UserSpecialitiesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UserSpecialitiesController(ApplicationDbContext context)
+        public UserSpecialitiesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/UserSpecialities
@@ -95,23 +98,18 @@ namespace ContratApp.Controllers
 
         // POST: api/UserSpecialities
         [HttpPost]
-        public async Task<ActionResult<UserSpeciality>> PostUserSpeciality(UserSpeciality userSpeciality)
+        public async Task<ActionResult<UserSpeciality>> PostUserSpeciality(UserSpecialityAddVM userSpecialityAddVM)
         {
-            _context.UserSpecialities.Add(userSpeciality);
+            var newUserSpeciality = await _context.UserSpecialities.AddAsync(_mapper.Map<UserSpeciality>(userSpecialityAddVM));
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(userSpeciality), new { id = userSpeciality.Id }, userSpeciality);
+            return CreatedAtAction(nameof(newUserSpeciality), new { id = newUserSpeciality.Entity.Id }, newUserSpeciality.Entity);
         }
 
         // PUT: api/UserSpecialities/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserSpeciality(int id, UserSpeciality userSpeciality)
+        public async Task<IActionResult> PutUserSpeciality(int id, UserSpecialityAddVM userSpecialityAddVM)
         {
-            if (id != userSpeciality.Id)
-            {
-                return BadRequest();
-            }
-
             var existingEntity = await _context.UserSpecialities.FindAsync(id);
             if (existingEntity == null)
             {
@@ -119,17 +117,17 @@ namespace ContratApp.Controllers
             }
 
             // Modificar sólo los campos enviados en el body
-            if (!string.IsNullOrWhiteSpace(userSpeciality.Title))
+            if (!string.IsNullOrWhiteSpace(userSpecialityAddVM.Title))
             {
-                existingEntity.Title = userSpeciality.Title;
+                existingEntity.Title = userSpecialityAddVM.Title;
             }
-            if (!string.IsNullOrWhiteSpace(userSpeciality.Text))
+            if (!string.IsNullOrWhiteSpace(userSpecialityAddVM.Text))
             {
-                existingEntity.Text = userSpeciality.Text;
+                existingEntity.Text = userSpecialityAddVM.Text;
             }
-            if (!string.IsNullOrWhiteSpace(userSpeciality.Area))
+            if (!string.IsNullOrWhiteSpace(userSpecialityAddVM.Area))
             {
-                existingEntity.Area = userSpeciality.Area;
+                existingEntity.Area = userSpecialityAddVM.Area;
             }
 
             _context.Entry(existingEntity).State = EntityState.Modified;

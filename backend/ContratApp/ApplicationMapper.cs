@@ -13,5 +13,7 @@ public class ApplicationMapper : Profile
 
         CreateMap<SpecialityAddViewModel, Speciality>();
         CreateMap<SpecialityUpdateViewModel, Speciality>();
+
+        CreateMap<UserSpecialityAddVM, UserSpeciality>();
     }
 }
