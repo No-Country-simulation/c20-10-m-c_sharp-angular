@@ -52,7 +52,7 @@ export default class PublishComponent implements OnInit {
   paymentMethods: any[] = [
     { name: 'Mercado Pago', key: 'M' },
     { name: 'Tarjeta Débito/Crédito', key: 'T' },
-    { name: 'Transferencia Bancaria', key: 'B' },
+    //{ name: 'Transferencia Bancaria', key: 'B' },
     { name: 'Pago en Efectivo', key: 'P' },
   ];
 
