@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 // Core
 import { JwtService } from '@core/services';
 import { ROUTES_PATH } from '@core/routes';
-import { UserService } from '@core/services';
+import { UserService, AuthService } from '@core/services';
 import { User } from '@core/interfaces';
 
 //PrimeNG
@@ -86,6 +86,7 @@ export default class PerfilComponent implements OnInit {
   userService = inject(UserService);
   jwtService = inject(JwtService);
   router = inject(Router);
+  authService = inject(AuthService);
 
   ngOnInit(): void {
     if (!this.jwtService.getAccessToken()) {
@@ -188,7 +189,7 @@ export default class PerfilComponent implements OnInit {
 
   logout(): void {
     //debugger;
-    this.jwtService.clearTokens();
+    this.authService.logout();
     this.router.navigateByUrl(AUTH_LOGIN);
   }
 }
