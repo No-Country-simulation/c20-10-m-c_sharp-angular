@@ -34,4 +34,5 @@ export interface UserSpecialitySearch {
   rating: number;
   area: string;
   src?: string;
+  route: string;
 }

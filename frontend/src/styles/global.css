@@ -19,4 +19,8 @@
 
 .reset-btn {
   all: unset;
+  box-sizing: border-box;
+}
+.reset-btn:focus-visible {
+  outline: 1px solid var(--primary-color);
 }
