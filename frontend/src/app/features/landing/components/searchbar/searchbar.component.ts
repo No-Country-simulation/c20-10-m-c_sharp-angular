@@ -33,18 +33,24 @@ import { ROUTES_PATH } from '../../../../core/routes';
           [group]="true"
           [suggestions]="filteredSuggestions"
           (completeMethod)="onSearch($event)"
-          (onSelect)="onSearch($event)">
+          (keydown.enter)="onKeyDownEnter($event)">
           <ng-template let-category pTemplate="group">
-            <div class="text-color cursor-pointer" (click)="onSelectCategory(category)">
+            <button
+              class="reset-btn text-color cursor-pointer"
+              (click)="onSelectCategory(category)"
+              (keydown.enter)="onSelectCategory(category)">
               {{ category.name }}
-            </div>
+            </button>
           </ng-template>
           <ng-template let-speciality pTemplate="item">
-            <div (click)="onSelectSpeciality(speciality)">
+            <button
+              class="reset-btn"
+              (click)="onSelectSpeciality(speciality)"
+              (keydown.enter)="onSelectSpeciality(speciality)">
               <span class="pl-2">
                 {{ speciality.name }}
               </span>
-            </div>
+            </button>
           </ng-template>
         </p-autoComplete>
 
@@ -100,7 +106,7 @@ export class SearchbarComponent implements OnInit {
     this.allData = data;
   }
 
-  public onSearch(event: any): void {
+  public onSearch(event: AutoCompleteCompleteEvent): void {
     this.filteredSuggestions = this.filterSuggestions(event.query);
   }
 
@@ -167,6 +173,28 @@ export class SearchbarComponent implements OnInit {
           '/especialidad/' +
           cleanUrl,
       ]);
+    }
+  }
+
+  public onKeyDownEnter(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent;
+    const input = (keyboardEvent.target as HTMLInputElement).value;
+
+    const categoryResult = fuzzysort.go(input, this.allData, { key: 'category.name' });
+    if (categoryResult.length > 0) {
+      const category = categoryResult[0].obj.category;
+      this.onSelectCategory(category);
+      return;
+    }
+
+    const specialityResult = fuzzysort.go(
+      input,
+      this.allData.flatMap(data => data.specialities),
+      { key: 'name' }
+    );
+    if (specialityResult.length > 0) {
+      const speciality = specialityResult[0].obj;
+      this.onSelectSpeciality(speciality);
     }
   }
 }
