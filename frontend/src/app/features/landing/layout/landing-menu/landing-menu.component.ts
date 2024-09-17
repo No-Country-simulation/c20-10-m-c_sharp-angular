@@ -77,11 +77,8 @@ export class LandingMenuComponent {
       children: [
         {
           label: 'Ver publicaciones',
-          /**
-           * @todo Falta la ruta para ver las publicaciones creadas
-           */
           action: () => {
-            this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH}`);
+            this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH.DASHBOARD_MY_POSTS}`);
           },
         },
         {
@@ -102,12 +99,9 @@ export class LandingMenuComponent {
       },
     },
     {
-      /**
-       * @todo Falta la ruta para ver los trabajos
-       */
       label: 'Mis trabajos',
       action: () => {
-        this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH}`);
+        this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH.DASHBOARD_MY_WORKS}`);
       },
     },
   ];

@@ -28,9 +28,19 @@ export default [
     pathMatch: 'full',
   },
   {
-    path: '',  // In case of empty path, redirect to 'dashboard/perfil'
+    path: '', // In case of empty path, redirect to 'dashboard/perfil'
     redirectTo: ROUTES_PATH.DASHBOARD_PROFILE,
     pathMatch: 'full',
+  },
+  {
+    path: ROUTES_PATH.DASHBOARD_MY_POSTS,
+    title: 'Mis publicaciones',
+    loadComponent: () => import('./pages/my-posts/my-posts.component'),
+  },
+  {
+    path: ROUTES_PATH.DASHBOARD_MY_WORKS,
+    title: 'Mis trabajos',
+    loadComponent: () => import('./pages/my-works/my-works.component'),
   },
   {
     path: '**', // In case of any other path, redirect to 'dashboard/perfil'
