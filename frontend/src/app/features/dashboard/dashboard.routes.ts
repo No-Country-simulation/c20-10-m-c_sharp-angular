@@ -10,10 +10,7 @@ export default [
   {
     path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_USER_ID,
     title: 'Perfil de usuario',
-    loadComponent: () =>
-      import('../landing/pages/public-profile/public-profile.component').then(
-        m => m.PublicProfileComponent
-      ),
+    loadComponent: () => import('../landing/pages/public-profile/public-profile.component'),
   },
   {
     path: ROUTES_PATH.DASHBOARD_MESSAGES, // 'dashboard/mensajes'
@@ -28,7 +25,7 @@ export default [
     pathMatch: 'full',
   },
   {
-    path: '',  // In case of empty path, redirect to 'dashboard/perfil'
+    path: '', // In case of empty path, redirect to 'dashboard/perfil'
     redirectTo: ROUTES_PATH.DASHBOARD_PROFILE,
     pathMatch: 'full',
   },
