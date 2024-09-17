@@ -1,5 +1,7 @@
 import { inject } from '@angular/core';
 import type { ResolveFn } from '@angular/router';
+import { map, of, switchMap } from 'rxjs';
+
 import { environment } from '../../../../environments/environment';
 import {
   UserSpecialitiesService,
@@ -7,15 +9,9 @@ import {
   SessionStorageService,
 } from '../../../core/services';
 import { Speciality } from '../../../core/interfaces';
-import { map, of, switchMap } from 'rxjs';
+import { BrowserPostsCombinedData } from '../interfaces';
 
-interface CombinedData {
-  currentSpeciality: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  offerorResults: any;
-}
-
-export const browserPostsResolver: ResolveFn<CombinedData> = route => {
+export const browserPostsResolver: ResolveFn<BrowserPostsCombinedData> = route => {
   const offerorSearch = inject(UserSpecialitiesService);
   const specialitiesService = inject(SpecialitiesService);
   const sessionStorageService = inject(SessionStorageService);
