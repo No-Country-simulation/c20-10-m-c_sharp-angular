@@ -36,6 +36,7 @@ import { MenuService } from '../../services/menu.service';
         </button>
         <img
           src="/assets/icons/contratAppLogo.svg"
+          class="cursor-pointer"
           width="48"
           alt="logo de la aplicacion"
           routerLink="/" />

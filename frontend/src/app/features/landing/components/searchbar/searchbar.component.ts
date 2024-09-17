@@ -33,6 +33,7 @@ import { ROUTES_PATH } from '../../../../core/routes';
           [group]="true"
           [suggestions]="filteredSuggestions"
           (completeMethod)="onSearch($event)"
+          (onDropdownClick)="onSearch($event)"
           (keydown.enter)="onKeyDownEnter($event)">
           <ng-template let-category pTemplate="group">
             <button

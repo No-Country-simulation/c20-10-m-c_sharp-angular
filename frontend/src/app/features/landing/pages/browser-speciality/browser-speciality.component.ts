@@ -17,7 +17,7 @@ import { ROUTES_PATH } from '../../../../core/routes';
   template: `
     <div class="container-c flex flex-column gap-5 py-5">
       <div class="w-full">
-        <app-searchbar />
+        <app-searchbar></app-searchbar>
       </div>
       <div>
         <span class="font-medium">{{ data().currentSpeciality }}</span>
