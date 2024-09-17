@@ -25,10 +25,12 @@
 }
 
 .menu-btn {
-  all: unset;
-  box-sizing: border-box;
   width: 2.5rem;
   height: 2.5rem;
+  border-radius: var(--border-radius);
+  &:hover {
+    background-color: rgba(245, 158, 11, 0.04);
+  }
 }
 
 .ham {
@@ -79,4 +81,12 @@
 }
 .ham8.active .bottom {
   stroke-dashoffset: -64px;
+}
+
+.header-logo {
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  &:hover {
+    background-color: rgba(245, 158, 11, 0.04);
+  }
 }

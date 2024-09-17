@@ -20,7 +20,7 @@ import { MenuService } from '../../services/menu.service';
       class="sticky top-0 left-0 flex justify-content-center align-items-center h-5rem custom-bg custom-shadow w-full custom-z-index">
       <div
         class="relative py-3 px-3 flex justify-content-between align-items-center w-full container-app">
-        <button class="menu-btn" (click)="menuService.toggleMenu()">
+        <button class="reset-btn menu-btn" (click)="menuService.toggleMenu()">
           <svg
             class="ham hamRotate ham8"
             viewBox="0 0 100 100"
@@ -34,11 +34,9 @@ import { MenuService } from '../../services/menu.service';
               d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20" />
           </svg>
         </button>
-        <img
-          src="/assets/icons/contratAppLogo.svg"
-          width="48"
-          alt="logo de la aplicacion"
-          routerLink="/" />
+        <button class="reset-btn header-logo cursor-pointer" routerLink="/">
+          <img src="/assets/icons/contratAppLogo.svg" width="48" alt="logo de la aplicacion" />
+        </button>
         <div class="flex gap-1">
           <!-- <p-avatar label="JA" size="large" shape="circle" /> -->
           <p-button
