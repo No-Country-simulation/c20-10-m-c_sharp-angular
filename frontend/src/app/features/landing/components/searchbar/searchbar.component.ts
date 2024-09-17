@@ -38,6 +38,7 @@ import { ROUTES_PATH } from '../../../../core/routes';
             <button
               class="reset-btn text-color cursor-pointer"
               (click)="onSelectCategory(category)"
+              (mousedown)="onSelectCategory(category)"
               (keydown.enter)="onSelectCategory(category)">
               {{ category.name }}
             </button>
@@ -46,6 +47,7 @@ import { ROUTES_PATH } from '../../../../core/routes';
             <button
               class="reset-btn"
               (click)="onSelectSpeciality(speciality)"
+              (mousedown)="onSelectSpeciality(speciality)"
               (keydown.enter)="onSelectSpeciality(speciality)">
               <span class="pl-2">
                 {{ speciality.name }}
