@@ -1,9 +1,9 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <div
   class="profile-form flex flex-column gap-3 justify-content-center align-items-center mt-7 mr-2 w-full">
-  <form [formGroup]="profileForm">
+  <form [formGroup]="profileForm" class="w-full">
     <!-- Foto -->
-    <p-fieldset class="w-12 pr-1" legend="Configuración de perfil">
+    <p-fieldset class="w-full pr-1" legend="Configuración de perfil">
       <div class="flex align-items-end justify-content-between gap-2 w-full">
         <p-avatar [image]="imageUrl" styleClass="h-10rem w-10rem" shape="circle" />
         <!-- <button (click)="">Cambiar</button> -->
@@ -172,6 +172,9 @@
           <label for="my"> Dinero en efectivo</label>
         </div>
       </div>
+    </p-fieldset>
+    <p-fieldset class="w-12 pr-1" legend="Sesión">
+      <p-button label="Cerrar sesión" (onClick)="logout()" styleClass="w-10rem" />
     </p-fieldset>
   </form>
 </div>

@@ -21,7 +21,16 @@ export interface User {
   srcImage: string;
 }
 
+/**
+ * @deprecated
+ */
 export type UserUpdate = Omit<User, 'id' | 'email'>;
+
+export interface UserFormRegister {
+  firstName: string;
+  lastName: string;
+}
+
 export interface UserMessages {
   id: number;
   idOtherUser: string;

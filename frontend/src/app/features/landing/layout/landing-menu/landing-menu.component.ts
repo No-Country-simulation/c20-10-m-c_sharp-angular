@@ -2,13 +2,17 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ROUTES_PATH } from '../../../../core/routes';
+import { ROUTES_PATH } from '@core/routes';
 import { MenuService } from '../../services/menu.service';
-import {
-  crossfadeAnimation,
-  expandAnimation,
-  slideDownAnimation,
-} from '../../../../shared/animations';
+import { crossfadeAnimation, expandAnimation, slideDownAnimation } from '@shared/animations';
+
+const {
+  DASHBOARD_HOME,
+  DASHBOARD_PROFILE,
+  DASHBOARD_MESSAGES,
+  DASHBOARD_CREATE_POST,
+  DASHBOARD_PUBLISH,
+} = ROUTES_PATH;
 
 @Component({
   selector: 'app-landing-menu',
@@ -63,13 +67,13 @@ export class LandingMenuComponent {
     {
       label: 'Mi perfil',
       action: () => {
-        this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH.DASHBOARD_PROFILE}`);
+        this.onNavigation(`${DASHBOARD_HOME}/${DASHBOARD_PROFILE}`);
       },
     },
     {
       label: 'Mensajes',
       action: () => {
-        this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH.DASHBOARD_MESSAGES}`);
+        this.onNavigation(`${DASHBOARD_HOME}/${DASHBOARD_MESSAGES}`);
       },
     },
     {
@@ -81,13 +85,13 @@ export class LandingMenuComponent {
            * @todo Falta la ruta para ver las publicaciones creadas
            */
           action: () => {
-            this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH}`);
+            this.onNavigation(`${DASHBOARD_HOME}/${ROUTES_PATH}`);
           },
         },
         {
           label: 'Ofrecer un servicio',
           action: () => {
-            this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH.DASHBOARD_CREATE_POST}`);
+            this.onNavigation(`${DASHBOARD_HOME}/${DASHBOARD_PUBLISH}`);
           },
         },
       ],
@@ -98,7 +102,7 @@ export class LandingMenuComponent {
        * @todo Falta la ruta para ver las calificaciones
        */
       action: () => {
-        this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH}`);
+        this.onNavigation(`${DASHBOARD_HOME}/${ROUTES_PATH}`);
       },
     },
     {
@@ -107,7 +111,7 @@ export class LandingMenuComponent {
        */
       label: 'Mis trabajos',
       action: () => {
-        this.onNavigation(`${ROUTES_PATH.DASHBOARD_HOME}/${ROUTES_PATH}`);
+        this.onNavigation(`${DASHBOARD_HOME}/${ROUTES_PATH}`);
       },
     },
   ];
