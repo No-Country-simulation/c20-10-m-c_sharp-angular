@@ -83,4 +83,9 @@ export class UserService {
   public getProfilesList(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + this.userProfiles);
   }
+
+  public getProfileById(id: string){
+    return this.http.get(this.baseUrl + this.userEndpoint + "/" + id);
+  }
+
 }
