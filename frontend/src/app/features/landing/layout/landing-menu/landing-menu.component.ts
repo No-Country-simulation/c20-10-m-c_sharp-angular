@@ -18,7 +18,7 @@ import {
   template: `
     @if (menuService.isMenuOpen()) {
       <div
-        class="menu bg-white text-color"
+        class="menu bg-white"
         [class.isOpen]="menuService.isMenuOpen()"
         [@crossfadeAnimation]
         [@slideDownAnimation]>
@@ -26,6 +26,7 @@ import {
           @for (menu of menuItems; track $index) {
             <button
               class="menu-btn font-semibold"
+              [class.hover:bg-gray-200]="menuService.currentIndexExpanded() !== $index"
               [class.item-active]="menuService.currentIndexExpanded() === $index"
               (click)="menu.children ? toggleExpand($index) : menu.action()">
               <i class="pi pi-angle-right"></i>
@@ -35,7 +36,7 @@ import {
               <div class="menu-expand " [@expandAnimation]>
                 <div class="flex flex-column gap-3 p-3">
                   @for (submenu of menu.children; track $index) {
-                    <button class="submenu-btn" (click)="submenu.action()">
+                    <button class="submenu-btn hover:bg-gray-300" (click)="submenu.action()">
                       {{ submenu.label }}
                     </button>
                   }
