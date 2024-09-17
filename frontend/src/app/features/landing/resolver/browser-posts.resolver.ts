@@ -1,8 +1,11 @@
-import { LocalstorageService } from '../../../core/services/localstorage.service';
 import { inject } from '@angular/core';
 import type { ResolveFn } from '@angular/router';
-import { UserSpecialitiesService, SpecialitiesService } from '../../../core/services';
 import { environment } from '../../../../environments/environment';
+import {
+  UserSpecialitiesService,
+  SpecialitiesService,
+  SessionStorageService,
+} from '../../../core/services';
 import { Speciality } from '../../../core/interfaces';
 import { map, of, switchMap } from 'rxjs';
 
@@ -15,12 +18,13 @@ interface CombinedData {
 export const browserPostsResolver: ResolveFn<CombinedData> = route => {
   const offerorSearch = inject(UserSpecialitiesService);
   const specialitiesService = inject(SpecialitiesService);
-  const localstorageService = inject(LocalstorageService);
+  const sessionStorageService = inject(SessionStorageService);
 
   const currentSpeciality = route.params['specialityName'];
 
   const allSpecialitiesKey = environment.SESSION_STORAGE.ALL_SPECIALITIES;
-  const allSpecialities: Speciality[] = localstorageService.get(allSpecialitiesKey);
+  const allSpecialities: Speciality[] = sessionStorageService.get(allSpecialitiesKey);
+  const defaultImage = '/assets/images/landing-page/post-default-image.webp';
 
   if (allSpecialities) {
     const speciality = allSpecialities.find(speciality => {
@@ -32,6 +36,7 @@ export const browserPostsResolver: ResolveFn<CombinedData> = route => {
           const dataWithRoutes = offerorResults.map(res => ({
             ...res,
             route: `explorar/post/${res.userSpecialityId}`,
+            src: res.src && res.src.trim() ? res.src : defaultImage,
           }));
           return {
             currentSpeciality: currentSpeciality,
@@ -57,6 +62,7 @@ export const browserPostsResolver: ResolveFn<CombinedData> = route => {
               const dataWithRoutes = offerorResults.map(res => ({
                 ...res,
                 route: `explorar/post/${res.userSpecialityId}`,
+                src: res.src && res.src.trim() ? res.src : defaultImage,
               }));
               return {
                 currentSpeciality: currentSpeciality,

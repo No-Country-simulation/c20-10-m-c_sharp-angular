@@ -14,8 +14,8 @@ import { RatingModule } from 'primeng/rating';
       (click)="onNavigate(data().route)">
       <div class="w-5">
         <div
-          class="w-full h-full bg-cover bg-center bg-no-repeat border-round-xs"
-          [style.backgroundImage]="'url(' + data().photo + ')'"></div>
+          class="w-full h-full bg-contain bg-center bg-no-repeat border-round-xs"
+          [style.backgroundImage]="'url(' + data().src + ')'"></div>
       </div>
       <div class="flex flex-column justify-content-between w-7">
         <h2 class="capitalize text-lg m-0">{{ data().title }}</h2>
