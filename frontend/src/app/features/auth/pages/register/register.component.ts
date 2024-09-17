@@ -147,11 +147,13 @@ export default class RegisterComponent {
         .updateUserData(updateData)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: res => {
-            console.log(res);
-          },
           error: err => {
-            console.error('Error', err);
+            this.messageService.add({
+              key: 'toast',
+              severity: 'error',
+              summary: 'Error al agregar datos del registro',
+              detail: `${err}`,
+            });
           },
         });
     }
