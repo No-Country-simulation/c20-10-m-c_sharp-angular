@@ -9,10 +9,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { PlacesService } from './services'
+import { PlacesService } from './services';
 import { MenuModule } from 'primeng/menu';
 import { CheckboxModule } from 'primeng/checkbox';
-
 
 @Component({
   selector: 'app-publish',
@@ -31,9 +30,9 @@ import { CheckboxModule } from 'primeng/checkbox';
   ],
   templateUrl: './publish.component.html',
   styleUrls: ['./publish.component.css'],
-  providers: [MessageService]
+  providers: [MessageService],
 })
-export class PublishComponent implements OnInit {
+export default class PublishComponent implements OnInit {
   selectedCategory: string | null = null;
   serviceInfo: string = '';
   selectedPaymentMethod: any[] = [];
@@ -41,40 +40,41 @@ export class PublishComponent implements OnInit {
   userLocation: string = '';
   isMenuVisible = false;
 
-
   categories: any[] = [
     { name: 'Electricidad', key: 'E' },
     { name: 'Plomería', key: 'P' },
     { name: 'Jardinería', key: 'J' },
     { name: 'Cuidados', key: 'C' },
     { name: 'Pintura', key: 'T' },
-    { name: 'Otros', key: 'O' }
+    { name: 'Otros', key: 'O' },
   ];
-
 
   paymentMethods: any[] = [
     { name: 'Mercado Pago', key: 'M' },
     { name: 'Tarjeta Débito/Crédito', key: 'T' },
     { name: 'Transferencia Bancaria', key: 'B' },
-    { name: 'Pago en Efectivo', key: 'P' }
+    { name: 'Pago en Efectivo', key: 'P' },
   ];
 
   constructor(
     private messageService: MessageService,
     private router: Router,
     private placesService: PlacesService
-  ) { }
+  ) {}
 
   // Hook que se ejecuta al inicializar el componente
   ngOnInit() {
     this.selectedCategory = null;
 
     // Obtener la ubicación del usuario a través del servicio PlacesService
-    this.placesService.getUserLocation().then((location: any[]) => {
-      this.userLocation = `Lat: ${location[1]}, Lng: ${location[0]}`;
-    }).catch(() => {
-      this.userLocation = 'No se pudo obtener la ubicación';
-    });
+    this.placesService
+      .getUserLocation()
+      .then((location: any[]) => {
+        this.userLocation = `Lat: ${location[1]}, Lng: ${location[0]}`;
+      })
+      .catch(() => {
+        this.userLocation = 'No se pudo obtener la ubicación';
+      });
   }
 
   // Método que se ejecuta cuando el formulario es enviado
@@ -84,10 +84,9 @@ export class PublishComponent implements OnInit {
       serviceInfo: this.serviceInfo,
       userLocation: this.userLocation,
       uploadedFiles: this.uploadedFiles,
-      selectedPaymentMethods: this.selectedPaymentMethod
+      selectedPaymentMethods: this.selectedPaymentMethod,
     };
     console.log(formData);
-
   }
 
   // Método para seleccionar una categoría
