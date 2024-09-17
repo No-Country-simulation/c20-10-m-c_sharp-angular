@@ -14,8 +14,10 @@ export const ROUTES_PATH = {
 
   DASHBOARD_NOTIFICATIONS: 'notificaciones',
   DASHBOARD_HOME: 'dashboard',
-
   DASHBOARD_PROFILE: 'perfil',
+  DASHBOARD_PUBLISH: 'publicar',
+
+
   DASHBOARD_PUBLIC_PROFILE_USER: 'perfil/publico',
   DASHBOARD_PUBLIC_PROFILE_USER_ID: 'perfil/publico/:id',
 
