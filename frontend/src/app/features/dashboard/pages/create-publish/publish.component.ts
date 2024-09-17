@@ -33,10 +33,10 @@ import { PlacesService } from './services';
 })
 export default class PublishComponent implements OnInit {
   selectedCategory: string | null = null;
-  serviceInfo: string = '';
+  serviceInfo = '';
   selectedPaymentMethod: string | null = null;
   uploadedFiles: any[] = [];
-  userLocation: string = '';
+  userLocation = '';
 
   // Lista de categorías disponibles para seleccionar
   categories: any[] = [

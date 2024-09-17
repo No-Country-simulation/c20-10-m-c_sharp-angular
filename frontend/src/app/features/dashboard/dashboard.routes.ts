@@ -27,24 +27,6 @@ export default [
     loadComponent: () => import('./pages/dashboard-messages/dashboard-messages.component'),
     pathMatch: 'full',
   },
-//     {
-//       path: 'rating-history',
-//       title: 'Historial de calificaciones',
-//       loadComponent: () =>
-//         import('./features/dashboard/pages/rating-history/rating-history.component'),
-//     },
-//     {
-//       path: 'mis-servicios',
-//       title: 'Mis Servicios',
-//       loadComponent: () =>
-//         import('./features/dashboard/pages/management-services/management-services.component'),
-//     },
-//     {
-//       path: 'gestionar-servicios/:serviceId',
-//       title: 'Servicios',
-//       loadComponent: () =>
-//         import('./features/dashboard/pages/management-services/management-services.component'),
-//     },
   {
     path: '',  // In case of empty path, redirect to 'dashboard/perfil'
     redirectTo: ROUTES_PATH.DASHBOARD_PROFILE,

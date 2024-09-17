@@ -24,7 +24,7 @@
           !isPrivate
               ? '/' + ROUTES_PATH.DASHBOARD_HOME + '/' + ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_USER
               : '/' + ROUTES_PATH.DASHBOARD_HOME + '/' + ROUTES_PATH.DASHBOARD_PROFILE,
-          !isPrivate ? offererParamId : []
+          !isPrivate ? offererParamId() : []
         ]"
       >
         {{ message }}

@@ -66,13 +66,14 @@
         <h3 class="tittle-2">Ingresar información</h3>
         <div class="text-area-flex">
           <!-- Textarea para ingresar detalles del servicio -->
-          <textarea rows="5" cols="63 auto" pInputTextarea [autoResize]="true"></textarea>
+          <textarea pInputTextarea [autoResize]="true" rows="5" class="custom-text-area"></textarea>
         </div>
       </div>
 
       <!-- Campo de entrada para ingresar la ubicación del servicio -->
       <h3 class="tittle-2">Ubicación en el mapa</h3>
       <input class="input mb12" name="address" autocomplete="billing address-line1" placeholder="Ubicación">
+
 
       <!-- Sección para subir imágenes relacionadas con el servicio -->
       <h3 class="tittle-2">Sube imágenes de tu trabajo</h3>
@@ -97,20 +98,17 @@
       <h3 class="tittle-2">Métodos de pago</h3>
       <div class="flex-column gap-3">
         <div *ngFor="let method of paymentMethods" class="field-checkbox">
-          <!-- RadioButton de PrimeNG para seleccionar un método de pago -->
-          <p-radioButton [inputId]="method.key" name="paymentMethod" [value]="method.key"
-            [(ngModel)]="selectedPaymentMethod" />
-          <!-- Etiqueta para cada método de pago -->
-          <label [for]="method.key" class="ml-2">
-            {{ method.name }}
-          </label>
+          <p-checkbox [(ngModel)]="selectedPaymentMethod" [label]="method.name" name="group"
+            [value]="method"></p-checkbox>
         </div>
       </div>
 
-      <!-- Botón para crear la publicación -->
-      <div class="card-flex">
-        <button pButton pRipple label="Crear Publicación" class="p-button-success" (click)="navigateTo()"></button>
-      </div>
     </div>
+
+    <!-- Botón para crear la publicación -->
+    <div class="button-flex">
+      <button pButton pRipple label="Crear Publicación" class="p-button-success" (click)="navigateTo()"></button>
+    </div>
+
   </p-card>
 </form>
