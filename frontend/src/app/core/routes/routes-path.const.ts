@@ -29,4 +29,7 @@ export const ROUTES_PATH = {
   AUTH_REGISTER: 'registrarse',
   AUTH_REGISTER_PROFESSIONAL: 'registro-profesional',
   AUTH_FORGOT_PASSWORD: 'restablecer-contrase%C3%B1a',
+
+  ADMIN_HOME: 'admin',
+  ADMIN_OFICIOS: 'oficios',
 } as const;

@@ -1,0 +1,81 @@
+<!--<div class="card flex justify-content-center">-->
+<p-sidebar #sidebarRef [visible]="true">
+  <ng-template pTemplate="headless">
+    <div class="flex flex-column h-full">
+      <!--header-->
+      <div
+        class="header flex align-items-center justify-content-center flex-shrink-0 mx-3"
+        style="height: 3.6rem"
+      >
+        <div
+          class="relative h-full w-full flex justify-content-center align-items-center bg-black-alpha-90"
+        >
+          <a
+            pRipple
+            [routerLink]="['/']"
+            class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+          >
+            <img
+              alt="logo"
+              ngSrc="/assets/icons/contratAppLogo.svg"
+              class="pr-2"
+              height="45"
+              width="45"
+            />
+          </a>
+        </div>
+      </div>
+      <!--menus-->
+      <div class="overflow-y-auto menus">
+        <ul class="list-none p-3 m-0">
+          <li>
+            <div
+              pRipple
+              pStyleClass="@next"
+              enterFromClass="hidden"
+              enterActiveClass="slidedown"
+              leaveToClass="hidden"
+              leaveActiveClass="slideup"
+              class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
+            >
+              <span class="font-medium">ADMINISTRACIÓN</span>
+              <i class="pi pi-chevron-down"></i>
+            </div>
+            <ul class="list- p-0 m-0 overflow-hidden">
+              @for( item of menuItems; track $index) {
+                <li>
+                  <a
+                    pRipple
+                    [routerLink]="item.routerLink"
+                    routerLinkActive="router-link-active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    class="no-underline flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+                  >
+                    <i class="pi {{ item.icon }} mr-2"></i>
+                    <span class="font-medium">{{ item.label | titlecase }}</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!--footer-->
+      <div class="mt-auto footer">
+        <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
+        <a
+          [routerLink]="['/dashboard/perfil']"
+          pRipple
+          class="m-3 flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+        >
+          <p-avatar [style]="{ 'background-color': '#2196F3', color: '#ffffff' }" [label]="this.userService.user()?.firstName ? this.userService.user()!.firstName.at(0) : 'A'" styleClass="mr-2" size="large" shape="circle"></p-avatar>
+          <span class="font-bold">{{ (this.userService.user()?.firstName
+            ? (this.userService.user()?.firstName + ' ' + this.userService.user()?.lastName | titlecase)
+            : 'Admin') | titlecase }}</span>
+        </a>
+      </div>
+    </div>
+  </ng-template>
+</p-sidebar>
+<!--</div>-->

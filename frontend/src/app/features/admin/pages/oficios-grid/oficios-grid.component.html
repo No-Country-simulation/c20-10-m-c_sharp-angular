@@ -1,0 +1,26 @@
+<div class="lotterys__list">
+  <section class="p-2">
+    <button
+      pButton
+      pRipple
+      class="bg-primary-700"
+      [routerLink]="['/admin/oficios/agregar']"
+    >
+      Nuevo oficio
+    </button>
+    <p-divider></p-divider>
+  </section>
+  <section class="grid grid-nogutter gap-3 md:gap-2">
+      <!--@for (product of productService.products(); track $index) {
+        <div class="col-12 md:col-6 lg:col-5">
+          <product-card [product]="product" isAdmin></product-card>
+        </div>
+      }@empty {-->
+        <div class="col-12 flex justify-content-center align-items-center">
+          <p-messages [(value)]="messageNotData" [enableService]="false" [closable]="false"></p-messages>
+        </div>
+<!--      }-->
+  </section>
+
+</div>
+

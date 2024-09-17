@@ -1,0 +1,9 @@
+@import "primeng/resources/primeng.min.css";
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+
+::ng-deep .p-divider {
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}

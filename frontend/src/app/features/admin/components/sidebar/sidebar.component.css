@@ -1,0 +1,20 @@
+@import "primeng/resources/primeng.min.css";
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+
+.header {
+  display: inline-block;
+  border-bottom: solid 1px var(--surface-border);
+}
+
+.router-link-active{
+  background-color: var(--surface-100) !important;
+}
+
+
+@media screen and (max-width: 960px) {
+  ::ng-deep .p-sidebar {
+    display: none;
+  }
+}

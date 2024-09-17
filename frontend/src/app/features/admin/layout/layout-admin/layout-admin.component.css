@@ -1,0 +1,23 @@
+@import "primeng/resources/primeng.min.css";
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+
+.dashboard__header,
+.dashboard__content {
+  margin-left: unset;
+}
+
+.dashboard__content {
+  padding: 1rem;
+  min-height: calc(100dvh - 62px);
+}
+
+/* modificar tamaño Mayor a 960px */
+@media screen and (min-width: 961px) {
+
+  .dashboard__content,
+  .dashboard__header {
+    margin-left: 321px;
+  }
+}
