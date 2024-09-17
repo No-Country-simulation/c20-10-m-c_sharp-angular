@@ -8,20 +8,17 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
-import { ButtonModule } from 'primeng/button';
-
-import { SearchbarComponent, CardImgComponent } from '../../components';
+import { SearchbarComponent, CardImgComponent, NotFoundResultsComponent } from '../../components';
 import { CategoryResponse } from '../../../../core/interfaces';
-import { ROUTES_PATH } from '../../../../core/routes';
 import { revealAnimation } from '../../../../shared/animations';
-import { SpecialitiesService } from '../../../../core/services';
+import { ROUTES_PATH } from '../../../../core/routes';
 
 @Component({
   selector: 'app-browser',
   standalone: true,
-  imports: [CommonModule, RouterLink, SearchbarComponent, CardImgComponent, ButtonModule],
+  imports: [CommonModule, SearchbarComponent, CardImgComponent, NotFoundResultsComponent],
   animations: [revealAnimation],
   template: `
     <div class="container-c flex flex-column gap-5 py-5">
@@ -40,10 +37,7 @@ import { SpecialitiesService } from '../../../../core/services';
               <app-card-img [data]="item" />
             </div>
           } @empty {
-            <div class="flex flex-column justify-content-center align-items-center h-30rem">
-              <p class="text-2xl">No se encontraron especialidades</p>
-              <p-button label="Volver a las categorias" [routerLink]="routesPath.LANDING_BROWSER" />
-            </div>
+            <app-not-found-results />
           }
         </div>
       </div>
@@ -64,7 +58,6 @@ import { SpecialitiesService } from '../../../../core/services';
 export default class BrowserComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly specialitiesService = inject(SpecialitiesService);
 
   public readonly currentCategory = signal<string | undefined>(undefined);
   public readonly currentRoute = signal<string | null>(null);
