@@ -90,7 +90,7 @@ export default class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.jwtService.getAccessToken()) {
-      debugger;
+      this.authService.logout();
       this.router.navigateByUrl(AUTH_LOGIN);
     }
     this.userService.getUserData().subscribe({
