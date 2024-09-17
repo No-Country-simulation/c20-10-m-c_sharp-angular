@@ -34,11 +34,6 @@ interface AuthData {
     LogoComponent,
   ],
   templateUrl: './layout.component.html',
-  styles: `
-    .c-mt {
-      margin-top: 7.5rem;
-    }
-  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LayoutComponent {
