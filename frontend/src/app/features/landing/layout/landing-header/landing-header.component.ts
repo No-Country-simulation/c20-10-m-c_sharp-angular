@@ -1,178 +1,102 @@
-import { MessageService, ConfirmationService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
 import { BadgeModule } from 'primeng/badge';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AvatarModule } from 'primeng/avatar';
 
 import { AuthService } from '../../../../core/services';
 import { LogoComponent } from '../../../../shared/components';
 import { ROUTES_PATH } from '../../../../core/routes';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-landing-header',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    ButtonModule,
-    MenuModule,
-    BadgeModule,
-    ConfirmDialogModule,
-    LogoComponent,
-    AvatarModule,
-  ],
+  imports: [CommonModule, RouterLink, ButtonModule, BadgeModule, LogoComponent, AvatarModule],
   template: `
     <div
-      class="flex justify-content-center align-items-center h-5rem custom-bg custom-shadow w-full">
-      <div class="py-4 pl-2 pr-3 flex justify-content-between align-items-center w-full">
-        <p-button icon="pi pi-bars text-2xl text-white" size="small" text="true"> </p-button>
+      class="sticky top-0 left-0 flex justify-content-center align-items-center h-5rem custom-bg custom-shadow w-full custom-z-index">
+      <div
+        class="relative py-3 px-3 flex justify-content-between align-items-center w-full container-app">
+        <button class="menu-btn" (click)="menuService.toggleMenu()">
+          <svg
+            class="ham hamRotate ham8"
+            viewBox="0 0 100 100"
+            [class.active]="menuService.isMenuOpen()">
+            <path
+              class="line top"
+              d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20" />
+            <path class="line middle" d="m 30,50 h 40" />
+            <path
+              class="line bottom"
+              d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20" />
+          </svg>
+        </button>
         <img
           src="/assets/icons/contratAppLogo.svg"
           width="48"
           alt="logo de la aplicacion"
           routerLink="/" />
-        <div class="flex">
-          <p-avatar label="JA" size="large" shape="circle" />
-          <!-- <p-button
+        <div class="flex gap-1">
+          <!-- <p-avatar label="JA" size="large" shape="circle" /> -->
+          <p-button
             icon="pi pi-user text-2xl text-white"
             size="small"
             text="true"
-            (onClick)="authService.isAuthenticated() ? menu.toggle($event) : onLogin()" /> -->
-          <p-button icon="pi pi-bell text-2xl text-white" size="small" text="true">
-            <i
-              class="absolute top-0 left-50 mt-2 select-none"
-              severity="danger"
-              pBadge
-              value="4"></i>
-          </p-button>
-        </div>
-      </div>
-      <p-menu #menu [model]="dropdownActions" [popup]="true" />
-      <!-- <div class="container-c flex align-items-center justify-content-between w-full px-5">
-        <app-logo [size]="3" />
-        <div class="flex align-items-center">
-          @if (!authService.isAuthenticated()) {
-            <p-button label="Iniciar sesión" link="true" routerLink="/iniciar-sesion" />
+            (onClick)="
+              authService.isAuthenticated()
+                ? onNavigate(routesPath.DASHBOARD_HOME + '/' + routesPath.DASHBOARD_PROFILE)
+                : onNavigate(routesPath.AUTH_LOGIN)
+            " />
+          @if (authService.isAuthenticated()) {
             <p-button
-              icon="pi pi-user"
-              label="Entrar como profesional"
+              icon="pi pi-bell text-2xl text-white"
               size="small"
-              rounded="true"
-              routerLink="/registro-profesional" />
-          } @else {
-            <p-button
-              styleClass="w-2rem h-2rem text-color"
-              icon="pi pi-user"
               text="true"
-              (onClick)="menu.toggle($event)" />
-            <div class="relative">
-              <p-button styleClass="w-2rem h-2rem text-color" icon="pi pi-bell" text="true" />
-              @if (true) {
-                <i class="custom-badge text-sm" pBadge value="2"></i>
-              }
-            </div>
-
+              (onClick)="
+                onNavigate(routesPath.DASHBOARD_HOME + '/' + routesPath.DASHBOARD_NOTIFICATIONS)
+              ">
+              <i
+                class="absolute top-0 left-50 mt-2 select-none"
+                severity="danger"
+                pBadge
+                value="4"></i>
+            </p-button>
           }
         </div>
-      </div> -->
+      </div>
     </div>
-    <p-confirmDialog />
   `,
-  styles: `
-    @keyframes scroll-shadow {
-      from {
-        box-shadow: none;
-      }
-      to {
-        box-shadow:
-          0px 1px 8px rgba(0, 0, 0, 0.08),
-          0px 3px 4px rgba(0, 0, 0, 0.1),
-          0px 1px 4px -1px rgba(0, 0, 0, 0.1);
-      }
-    }
+  styleUrls: ['./landing-header.component.css'],
 
-    .custom-shadow {
-      animation: scroll-shadow linear forwards;
-      animation-timeline: scroll();
-      animation-range: 0vh 50vh;
-    }
-
-    .custom-bg {
-      background-color: #231f20;
-    }
-
-
-
-  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingHeaderComponent {
-  public readonly confirmationService = inject(ConfirmationService);
-  public readonly messageService = inject(MessageService);
   public readonly authService = inject(AuthService);
+  public readonly menuService = inject(MenuService);
   public readonly router = inject(Router);
 
-  public readonly dropdownActions = [
-    {
-      label: 'Mi perfil',
-      command: () => {
-        this.router.navigate(['/dashboard/perfil']);
-      },
-    },
-    {
-      label: 'Mensajes',
-      command: () => {
-        this.router.navigate(['/dashboard/mensajes']);
-      },
-    },
-    {
-      label: 'Ofrecer servicio',
-      command: () => {
-        this.router.navigate(['/dashboard/ofrecer-servicio']);
-      },
-    },
-    {
-      label: 'Mis publicaciones',
-      command: () => {
-        this.router.navigate(['/dashboard/mis-publicaciones']);
-      },
-    },
-    {
-      label: 'Mis calificaciones',
-      command: () => {
-        this.router.navigate(['/dashboard/mis-calificaciones']);
-      },
-    },
-    {
-      label: 'Cerrar sesión',
-      command: () => {
-        this.onLogout();
-      },
-    },
-  ];
+  public readonly routesPath = ROUTES_PATH;
 
-  public onLogin(): void {
-    this.router.navigate([ROUTES_PATH.AUTH_LOGIN]);
+  public onNavigate(route: string): void {
+    this.router.navigate(['/' + route]);
   }
 
-  private onLogout(): void {
-    this.confirmationService.confirm({
-      message: '¿Deseas cerrar sesión?',
-      rejectButtonStyleClass: 'p-danger',
-      accept: () => {
-        this.messageService.add({
-          severity: 'info',
-          summary: 'La sesión ha sido cerrada',
-          detail: 'Gracias por preferirnos',
-          key: 'logout',
-        });
-        this.authService.logout();
-      },
-    });
-  }
+  // private onLogout(): void {
+  //   this.confirmationService.confirm({
+  //     message: '¿Deseas cerrar sesión?',
+  //     rejectButtonStyleClass: 'p-danger',
+  //     accept: () => {
+  //       this.messageService.add({
+  //         severity: 'info',
+  //         summary: 'La sesión ha sido cerrada',
+  //         detail: 'Gracias por preferirnos',
+  //         key: 'logout',
+  //       });
+  //       this.authService.logout();
+  //     },
+  //   });
+  // }
 }

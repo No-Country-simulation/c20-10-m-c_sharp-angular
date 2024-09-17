@@ -54,6 +54,7 @@ export default class SharePostComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
       this.data.set(res[0]);
+      console.log(res);
     });
   }
 

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { LandingFooterComponent, LandingHeaderComponent } from '../../layout';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { RatingModule } from 'primeng/rating';
   styleUrl: './public-profile.component.css'
 })
 
-export class PublicProfileComponent {
+export class PublicProfileComponent implements OnInit {
   value5: number = 5;
   value4: number = 4;
   value3: number = 3;
@@ -34,12 +35,18 @@ export class PublicProfileComponent {
   jsonData: any;
 
   constructor(private router:Router,
-              private activatedRoute: ActivatedRoute) 
+              private activatedRoute: ActivatedRoute, 
+              private destroyRef: DestroyRef) 
   {
-    this.activatedRoute.params.subscribe( params => {
-      this.jsonData = params;
-      console.log("aca recibimos la info en el componete public-profile: ",this.jsonData);
-    })
+    
   }
-
+  ngOnInit(): void{
+    this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
+      
+      if(res){
+        this.jsonData = res["data"];
+        console.log("info que tenemos en el public profile",this.jsonData);
+      }
+    });
+  }
 }

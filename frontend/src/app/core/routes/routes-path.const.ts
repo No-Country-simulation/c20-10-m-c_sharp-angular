@@ -12,6 +12,7 @@ export const ROUTES_PATH = {
   LANDING_PROFILE_PROFESSIONAL: '',
   LANDING_PROFILE_CLIENT: '',
 
+  DASHBOARD_NOTIFICATIONS: 'notificaciones',
   DASHBOARD_HOME: 'dashboard',
   DASHBOARD_PROFILE: 'perfil',
   DASHBOARD_PUBLISH: 'publicar',

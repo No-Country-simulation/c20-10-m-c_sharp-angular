@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+// Angular Libraries
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  inject,
+} from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -6,8 +13,17 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { UserService } from '../../../core/services';
-import { CountriesService } from '../../../shared/services/countries.service';
+
+import { Router } from '@angular/router';
+
+// Core
+import { JwtService } from '@core/services';
+import { ROUTES_PATH } from '@core/routes';
+import { UserService, AuthService } from '@core/services';
+import { User } from '@core/interfaces';
+
+//PrimeNG
+import { CountriesService } from '@shared/services/countries.service';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,14 +35,9 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CheckboxModule } from 'primeng/checkbox';
-import { ChangeDetectorRef } from '@angular/core';
 
-import { User } from '../../../core/interfaces';
-
-interface Country {
-  country: string;
-  code: string;
-}
+// Routes
+const { AUTH_LOGIN } = ROUTES_PATH;
 
 @Component({
   selector: 'app-perfil',
@@ -69,16 +80,22 @@ export default class PerfilComponent implements OnInit {
 
   photoUrl = 'path-to-default-image.jpg'; // Cambiar por el path real o manejar dinámicamente
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private countriesServices: CountriesService,
-    private cd: ChangeDetectorRef,
-    private userService: UserService
-  ) {}
+  formBuilder = inject(FormBuilder);
+  countriesServices = inject(CountriesService);
+  cd = inject(ChangeDetectorRef);
+  userService = inject(UserService);
+  jwtService = inject(JwtService);
+  router = inject(Router);
+  authService = inject(AuthService);
 
   ngOnInit(): void {
+    if (!this.jwtService.getAccessToken()) {
+      this.authService.logout();
+      this.router.navigateByUrl(AUTH_LOGIN);
+    }
     this.userService.getUserData().subscribe({
       next: user => {
+        console.log('Datos recibidos por la API', user);
         this.currentUser = user;
         this.profileForm.patchValue(user);
       },
@@ -118,10 +135,26 @@ export default class PerfilComponent implements OnInit {
   }
 
   toggleEdit(): void {
-    this.editmode = !this.editmode;
-    this.editLabel = this.editmode ? 'Guardar' : 'Editar';
-
-    this.editmode ? this.profileForm.enable() : this.profileForm.disable();
+    if (this.editmode) {
+      this.userService.updateUserData(this.profileForm.value).subscribe({
+        next: () => {
+          console.log('Datos actualizados');
+          this.editmode = false;
+          this.editLabel = 'Editar';
+          this.profileForm.disable();
+        },
+        error: error => {
+          console.error('Error updating user data', error);
+          this.editmode = false;
+          this.editLabel = 'Editar';
+          this.profileForm.disable();
+        },
+      });
+    } else {
+      this.editmode = true;
+      this.editLabel = 'Guardar';
+      this.profileForm.enable();
+    }
   }
 
   uploadImage(event: Event): void {
@@ -152,5 +185,11 @@ export default class PerfilComponent implements OnInit {
           this.profileForm.controls['state'].enable();
         });
     }
+  }
+
+  logout(): void {
+    //debugger;
+    this.authService.logout();
+    this.router.navigateByUrl(AUTH_LOGIN);
   }
 }

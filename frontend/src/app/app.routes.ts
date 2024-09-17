@@ -34,7 +34,7 @@ export const routes: Routes = [
       {
         path: ROUTES_PATH.DASHBOARD_HOME,
         loadComponent: () =>
-          import('./features/dashboard/layout/layout-dashboard/layout-dashboard.component'),
+          import('./features/landing/layout/landing-layout/landing-layout.component'),
         loadChildren: () => import('./features/dashboard/dashboard.routes'),
         canActivate: [dashboardGuard],
       },
