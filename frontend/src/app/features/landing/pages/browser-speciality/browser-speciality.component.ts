@@ -54,6 +54,7 @@ export default class BrowserSpecialityComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
       this.data.set(data['data']);
+      console.log(data);
     });
   }
 

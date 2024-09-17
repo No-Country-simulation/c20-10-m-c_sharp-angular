@@ -9,6 +9,7 @@ import {
   browserViewSpecialityResolver,
   postDetailed,
 } from './features/landing/resolver';
+import { publicProfileResolver } from './features/landing/resolver/public-profile.resolver';
 
 const {
   LANDING_HOME,
@@ -79,7 +80,9 @@ export const routes: Routes = [
       {
         path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_ID,
         title: 'Perfil publico',
-        resolve: {},
+        resolve: {
+          data: publicProfileResolver, 
+        },
         loadComponent: () =>
           import('./features/landing/pages/public-profile/public-profile.component').then(
             m => m.PublicProfileComponent
