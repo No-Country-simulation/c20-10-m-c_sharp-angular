@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
+import { ORDER_FILTER } from '../../utils';
 
 @Component({
   selector: 'app-order-filter',
@@ -14,7 +15,6 @@ import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
       optionLabel="label"
       optionValue="value"
       placeholder="Ordenar por"
-      [disabled]="disabled()"
       [options]="order"
       (onChange)="handleOrder($event)" />
   `,
@@ -24,34 +24,23 @@ export class OrderFilterComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  public disabled = input.required<boolean>();
-
   public readonly order = [
     {
       label: 'Por defecto',
-      value: 'por-defecto',
+      value: ORDER_FILTER.DEFAULT,
     },
     {
       label: 'Mejores calificados',
-      value: 'mejores-calificados',
+      value: ORDER_FILTER.BY_RATING,
     },
     {
       label: 'Mas cercanos',
-      value: 'mas-cercanos',
-    },
-    {
-      label: 'A - Z',
-      value: 'a-z',
-    },
-    {
-      label: 'Z - A',
-      value: 'z-a',
+      value: ORDER_FILTER.BY_NEAREST,
     },
   ];
 
   public handleOrder(event: DropdownChangeEvent): void {
     const cleanCategory = event.value;
-
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: { orden: cleanCategory },
