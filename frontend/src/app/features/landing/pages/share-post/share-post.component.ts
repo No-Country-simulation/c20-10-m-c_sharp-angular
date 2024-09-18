@@ -7,7 +7,9 @@ import { RatingModule } from 'primeng/rating';
 import { CheckboxModule } from 'primeng/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { User, UserSpeciality } from '../../../../core/interfaces';
+import { ROUTES_PATH } from '@core/routes';
 
+const { DASHBOARD_HOME, DASHBOARD_MESSAGES } = ROUTES_PATH;
 @Component({
   selector: 'app-share-post',
   standalone: true,
@@ -73,5 +75,9 @@ export default class SharePostComponent implements OnInit {
 
   getIndicatorStyle(index: number) {
     return index === this.activeImageIndex ? 'indicator active' : 'indicator';
+  }
+
+  goToChat() {
+    this.router.navigate([DASHBOARD_HOME + '/' + DASHBOARD_MESSAGES]);
   }
 }
