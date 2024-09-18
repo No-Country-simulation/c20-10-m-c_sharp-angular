@@ -18,6 +18,7 @@ export const environment = {
   SESSION_STORAGE: {
     ALL_CATEGORIES: 'allCategories',
     ALL_SPECIALITIES: 'allSpecialities',
+    CURRENT_USER_LOCATION: 'currentUserLocation',
   },
   COOKIES: {
     TOKEN: 'token',

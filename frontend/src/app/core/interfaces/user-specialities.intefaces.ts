@@ -34,5 +34,9 @@ export interface UserSpecialitySearch {
   rating: number;
   area: string;
   src?: string;
+  latitude?: number;
+  longitude?: number;
+  distance?: number;
+  distanceFormatted?: string;
   route: string;
 }
