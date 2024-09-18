@@ -1,3 +1,4 @@
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -11,8 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
-import { RatingModule } from 'primeng/rating';
-import { TagModule } from 'primeng/tag';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { UserService, UserSpecialitiesService } from '@app/core/services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -24,12 +23,10 @@ import { UserSpeciality } from '@app/core/interfaces';
   imports: [
     CommonModule,
     FormsModule,
-    DataViewModule,
-    TagModule,
-    RatingModule,
-    ButtonModule,
-    CommonModule,
+    RouterLink,
     ConfirmDialogModule,
+    DataViewModule,
+    ButtonModule,
   ],
   templateUrl: './my-posts.component.html',
   styleUrl: './my-posts.component.css',
@@ -41,6 +38,7 @@ export default class MyPostsComponent implements OnInit {
   public readonly messageService = inject(MessageService);
   public readonly userService = inject(UserService);
   public readonly destroyRef = inject(DestroyRef);
+  public readonly router = inject(Router);
 
   public readonly postsData = signal<UserSpeciality[]>([]);
 
@@ -67,14 +65,6 @@ export default class MyPostsComponent implements OnInit {
         });
         this.getPosts();
       },
-      reject: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Rejected',
-          detail: 'You have rejected',
-          life: 3000,
-        });
-      },
     });
   }
 
@@ -85,5 +75,9 @@ export default class MyPostsComponent implements OnInit {
       .subscribe(res => {
         this.postsData.set(res.userSpecialities);
       });
+  }
+
+  public onNavigate(route: string): void {
+    this.router.navigate([route]);
   }
 }
