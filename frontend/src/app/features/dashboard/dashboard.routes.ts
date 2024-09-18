@@ -7,6 +7,8 @@ const {
   DASHBOARD_MESSAGES,
   DASHBOARD_MESSAGES_INBOX,
   DASHBOARD_PUBLISH,
+  DASHBOARD_MY_POSTS,
+  DASHBOARD_MY_WORKS,
 } = ROUTES_PATH;
 
 export default [
@@ -41,6 +43,16 @@ export default [
     path: '', // In case of empty path, redirect to 'dashboard/perfil'
     redirectTo: DASHBOARD_PROFILE,
     pathMatch: 'full',
+  },
+  {
+    path: DASHBOARD_MY_POSTS,
+    title: 'Mis publicaciones',
+    loadComponent: () => import('./pages/my-posts/my-posts.component'),
+  },
+  {
+    path: DASHBOARD_MY_WORKS,
+    title: 'Mis trabajos',
+    loadComponent: () => import('./pages/my-works/my-works.component'),
   },
   {
     path: '**', // In case of any other path, redirect to 'dashboard/perfil'

@@ -27,6 +27,9 @@ export const ROUTES_PATH = {
   DASHBOARD_PUBLIC_PROFILE: 'perfil-publico',
   DASHBOARD_PUBLIC_PROFILE_ID: 'perfil-publico/:id',
 
+  DASHBOARD_MY_WORKS: 'mis-trabajos',
+  DASHBOARD_MY_POSTS: 'mis-publicaciones',
+
   AUTH_LOGIN: 'iniciar-sesion',
   AUTH_REGISTER: 'registrarse',
   AUTH_REGISTER_PROFESSIONAL: 'registro-profesional',
