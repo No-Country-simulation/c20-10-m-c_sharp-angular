@@ -32,7 +32,7 @@ import { ORDER_FILTER } from '../../utils';
     NotFoundResultsComponent,
   ],
   template: `
-    <div class="container-c flex flex-column gap-5 py-5">
+    <div class="layout-container flex flex-column gap-5">
       <div class="w-full">
         <app-searchbar></app-searchbar>
       </div>

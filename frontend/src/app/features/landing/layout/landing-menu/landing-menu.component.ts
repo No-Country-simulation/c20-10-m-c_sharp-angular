@@ -11,6 +11,8 @@ const {
   DASHBOARD_PROFILE,
   DASHBOARD_MESSAGES,
   DASHBOARD_CREATE_POST,
+  DASHBOARD_MY_POSTS,
+  DASHBOARD_MY_WORKS,
   DASHBOARD_PUBLISH,
 } = ROUTES_PATH;
 
@@ -81,11 +83,8 @@ export class LandingMenuComponent {
       children: [
         {
           label: 'Ver publicaciones',
-          /**
-           * @todo Falta la ruta para ver las publicaciones creadas
-           */
           action: () => {
-            this.onNavigation(`${DASHBOARD_HOME}/${ROUTES_PATH}`);
+            this.onNavigation(`${DASHBOARD_HOME}/${DASHBOARD_MY_POSTS}`);
           },
         },
         {
@@ -106,12 +105,9 @@ export class LandingMenuComponent {
       },
     },
     {
-      /**
-       * @todo Falta la ruta para ver los trabajos
-       */
       label: 'Mis trabajos',
       action: () => {
-        this.onNavigation(`${DASHBOARD_HOME}/${ROUTES_PATH}`);
+        this.onNavigation(`${DASHBOARD_HOME}/${DASHBOARD_MY_WORKS}`);
       },
     },
   ];

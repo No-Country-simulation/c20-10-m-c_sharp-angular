@@ -1,6 +1,6 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { LandingFooterComponent, LandingHeaderComponent } from '../../layout';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +23,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './public-profile.component.css',
 })
 export default class PublicProfileComponent implements OnInit {
+  private readonly location = inject(Location);
+
   value5: number = 5;
   value4: number = 4;
   value3: number = 3;
@@ -45,5 +47,9 @@ export default class PublicProfileComponent implements OnInit {
         console.log('info que tenemos en el public profile', this.jsonData);
       }
     });
+  }
+
+  onNavigatePrev(): void {
+    this.location.back();
   }
 }

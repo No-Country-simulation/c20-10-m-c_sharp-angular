@@ -33,8 +33,8 @@ import {
     OpinionCarouselComponent,
   ],
   template: `
-    <main class="md:px-4">
-      <div class="mt-5 px-7 md:px-0">
+    <main class="layout-container px-0">
+      <div class="px-7 md:px-0">
         <app-searchbar></app-searchbar>
       </div>
       <h2 class="mt-6 mb-3 text-center text-regular text-base">Explora nuestras categorías</h2>

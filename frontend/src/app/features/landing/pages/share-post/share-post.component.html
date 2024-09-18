@@ -1,41 +1,41 @@
-<main>
-  <div class="mt-5 scroll-icon">
-    <i class="pi pi-chevron-left"></i>
+<main class="layout-container">
+  <div class="mb-5">
+    <p-button icon="text-color pi pi-chevron-left" text="true" (onClick)="onNavigatePrev()" />
   </div>
-  
+
   <div class="publication-container pd-3">
     <div class="mt-5 service-provider">
       <h2>{{ data().title }}</h2>
     </div>
-  
+
     <div class="mt-4">
       <div class="mt-rating">
-        <p-rating [readonly]="true" [(ngModel)]="value4" />
+        <p-rating cancel="false" [readonly]="true" [(ngModel)]="ratingValue" />
       </div>
     </div>
-  
+
     <div class="mt-3 price-and-profile">
       <span class="price">Precio a convenir</span>
       <div class="contenedor-boton">
-        <a (click)="verPerfil(data().idUser)" class="ver-perfil">Ver Perfil</a>
+        <a (click)="verPerfil(data().idUser)" class="ver-perfil cursor-pointer">Ver Perfil</a>
       </div>
     </div>
-  
+
     <!-- Imágenes desplazables
     <div class="image-slider">
       <img *ngFor="let image of images; let i = index" [src]="image" [alt]="'Imagen ' + (i + 1)">
     </div>-->
-  
+
     <!-- Indicadores de imagen actual
     <div class="image-indicators">
       <span *ngFor="let image of images; let i = index" [class]="getIndicatorStyle(i)" (click)="setActiveImage(i)"></span>
     </div> -->
-  
+
     <div class="service-description">
       <h3 class="mt-5">{{ data().text }}</h3>
       <p class="mt-0">{{ data().area }}</p>
     </div>
-  
+
     <h3 class="mt-5">Métodos de pago</h3>
     <div class="card flex justify-content-left">
       <div class="flex flex-column gap-2">
@@ -48,12 +48,11 @@
         </div>
       </div>
     </div>
-  
+
     <div class="service-location"></div>
-  
+
     <div class="contact-link">
-      <a href="#">Envíame una consulta</a>
+      <div class="cursor-pointer underline" (click)="goToChat()">Envíame una consulta</div>
     </div>
   </div>
 </main>
-

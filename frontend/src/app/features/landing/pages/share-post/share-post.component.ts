@@ -1,26 +1,27 @@
-import { Component, DestroyRef, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
 import { MenuModule } from 'primeng/menu';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { CheckboxModule } from 'primeng/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { User, UserSpeciality } from '../../../../core/interfaces';
+import { UserSpeciality } from '../../../../core/interfaces';
+import { ROUTES_PATH } from '@core/routes';
+import { ButtonModule } from 'primeng/button';
 
+const { DASHBOARD_HOME, DASHBOARD_MESSAGES } = ROUTES_PATH;
 @Component({
   selector: 'app-share-post',
   standalone: true,
-  imports: [CommonModule, MenuModule, FormsModule, RatingModule, CheckboxModule],
+  imports: [CommonModule, MenuModule, FormsModule, RatingModule, CheckboxModule, ButtonModule],
   templateUrl: './share-post.component.html',
   styleUrls: ['./share-post.component.css'],
 })
 export default class SharePostComponent implements OnInit {
-  value5: number = 5;
-  value4: number = 4;
-  value3: number = 3;
-  value2: number = 2;
-  value1: number = 1;
+  private readonly location = inject(Location);
+
+  ratingValue = 4;
 
   selectedCategories: any[] = [];
 
@@ -58,6 +59,10 @@ export default class SharePostComponent implements OnInit {
     });
   }
 
+  onNavigatePrev(): void {
+    this.location.back();
+  }
+
   verPerfil(item: any) {
     console.log('quiso ver su perfil');
     this.router.navigate(['/perfil-publico', item]);
@@ -73,5 +78,9 @@ export default class SharePostComponent implements OnInit {
 
   getIndicatorStyle(index: number) {
     return index === this.activeImageIndex ? 'indicator active' : 'indicator';
+  }
+
+  goToChat() {
+    this.router.navigate([DASHBOARD_HOME + '/' + DASHBOARD_MESSAGES]);
   }
 }

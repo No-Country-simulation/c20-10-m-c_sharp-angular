@@ -1,47 +1,51 @@
-<!-- <app-landing-header></app-landing-header> -->
-<main>
-    
-    <div class="profile-header">
-        <img src="../../../../../assets/images/landing-page/Ellipse202.png" alt="{José Garcia}" class="profile-picture">
-        <div class="profile-info">
-            <h1>{{ jsonData.firstName }}</h1>
-            <h1>{{ jsonData.lastName }}</h1>
-            @for (item of jsonData.userSpecialities; track $index) {
-                <p class="profession">{{ item.title }}</p>
-            }
-            <div class="card flex justify-content-left">
-                <p-rating [(ngModel)]="value4" [readonly]="true" [cancel]="false" />
-            </div>
-            <p>Experiencia: 10 años</p>
-            <p>Horario: 10 a 17hs</p>
-        </div>
+<main class="layout-container">
+  <div class="mb-5">
+    <p-button icon="text-color pi pi-chevron-left" text="true" (onClick)="onNavigatePrev()" />
+  </div>
+
+  <div class="profile-header flex justify-content-center">
+    <img
+      src="../../../../../assets/images/landing-page/Ellipse202.png"
+      alt="{José Garcia}"
+      class="profile-picture" />
+    <div class="profile-info">
+      <h1>{{ jsonData.firstName }}</h1>
+      <h1>{{ jsonData.lastName }}</h1>
+      @for (item of jsonData.userSpecialities; track $index) {
+        <p class="profession">{{ item.title }}</p>
+      }
+      <div class="card flex justify-content-left">
+        <p-rating [(ngModel)]="value4" [readonly]="true" [cancel]="false" />
+      </div>
+      <p>Experiencia: 10 años</p>
+      <p>Horario: 10 a 17hs</p>
+    </div>
+  </div>
+
+  <section class="certificates-section">
+    <h3>Certificados y matrículas</h3>
+
+    <div class="rating">
+      <p-rating [(ngModel)]="value5" [readonly]="true" [cancel]="false"></p-rating>
+      <p class="rating-text">Excelente (12)</p>
+    </div>
+    <div class="rating">
+      <p-rating [(ngModel)]="value4" [readonly]="true" [cancel]="false"></p-rating>
+      <p class="rating-text">Muy buena (9)</p>
+    </div>
+    <div class="rating">
+      <p-rating [(ngModel)]="value3" [readonly]="true" [cancel]="false"></p-rating>
+      <p class="rating-text">Buena (5)</p>
+    </div>
+    <div class="rating">
+      <p-rating [(ngModel)]="value2" [readonly]="true" [cancel]="false"></p-rating>
+      <p class="rating-text">Regular (3)</p>
+    </div>
+    <div class="rating">
+      <p-rating [(ngModel)]="value1" [readonly]="true" [cancel]="false"></p-rating>
+      <p class="rating-text">Mala (1)</p>
     </div>
 
-    <section class="certificates-section">
-        <h3>Certificados y matrículas</h3>
-
-        <div class="rating">
-            <p-rating [(ngModel)]="value5" [readonly]="true" [cancel]="false"></p-rating>
-            <p class="rating-text">Excelente (12)</p>
-        </div>
-        <div class="rating">
-            <p-rating [(ngModel)]="value4" [readonly]="true" [cancel]="false"></p-rating>
-            <p class="rating-text">Muy buena (9)</p>
-        </div>
-        <div class="rating">
-            <p-rating [(ngModel)]="value3" [readonly]="true" [cancel]="false"></p-rating>
-            <p class="rating-text">Buena (5)</p>
-        </div>
-        <div class="rating">
-            <p-rating [(ngModel)]="value2" [readonly]="true" [cancel]="false"></p-rating>
-            <p class="rating-text">Regular (3)</p>
-        </div>
-        <div class="rating">
-            <p-rating [(ngModel)]="value1" [readonly]="true" [cancel]="false"></p-rating>
-            <p class="rating-text">Mala (1)</p>
-        </div>
-
-        <button pButton label="Ver Opiniones" class="opinions-btn"></button>
-    </section>
-
+    <button pButton label="Ver Opiniones" class="opinions-btn"></button>
+  </section>
 </main>
