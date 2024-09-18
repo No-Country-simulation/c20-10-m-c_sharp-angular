@@ -1,12 +1,12 @@
-import { Component, DestroyRef, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
 import { MenuModule } from 'primeng/menu';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { CheckboxModule } from 'primeng/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { User, UserSpeciality } from '../../../../core/interfaces';
+import { UserSpeciality } from '../../../../core/interfaces';
 import { ROUTES_PATH } from '@core/routes';
 import { ButtonModule } from 'primeng/button';
 
@@ -19,6 +19,8 @@ const { DASHBOARD_HOME, DASHBOARD_MESSAGES } = ROUTES_PATH;
   styleUrls: ['./share-post.component.css'],
 })
 export default class SharePostComponent implements OnInit {
+  private readonly location = inject(Location);
+
   ratingValue = 4;
 
   selectedCategories: any[] = [];
@@ -57,7 +59,9 @@ export default class SharePostComponent implements OnInit {
     });
   }
 
-  onNavigatePrev() {}
+  onNavigatePrev(): void {
+    this.location.back();
+  }
 
   verPerfil(item: any) {
     console.log('quiso ver su perfil');
