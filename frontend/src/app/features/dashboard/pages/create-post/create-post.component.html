@@ -1,0 +1,90 @@
+<div class="layout-container">
+  <form [formGroup]="createForm">
+    <h1 class="text-xl text-center mb-5">¡Vamos a crear una nueva publicación!</h1>
+    <div class="flex flex-column gap-5 px-4">
+      <div>
+        <h2 class="text-base font-semibold text-center mb-3">Ingresa un titulo</h2>
+        <input pInputText class="w-full" type="text" formControlName="title" />
+        <div [appShowErrors]="title"></div>
+      </div>
+      <div>
+        <h2 class="text-base font-semibold text-center mb-3">
+          ¿A que categoría pertenece tu servicio?
+        </h2>
+        <p-dropdown
+          class="w-full"
+          styleClass="w-full"
+          optionLabel="name"
+          placeholder="Selecciona una categoria"
+          formControlName="category"
+          [options]="allCategories()"
+          (onChange)="onSelectCategory($event)" />
+        <div [appShowErrors]="category"></div>
+      </div>
+      <div>
+        <h2 class="text-base font-semibold text-center mb-3">
+          ¿A que especialidad pertenece tu servicio?
+        </h2>
+        <p-dropdown
+          class="w-full"
+          styleClass="w-full"
+          optionLabel="name"
+          placeholder="Selecciona una especialidad"
+          panelStyleClass="min-h-full"
+          formControlName="speciality"
+          [options]="specialitiesByCategory()" />
+
+        <div [appShowErrors]="speciality"></div>
+      </div>
+      <!-- <div>
+        <h2 class="text-base font-semibold text-center mb-3">Sube fotos de tus trabajos</h2>
+        <div class="border-1 surface-border border-round p-3"></div>
+      </div> -->
+      <div>
+        <h2 class="text-base font-semibold text-center mb-3">Describe tu servicio</h2>
+        <textarea
+          pInputTextarea
+          class="w-full"
+          rows="5"
+          cols="30"
+          formControlName="description"
+          [autoResize]="true"></textarea>
+        <div [appShowErrors]="description"></div>
+      </div>
+      <div>
+        <h2 class="text-base font-semibold text-center mb-3">Selecciona tus metodos de pago</h2>
+        <div formGroupName="paymentMethods">
+          @for (item of paymentMethodsList; track $index) {
+            <div class="field-checkbox">
+              <p-checkbox
+                name="group"
+                [binary]="true"
+                [label]="item.label"
+                [formControlName]="item.control" />
+            </div>
+          }
+        </div>
+        <div [appShowErrors]="paymentMethods"></div>
+      </div>
+      <div>
+        <h2 class="text-base font-semibold text-center mb-3">Ingresa tu ubicación</h2>
+        <p-autoComplete
+          class="w-full"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+          minLength="10"
+          optionLabel="name"
+          placeholder="Ciudad y dirección"
+          [delay]="800"
+          [ngModelOptions]="{ standalone: true }"
+          [suggestions]="suggestions()"
+          [(ngModel)]="address"
+          (completeMethod)="searchAddress($event)" />
+        <div [appShowErrors]="location"></div>
+      </div>
+      <div class="my-5">
+        <p-button styleClass="w-full" label="Crear publicación" (onClick)="onSubmit()" />
+      </div>
+    </div>
+  </form>
+</div>
