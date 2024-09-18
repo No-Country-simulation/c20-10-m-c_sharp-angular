@@ -1,12 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { JwtService, UserService as UserApiService } from '../../../core/services';
+import { AuthService, JwtService, UserService as UserApiService } from '../../../core/services';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User, UserMessages } from '../../../core/interfaces';
 import { Message, MessageCreatedResponse } from '../../../core/interfaces/message.interface';
 import { ROUTES_PATH } from '../../../core/routes';
-import { FakeUserService } from '../../../shared/services/fake-user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ import { FakeUserService } from '../../../shared/services/fake-user.service';
 export class UserService {
 
   private userApi = inject(UserApiService);
-  private fakeUserService = inject(FakeUserService);
+  private authApiService = inject(AuthService);
   private messageService = inject(MessageService);
   private jwtService = inject(JwtService);
   private router = inject(Router);
@@ -28,16 +27,10 @@ export class UserService {
       }),
       catchError((error) => {
         console.error('Error al obtener los datos de usuario', error);
-        this.jwtService.clearTokens();
-        this.messageService.add({
-          key: 'toast',
-          severity: 'error',
-          summary: 'Error al obtener los datos de usuario',
-          detail: `Inicie sesión nuevamente`,
-        });
+        this.authApiService.logout();
 
         setTimeout(() => {
-          this.router.navigate(['/', ROUTES_PATH.AUTH_LOGIN]);
+          this.router.navigate([ROUTES_PATH.AUTH_LOGIN]);
         }, 500);
 
         return throwError(() => 'Error al obtener los datos de usuario');

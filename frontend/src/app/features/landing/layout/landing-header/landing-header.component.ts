@@ -34,9 +34,12 @@ import { MenuService } from '../../services/menu.service';
               d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20" />
           </svg>
         </button>
-        <button class="reset-btn header-logo cursor-pointer" routerLink="/">
-          <img src="/assets/icons/contratAppLogo.svg" width="48" alt="logo de la aplicacion" />
-        </button>
+        <img
+          src="/assets/icons/contratAppLogo.svg"
+          class="cursor-pointer"
+          width="48"
+          alt="logo de la aplicacion"
+          routerLink="/" />
         <div class="flex gap-1">
           <!-- <p-avatar label="JA" size="large" shape="circle" /> -->
           <p-button

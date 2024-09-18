@@ -34,11 +34,6 @@ interface AuthData {
     LogoComponent,
   ],
   templateUrl: './layout.component.html',
-  styles: `
-    .c-mt {
-      margin-top: 7.5rem;
-    }
-  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LayoutComponent {
@@ -60,7 +55,7 @@ export default class LayoutComponent {
   }
 
   private updateTitleAndSubtitle(url: string): void {
-    if (url === this.routesPath.AUTH_LOGIN) {
+    if (url === '/' + this.routesPath.AUTH_LOGIN) {
       this.authData = {
         img: '/assets/images/auth/login.webp',
         title: '¡Bienvenido de nuevo!',
@@ -69,7 +64,7 @@ export default class LayoutComponent {
         swithchLabelButton: 'Crear Cuenta',
         switchRoute: this.routesPath.AUTH_REGISTER,
       };
-    } else if (url === this.routesPath.AUTH_REGISTER) {
+    } else if (url === '/' + this.routesPath.AUTH_REGISTER) {
       this.authData = {
         img: '/assets/images/auth/register-1.webp',
         title: 'Crear Cuenta',
@@ -78,7 +73,7 @@ export default class LayoutComponent {
         swithchLabelButton: 'Iniciar Sesión',
         switchRoute: this.routesPath.AUTH_LOGIN,
       };
-    } else if (url === this.routesPath.AUTH_REGISTER_PROFESSIONAL) {
+    } else if (url === '/' + this.routesPath.AUTH_REGISTER_PROFESSIONAL) {
       this.authData = {
         img: '/assets/images/auth/register.webp',
         title: 'Registrarse como Profesional',
@@ -87,7 +82,7 @@ export default class LayoutComponent {
         swithchLabelButton: 'Iniciar Sesión',
         switchRoute: this.routesPath.AUTH_LOGIN,
       };
-    } else if (url === this.routesPath.AUTH_FORGOT_PASSWORD) {
+    } else if (url === '/' + this.routesPath.AUTH_FORGOT_PASSWORD) {
       this.isForgot.set(true);
       this.authData = {
         img: '/assets/images/auth/forgot.webp',

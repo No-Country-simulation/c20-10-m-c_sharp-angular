@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,6 +18,10 @@ export class CountriesService {
   }
 
   getCitiesByCountry(countryCode: string): Observable<any> {
+    const headers = new Headers({});
+    //Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+    headers.append('Access-Control-Allow-Origin', '*');
+
     return this.http.get(
       `${this.geoNamesBaseUrl}searchJSON?country=${countryCode}&featureClass=P&maxRows=1000&username=${this.username}`
     );
