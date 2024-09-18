@@ -21,12 +21,9 @@ import { LandingMenuComponent } from '../landing-menu/landing-menu.component';
     @defer {
       <app-landing-menu />
     }
-    <div class="container-app p-5">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
     <app-landing-footer />
   `,
-  styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LandingLayoutComponent {}

@@ -7,20 +7,17 @@ import { RatingModule } from 'primeng/rating';
 import { CheckboxModule } from 'primeng/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { User, UserSpeciality } from '../../../../core/interfaces';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-share-post',
   standalone: true,
-  imports: [CommonModule, MenuModule, FormsModule, RatingModule, CheckboxModule],
+  imports: [CommonModule, MenuModule, FormsModule, RatingModule, CheckboxModule, ButtonModule],
   templateUrl: './share-post.component.html',
   styleUrls: ['./share-post.component.css'],
 })
 export default class SharePostComponent implements OnInit {
-  value5: number = 5;
-  value4: number = 4;
-  value3: number = 3;
-  value2: number = 2;
-  value1: number = 1;
+  ratingValue = 4;
 
   selectedCategories: any[] = [];
 
@@ -57,6 +54,8 @@ export default class SharePostComponent implements OnInit {
       console.log(res);
     });
   }
+
+  onNavigatePrev() {}
 
   verPerfil(item: any) {
     console.log('quiso ver su perfil');
