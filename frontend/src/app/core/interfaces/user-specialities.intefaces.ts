@@ -9,6 +9,18 @@ export interface UserSpeciality {
   title: string;
   text: string;
   area: string;
+  latitude: string;
+  longitude: string;
+}
+
+export interface CreateUserSpeciality {
+  idUser: string;
+  idSpeciality: number;
+  title: string;
+  text: string;
+  area: string;
+  latitude: string;
+  longitude: string;
 }
 
 export interface USpeciality {
