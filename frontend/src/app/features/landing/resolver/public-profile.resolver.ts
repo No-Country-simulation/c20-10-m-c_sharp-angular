@@ -1,15 +1,14 @@
 import type { ResolveFn } from '@angular/router';
-import { UserService, UserSpecialitiesService } from '../../../core/services';
 import { inject } from '@angular/core';
+import { UserService } from '../../../core/services';
+import { User } from '../../../core/interfaces';
 
-export const publicProfileResolver: ResolveFn<any> = (route, state) => {
+export const publicProfileResolver: ResolveFn<User | null> = route => {
   const userService = inject(UserService);
 
   const idPost = route.params['id'];
-  console.log(route);
 
   if (idPost) {
-    console.log(idPost);
     return userService.getProfileById(idPost);
   } else {
     return null;

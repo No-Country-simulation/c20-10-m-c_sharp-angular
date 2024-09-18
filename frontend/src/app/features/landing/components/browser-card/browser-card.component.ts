@@ -2,15 +2,17 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { RatingModule } from 'primeng/rating';
+import { UserSpecialitySearch } from '../../../../core/interfaces';
 
 @Component({
   selector: 'app-browser-card',
   standalone: true,
   imports: [CommonModule, FormsModule, RatingModule],
   template: `
-    <div
-      class="flex gap-3 border-round w-full h-14rem px-2 py-3 shadow-5"
+    <button
+      class="reset-btn flex gap-3 border-round w-full h-14rem px-2 py-3 cursor-pointer shadow-5"
       (click)="onNavigate(data().route)">
       <div class="w-5">
         <div
@@ -23,20 +25,19 @@ import { RatingModule } from 'primeng/rating';
           <span>{{ averageRating }}</span>
           <p-rating [ngModel]="data().rating" [readonly]="true" [cancel]="false" />
         </div>
-        <span>{{ data().price }}</span>
+        <!-- <span>{{ data().price }}</span> -->
         <p class="m-0 text-color-secondary">{{ data().text }}</p>
         <span>{{ data().area }}</span>
       </div>
-    </div>
+    </button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrowserCardComponent {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private readonly router = inject(Router);
-  public readonly data = input.required<any>();
+  public readonly data = input.required<UserSpecialitySearch>();
 
-  public get averageRating(): number {
+  public get averageRating(): string {
     const rating = this.data().rating;
     return rating.toFixed(1);
   }

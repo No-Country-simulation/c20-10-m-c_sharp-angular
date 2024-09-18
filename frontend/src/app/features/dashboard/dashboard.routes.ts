@@ -25,10 +25,7 @@ export default [
   {
     path: DASHBOARD_PUBLIC_PROFILE_USER_ID,
     title: 'Perfil de usuario',
-    loadComponent: () =>
-      import('../landing/pages/public-profile/public-profile.component').then(
-        m => m.PublicProfileComponent
-      ),
+    loadComponent: () => import('../landing/pages/public-profile/public-profile.component'),
   },
   {
     path: DASHBOARD_MESSAGES, // 'dashboard/mensajes'

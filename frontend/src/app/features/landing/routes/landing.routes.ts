@@ -7,6 +7,7 @@ import {
   browserPostsResolver,
   browserViewSpecialityResolver,
   postDetailed,
+  publicProfileResolver,
 } from '../resolver';
 
 const {
@@ -63,10 +64,7 @@ export const landingRoutes = [
   {
     path: DASHBOARD_PUBLIC_PROFILE_ID,
     title: 'Perfil publico',
-    resolve: {},
-    loadComponent: () =>
-      import('../pages/public-profile/public-profile.component').then(
-        m => m.PublicProfileComponent
-      ),
+    resolve: [publicProfileResolver],
+    loadComponent: () => import('../pages/public-profile/public-profile.component'),
   },
 ] satisfies Route[];

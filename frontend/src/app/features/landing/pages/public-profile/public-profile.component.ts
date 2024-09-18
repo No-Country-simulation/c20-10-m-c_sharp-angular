@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-
 @Component({
   selector: 'app-public-profile',
   standalone: true,
@@ -19,12 +18,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     LandingFooterComponent,
     FormsModule,
     RatingModule,
-],
+  ],
   templateUrl: './public-profile.component.html',
-  styleUrl: './public-profile.component.css'
+  styleUrl: './public-profile.component.css',
 })
-
-export class PublicProfileComponent implements OnInit {
+export default class PublicProfileComponent implements OnInit {
   value5: number = 5;
   value4: number = 4;
   value3: number = 3;
@@ -34,18 +32,17 @@ export class PublicProfileComponent implements OnInit {
 
   jsonData: any;
 
-  constructor(private router:Router,
-              private activatedRoute: ActivatedRoute, 
-              private destroyRef: DestroyRef) 
-  {
-    
-  }
-  ngOnInit(): void{
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private destroyRef: DestroyRef
+  ) {}
+  ngOnInit(): void {
     this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
-      
-      if(res){
-        this.jsonData = res["data"];
-        console.log("info que tenemos en el public profile",this.jsonData);
+      console.log(res);
+      if (res[0]) {
+        this.jsonData = res[0];
+        console.log('info que tenemos en el public profile', this.jsonData);
       }
     });
   }

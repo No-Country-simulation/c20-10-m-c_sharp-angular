@@ -21,10 +21,10 @@ import { LandingMenuComponent } from '../landing-menu/landing-menu.component';
     @defer {
       <app-landing-menu />
     }
-    <div class="container-app">
+    <div class="container-app p-5">
       <router-outlet></router-outlet>
     </div>
-    <!-- <app-landing-footer /> -->
+    <app-landing-footer />
   `,
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
