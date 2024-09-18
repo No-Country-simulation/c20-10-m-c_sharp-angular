@@ -1,0 +1,71 @@
+<div class="px-3 py-5 c-min-h">
+  <h1 class="text-lg">Mis publicaciones</h1>
+  <p-dataView
+    layout="list"
+    emptyMessage="No hay posts creados"
+    [value]="postsData()"
+    [rows]="5"
+    [paginator]="postsData().length > 5 ? true : false">
+    <ng-template pTemplate="header">
+      <div class="flex justify-content-end">
+        <p-button
+          icon="pi pi-plus"
+          label="Crear publicacion"
+          (onClick)="onNavigate('/dashboard/publicar')" />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="list">
+      @for (item of postsData(); track $index) {
+        <div class="flex flex-column sm:align-items-center p-4 border-bottom-1 surface-border">
+          <div class="hidden md:w-6 md:block">
+            <img
+              class="block xl:block mx-auto border-round w-full"
+              src="/assets/images/landing-page/post-default-image.webp"
+              [alt]="" />
+          </div>
+          <div class="w-full md:w-6 flex flex-column justify-content-between flex-1 gap-3">
+            <div
+              class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+              <div class="flex flex-column gap-1">
+                <div class="text-lg font-medium text-900 mt-2">{{ item.title }}</div>
+                <div class="block md:w-6 md:hidden">
+                  <img
+                    class="block xl:block mx-auto border-round w-full"
+                    src="/assets/images/landing-page/post-default-image.webp"
+                    [alt]="" />
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-column gap-2">
+              <p-button
+                styleClass="w-full"
+                icon="pi pi-eye"
+                outlined="true"
+                severity="secondary"
+                label="Ver publicacion"
+                (onClick)="onNavigate('/explorar/post/{{item.idSpeciality}}')" />
+              <div class="flex gap-2">
+                <p-button
+                  class="w-6"
+                  styleClass="w-full"
+                  icon="pi pi-pencil"
+                  outlined="true"
+                  severity="success"
+                  label="Editar" />
+                <p-button
+                  class="w-6"
+                  styleClass="w-full"
+                  icon="pi pi-trash"
+                  outlined="true"
+                  severity="danger"
+                  label="Eliminar"
+                  (onClick)="deletePost(item.idSpeciality)" />
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </ng-template>
+  </p-dataView>
+</div>
+<p-confirmDialog styleClass="m-3" />
