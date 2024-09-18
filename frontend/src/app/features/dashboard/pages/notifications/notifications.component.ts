@@ -8,11 +8,14 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 import { Router } from '@angular/router';
-import { Notification } from '@app/core/interfaces';
-import { NotificationService } from '@app/core/services';
-import { revealAnimation } from '@app/shared/animations';
+
 import { ButtonModule } from 'primeng/button';
+
+import { NotificationService } from '@app/core/services';
+import { Notification } from '@app/core/interfaces';
+import { revealAnimation } from '@app/shared/animations';
 
 @Component({
   standalone: true,
@@ -20,18 +23,23 @@ import { ButtonModule } from 'primeng/button';
   animations: [revealAnimation],
   template: `
     <div class="layout-container">
-      <h1 class="text-xl mb-5">Mis notificaciones</h1>
+      <h1 class="text-xl text-center mb-5">Mis notificaciones</h1>
       <div class="flex flex-column gap-3" [@revealAnimation]>
         @for (item of notificationsData(); track $index) {
           <button class="reset-btn" (click)="onNavigate(item.url)">
             <div class="flex flex-column border-1 border-round p-3">
-              <div class="flex justify-content-between">
-                <span>{{ item.subject }}</span>
-                <p-button class="align-self-end" icon="text-color pi pi-times" text="true" />
+              <div class="flex align-items-center justify-content-between">
+                <span class="capitalize text-lg font-semibold">{{ item.subject }}</span>
+                <p-button
+                  class="align-self-end"
+                  icon="text-color pi pi-times"
+                  text="true"
+                  (onClick)="onRemoveNotification(item.id)" />
               </div>
-              <p class="m-0">
+              <p class="m-0 flex-1">
                 {{ item.message }}
               </p>
+              <small class="text-color-secondary  mt-2">{{ item.createdAt | date: 'short' }}</small>
             </div>
           </button>
         } @empty {
@@ -52,8 +60,23 @@ export default class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.notificationService.notifications$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(res => this.notificationsData.set(res));
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        map(notifications =>
+          notifications.map(notification => ({
+            ...notification,
+            message: this.truncateMessage(notification.message),
+          }))
+        )
+      )
+      .subscribe(res => {
+        this.notificationsData.set(res);
+      });
+  }
+
+  private truncateMessage(message: string): string {
+    const maxLength = 85;
+    return message.length > maxLength ? message.slice(0, maxLength) + '...' : message;
   }
 
   public onRemoveNotification(id: string): void {
@@ -64,7 +87,9 @@ export default class NotificationsComponent implements OnInit {
     this.notificationService.removeAllNotifications();
   }
 
-  public onNavigate(url: string) {
-    this.router.navigate([url]);
+  public onNavigate(url: string | undefined) {
+    if (url) {
+      this.router.navigate([url]);
+    }
   }
 }

@@ -23,7 +23,7 @@ export class NotificationService {
    * {
    *   subject: 'Chat - Mariano',
    *   message: 'Hola',
-   *   url: '/dashboard/mensajes/1',
+   *   url: '/dashboard/mensajes/1' // Optional depending on the notification
    * }
    */
   public addNotification(notification: NotificationAdd) {
@@ -32,6 +32,7 @@ export class NotificationService {
       message: notification.message,
       subject: notification.subject,
       url: notification.url,
+      createdAt: new Date(),
     };
 
     this.notifications.push(newNotification);
