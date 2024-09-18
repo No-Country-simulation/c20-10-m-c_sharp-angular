@@ -1,15 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 
-import { AuthService } from '../../../../core/services';
+import { AuthService, NotificationService } from '../../../../core/services';
 import { LogoComponent } from '../../../../shared/components';
 import { ROUTES_PATH } from '../../../../core/routes';
 import { MenuService } from '../../services/menu.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-landing-header',
@@ -59,11 +67,14 @@ import { MenuService } from '../../services/menu.service';
               (onClick)="
                 onNavigate(routesPath.DASHBOARD_HOME + '/' + routesPath.DASHBOARD_NOTIFICATIONS)
               ">
-              <i
-                class="absolute top-0 left-50 mt-2 select-none"
-                severity="danger"
-                pBadge
-                value="4"></i>
+              @if (currentNotification() > 0) {
+                <i
+                  pBadge
+                  class="absolute top-0 left-50 mt-2 select-none"
+                  severity="danger"
+                  [value]="currentNotification()">
+                </i>
+              }
             </p-button>
           }
         </div>
@@ -74,15 +85,24 @@ import { MenuService } from '../../services/menu.service';
 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingHeaderComponent {
+export class LandingHeaderComponent implements OnInit {
+  public readonly notificationService = inject(NotificationService);
   public readonly authService = inject(AuthService);
   public readonly menuService = inject(MenuService);
+  public readonly destroyRef = inject(DestroyRef);
   public readonly router = inject(Router);
 
   public readonly routesPath = ROUTES_PATH;
+  public readonly currentNotification = signal<number>(2);
 
   public onNavigate(route: string): void {
     this.router.navigate(['/' + route]);
+  }
+
+  ngOnInit(): void {
+    this.notificationService.notifications$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(res => this.currentNotification.set(res.length));
   }
 
   // private onLogout(): void {
