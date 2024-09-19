@@ -41,10 +41,8 @@ export default class PublicProfileComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
-      console.log(res);
       if (res[0]) {
         this.jsonData = res[0];
-        console.log('info que tenemos en el public profile', this.jsonData);
       }
     });
   }

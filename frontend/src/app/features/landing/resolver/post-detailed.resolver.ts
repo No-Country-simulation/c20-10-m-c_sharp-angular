@@ -9,7 +9,6 @@ export const postDetailed: ResolveFn<UserSpeciality | null> = route => {
   const idPost = route.params['id'];
 
   if (idPost) {
-    console.log(idPost);
     return userSpecialitiesService.getUserSpecialitiesById(idPost);
   } else {
     return null;

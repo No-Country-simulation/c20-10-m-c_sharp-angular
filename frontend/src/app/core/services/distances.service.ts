@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserSpecialitySearch } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -32,14 +33,13 @@ export class DistancesService {
   /**
    * Method for calculating distances between the user's location and multiple publications
    */
-  public calculateDistances(userLat: number, userLon: number, posts: any[]): any[] {
+  public calculateDistances(
+    userLat: number,
+    userLon: number,
+    posts: UserSpecialitySearch[]
+  ): UserSpecialitySearch[] {
     return posts.map(post => {
-      const distanceKm = this.calculateDistance(
-        userLon,
-        userLat,
-        post.location.lat,
-        post.location.lon
-      );
+      const distanceKm = this.calculateDistance(userLon, userLat, post.latitude!, post.longitude!);
 
       let distanceFormatted: string;
       if (distanceKm < 1) {
