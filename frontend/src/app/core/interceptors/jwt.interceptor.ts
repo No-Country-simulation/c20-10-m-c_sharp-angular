@@ -75,12 +75,16 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
           catchError(refreshError => {
             // If token refresh fails, clear tokens and propagate the error.
             jwtService.clearTokens();
+            authService.isAuthenticated.set(null);
             return throwError(() => refreshError);
           })
         );
       }
       // Propagate the error if it's not a 401 or if it's from the refresh endpoint.
-      return throwError(() => error);
+      return throwError(() => {
+        console.error(error);
+        authService.isAuthenticated.set(null);
+      });
     })
   );
 };
