@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -63,6 +64,9 @@ namespace ContratApp
                 });
             });
             builder.Services.AddAutoMapper(typeof(ApplicationMapper).Assembly);
+            builder.Services.AddOptions<BearerTokenOptions>(IdentityConstants.BearerScheme).Configure(options => {
+                options.BearerTokenExpiration = TimeSpan.FromDays(15);
+            });
             builder.Services.Configure<IdentityOptions>(options =>
             {
                 // Default Password settings.
