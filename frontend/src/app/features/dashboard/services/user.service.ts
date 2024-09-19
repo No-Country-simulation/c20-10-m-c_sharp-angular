@@ -1,6 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { AuthService, JwtService, UserService as UserApiService } from '../../../core/services';
-import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User, UserMessages } from '../../../core/interfaces';
@@ -14,7 +13,6 @@ export class UserService {
 
   private userApi = inject(UserApiService);
   private authApiService = inject(AuthService);
-  private messageService = inject(MessageService);
   private jwtService = inject(JwtService);
   private router = inject(Router);
   user = signal<User | undefined>(undefined);
@@ -54,12 +52,6 @@ export class UserService {
       tap( userMessages => this.userMessages.set(userMessages) ),
       catchError((error) => {
         console.error('Error al obtener la lista de chats', error);
-        this.messageService.add({
-          key: 'toast',
-          severity: 'error',
-          summary: 'Error al obtener la lista de chats',
-          detail: ``,
-        });
         return throwError(() => error);
       })
     );
@@ -70,12 +62,6 @@ export class UserService {
     return this.userApi.addNewUserMessage(idUser, message).pipe(
       catchError((error) => {
         console.error('Error al agregar el mensaje', error);
-        this.messageService.add({
-          key: 'toast',
-          severity: 'error',
-          summary: 'Error al agregar el mensaje',
-          detail: ``,
-        });
         return throwError(() => 'Error al agregar el mensaje');
       })
     );
@@ -86,12 +72,6 @@ export class UserService {
       catchError((error) => {
         console.error('Error la lista de perfiles de usuario', error);
         this.jwtService.clearTokens();
-        this.messageService.add({
-          key: 'toast',
-          severity: 'error',
-          summary: 'Error la lista de perfiles de usuario',
-          detail: `Verifique con el administrador`,
-        });
 
         return throwError(() => 'Error la lista de perfiles de usuario');
       })
