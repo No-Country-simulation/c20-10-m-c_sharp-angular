@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { UserSpeciality, UserSpecialitySearch } from '../interfaces';
+import { CreateUserSpeciality, UserSpeciality, UserSpecialitySearch } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class UserSpecialitiesService {
    * @param formValue - The data of the new user speciality to be created.
    * @returns An Observable containing the created `UserSpeciality` object.
    */
-  public createUserSpecialities(formValue: UserSpeciality): Observable<UserSpeciality> {
+  public createUserSpecialities(formValue: CreateUserSpeciality): Observable<UserSpeciality> {
     return this.http.post<UserSpeciality>(this.baseUrl + this.userSpecilitiesEndpoint, formValue);
   }
 

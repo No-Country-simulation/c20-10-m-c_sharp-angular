@@ -42,6 +42,10 @@ export class ShowErrorsDirective implements OnInit {
       if (errors!['email']) {
         this.addErrorMessage('El correo electrónico es inválido');
       }
+
+      if (errors!['atLeastOneRequired']) {
+        this.addErrorMessage('Debes seleccionar al menos un método de pago');
+      }
     }
   }
 

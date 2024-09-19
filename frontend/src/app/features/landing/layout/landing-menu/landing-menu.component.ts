@@ -90,7 +90,7 @@ export class LandingMenuComponent {
         {
           label: 'Ofrecer un servicio',
           action: () => {
-            this.onNavigation(`${DASHBOARD_HOME}/${DASHBOARD_PUBLISH}`);
+            this.onNavigation(`${DASHBOARD_HOME}/${DASHBOARD_CREATE_POST}`);
           },
         },
       ],

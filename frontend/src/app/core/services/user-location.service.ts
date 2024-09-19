@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { of, shareReplay, tap } from 'rxjs';
 import { SessionStorageService } from './session-storage.service';
-import { UserLocation } from '../interfaces';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +10,29 @@ import { UserLocation } from '../interfaces';
 export class UserLocationService {
   private readonly sessionStorageService = inject(SessionStorageService);
   private readonly http = inject(HttpClient);
-  private readonly ipApiEndpoint =
-    'http://ip-api.com/json?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon';
 
-  public getUserLocation(): Observable<UserLocation> {
-    return this.http.get<UserLocation>(this.ipApiEndpoint).pipe(
-      shareReplay(1),
-      tap(res => this.sessionStorageService.set('currentUserLocation', res))
+  private readonly ipApiEndpoint = environment.LOCATION.CURRENT_USER_LOCATION;
+  private readonly addressAutocompleteEndpoint = environment.LOCATION.ADDRESS_AUTOCOMPLETE_BASE_URL;
+  private readonly addressAutocompleteKey = environment.LOCATION.ADDRESS_AUTOCOMPLETE_KEY;
+
+  public getUserLocation() {
+    return this.http.get(this.ipApiEndpoint).pipe(shareReplay(1));
+  }
+
+  public addressAutocomplete(query: string) {
+    const cachedResponse = this.sessionStorageService.get(`${encodeURIComponent(query)}key`);
+    if (cachedResponse) {
+      return of(cachedResponse);
+    }
+    const headers = new HttpHeaders({
+      'x-placekit-api-key': this.addressAutocompleteKey,
+      'Content-Type': 'application/json',
+    });
+    const body = { query };
+    return this.http.post(this.addressAutocompleteEndpoint, body, { headers }).pipe(
+      tap(res => {
+        this.sessionStorageService.set(`${encodeURIComponent(query)}key`, res);
+      })
     );
   }
 }
