@@ -24,6 +24,7 @@ export const environment = {
   SESSION_STORAGE: {
     ALL_CATEGORIES: 'allCategories',
     ALL_SPECIALITIES: 'allSpecialities',
+    USER_DATA: 'userData',
   },
   COOKIES: {
     TOKEN: 'token',
