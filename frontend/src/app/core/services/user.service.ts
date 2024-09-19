@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { User, UserMessages, UserUpdate } from '../interfaces';
+import { User, UserFormRegister, UserMessages, UserUpdate } from '../interfaces';
 import { Message, MessageCreatedResponse } from '../interfaces/message.interface';
 
 @Injectable({
@@ -24,10 +24,6 @@ export class UserService {
     return this.http.get<User>(this.baseUrl + this.userEndpoint);
   }
 
-  public getUserProfileData(): Observable<User> {
-    return this.http.get<User>(this.baseUrl + this.userEndpoint);
-  }
-
   /**
    * Updates the user data.
    *
@@ -36,7 +32,7 @@ export class UserService {
    *  - surname: string
    * @returns An observable that emits the server response.
    */
-  public updateUserData(formValue: UserUpdate): Observable<any> {
+  public updateUserData(formValue: any): Observable<any> {
     return this.http.put<any>(this.baseUrl + this.userEndpoint, formValue);
   }
 
@@ -46,7 +42,7 @@ export class UserService {
    * @returns An observable that emits the server response.
    */
   public getUserMessagesFromOneUser(id: string): Observable<UserMessages> {
-    return this.http.get<UserMessages>(`${ this.baseUrl }${ this.userMessagesEndpoint }/${id}` );
+    return this.http.get<UserMessages>(`${this.baseUrl}${this.userMessagesEndpoint}/${id}`);
   }
 
   /**
@@ -69,7 +65,10 @@ export class UserService {
    * @returns An observable that emits the server response.
    */
   public addNewUserMessage(userId: string, message: Message): Observable<MessageCreatedResponse> {
-    return this.http.post<MessageCreatedResponse>(`${ this.baseUrl }${ this.userMessagesEndpoint }/${userId} `, message);
+    return this.http.post<MessageCreatedResponse>(
+      `${this.baseUrl}${this.userMessagesEndpoint}/${userId} `,
+      message
+    );
   }
 
   /**
@@ -79,5 +78,9 @@ export class UserService {
    */
   public getProfilesList(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + this.userProfiles);
+  }
+
+  public getProfileById(id: string): Observable<User> {
+    return this.http.get<User>(this.baseUrl + this.userEndpoint + '/' + id);
   }
 }

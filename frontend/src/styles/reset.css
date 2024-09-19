@@ -45,12 +45,14 @@ canvas {
   }
 }
 
+html {
+  scrollbar-gutter: auto;
+}
+
 body,
 html {
   margin: 0;
   padding: 0;
-  width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
   scroll-behavior: auto;
 }

@@ -1,14 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ButtonModule } from 'primeng/button';
 
 import { LandingHeaderComponent, LandingFooterComponent } from '../../layout';
-import { SearchbarComponent, CategoriesCarouselComponent } from '../../components';
-import { AuthService } from '../../../../core/services';
-import { OpinionCarouselComponent } from '../../components/opinion-carousel/opinion-carousel.component';
-
+import {
+  SearchbarComponent,
+  OpinionCarouselComponent,
+  CategoriesCarouselComponent,
+} from '../../components';
 
 @Component({
   selector: 'app-home',
@@ -23,18 +32,17 @@ import { OpinionCarouselComponent } from '../../components/opinion-carousel/opin
     CategoriesCarouselComponent,
     OpinionCarouselComponent,
   ],
-  templateUrl: "./home.component.html",
-  // template: `
-  //   <div class="mt-5">
-  //     <!-- <p-button styleClass="text-color" icon="pi pi-bars" text="true" /> -->
-  //     <div class="flex justify-content-center w-full">
-  //       <app-searchbar />
-  //     </div>
-  //     <h2 class="mt-6 mb-5 text-center text-regular text-base">Explora nuestras categorías</h2>
-  //     <app-categories-carousel />
-  //     <h2 class="mt-6 mb-5 text-center text-regular text-base">¿Que opinan nuestros usuarios?</h2>
-  //   </div>
-  // `,
+  template: `
+    <main class="layout-container px-0">
+      <div class="px-7 md:px-0">
+        <app-searchbar></app-searchbar>
+      </div>
+      <h2 class="mt-6 mb-3 text-center text-regular text-base">Explora nuestras categorías</h2>
+      <app-categories-carousel [data]="data()[0].allCategories"></app-categories-carousel>
+      <h2 class="mt-6 mb-3 text-center text-regular text-base">¿Qué opinan nuestros usuarios?</h2>
+      <app-opinion-carousel></app-opinion-carousel>
+    </main>
+  `,
   styles: `
     .min-h-custom {
       min-height: calc(100vh - 64px);
@@ -48,6 +56,15 @@ import { OpinionCarouselComponent } from '../../components/opinion-carousel/opin
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class HomeComponent {
-  public readonly authService = inject(AuthService);
+export default class HomeComponent implements OnInit {
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly destroyRef = inject(DestroyRef);
+
+  public readonly data = signal<any>([]);
+
+  ngOnInit(): void {
+    this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
+      this.data.set(res);
+    });
+  }
 }

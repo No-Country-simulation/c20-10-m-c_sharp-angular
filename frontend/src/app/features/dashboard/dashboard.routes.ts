@@ -1,54 +1,75 @@
 import { Route } from '@angular/router';
 import { ROUTES_PATH } from '../../core/routes';
+import { createPostResolver } from './resolver/create-post.resolver';
+
+const {
+  DASHBOARD_PROFILE,
+  DASHBOARD_PUBLIC_PROFILE_USER_ID,
+  DASHBOARD_MESSAGES,
+  DASHBOARD_MESSAGES_INBOX,
+  DASHBOARD_PUBLISH,
+  DASHBOARD_MY_POSTS,
+  DASHBOARD_MY_WORKS,
+  DASHBOARD_NOTIFICATIONS,
+  DASHBOARD_CREATE_POST,
+} = ROUTES_PATH;
 
 export default [
   {
-    path: ROUTES_PATH.DASHBOARD_PROFILE, // 'dashboard/perfil'
+    path: DASHBOARD_PROFILE, // 'dashboard/perfil'
     title: 'Mi perfil',
     loadComponent: () => import('../profile/layout/layout.component'),
   },
   {
-    path: ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_USER_ID, // 'dashboard/perfil/publico/:id'
+    path: DASHBOARD_PUBLISH, // 'dashboard/publicar'
+    title: 'Publicar',
+    loadComponent: () => import('../dashboard/pages/create-publish/publish.component'),
+  },
+  {
+    path: DASHBOARD_PUBLIC_PROFILE_USER_ID,
     title: 'Perfil de usuario',
-    loadComponent: () => import('./pages/profile/profile.component'),
+    loadComponent: () => import('../landing/pages/public-profile/public-profile.component'),
   },
   {
-    path: ROUTES_PATH.DASHBOARD_MESSAGES, // 'dashboard/mensajes'
+    path: DASHBOARD_MESSAGES, // 'dashboard/mensajes'
     title: 'Mensajes',
     loadComponent: () => import('./pages/dashboard-messages/dashboard-messages.component'),
     pathMatch: 'full',
   },
   {
-    path: ROUTES_PATH.DASHBOARD_MESSAGES_INBOX, // 'dashboard/mensajes/:id'
+    path: DASHBOARD_MESSAGES_INBOX, // 'dashboard/mensajes/:id'
     title: 'Mensajes',
     loadComponent: () => import('./pages/dashboard-messages/dashboard-messages.component'),
     pathMatch: 'full',
   },
-//     {
-//       path: 'rating-history',
-//       title: 'Historial de calificaciones',
-//       loadComponent: () =>
-//         import('./features/dashboard/pages/rating-history/rating-history.component'),
-//     },
-//     {
-//       path: 'mis-servicios',
-//       title: 'Mis Servicios',
-//       loadComponent: () =>
-//         import('./features/dashboard/pages/management-services/management-services.component'),
-//     },
-//     {
-//       path: 'gestionar-servicios/:serviceId',
-//       title: 'Servicios',
-//       loadComponent: () =>
-//         import('./features/dashboard/pages/management-services/management-services.component'),
-//     },
   {
-    path: '',  // In case of empty path, redirect to 'dashboard/perfil'
-    redirectTo: ROUTES_PATH.DASHBOARD_PROFILE,
+    path: '', // In case of empty path, redirect to 'dashboard/perfil'
+    redirectTo: DASHBOARD_PROFILE,
     pathMatch: 'full',
+  },
+  {
+    path: DASHBOARD_MY_POSTS,
+    title: 'Mis publicaciones',
+    loadComponent: () => import('./pages/my-posts/my-posts.component'),
+  },
+  {
+    path: DASHBOARD_MY_WORKS,
+    title: 'Mis trabajos',
+    loadComponent: () => import('./pages/my-works/my-works.component'),
+  },
+  {
+    path: DASHBOARD_NOTIFICATIONS,
+    title: 'Notificaciones',
+    loadComponent: () => import('./pages/notifications/notifications.component'),
+  },
+  {
+    path: DASHBOARD_CREATE_POST,
+    title: 'Crear publicacion',
+    resolve: [createPostResolver],
+    loadComponent: () => import('./pages/create-post/create-post.component'),
   },
   {
     path: '**', // In case of any other path, redirect to 'dashboard/perfil'
-    redirectTo: ROUTES_PATH.DASHBOARD_PROFILE,
+    redirectTo: DASHBOARD_PROFILE,
   },
 ] satisfies Route[];

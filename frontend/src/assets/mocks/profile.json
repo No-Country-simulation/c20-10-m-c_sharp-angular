@@ -1,0 +1,76 @@
+{
+  "offerorId": 0,
+  "name": "Jose",
+  "lastName": "Garcia",
+  "subtitle": "Plomero",
+  "photo": "https://media.istockphoto.com/id/1516511531/es/foto/un-plomero-arregla-cuidadosamente-una-fuga-en-un-fregadero-usando-una-llave-inglesa.jpg?s=612x612&w=0&k=20&c=4xlGLPSpMOYZ_8ORIR2MgXSWCfGQ-VqjDt5InPYFSVo=",
+  "averageRating": "4.5",
+  "listRating": [
+    {
+      "title": "Excelente",
+      "value": 5,
+      "totalReviews": "10"
+    },
+    {
+      "title": "Muy buena",
+      "value": 4,
+      "totalReviews": "6"
+    },
+    {
+      "title": "Buena",
+      "value": 3,
+      "totalReviews": "4"
+    },
+    {
+      "title": "Regular",
+      "value": 2,
+      "totalReviews": "1"
+    },
+    {
+      "title": "Mala",
+      "value": 1,
+      "totalReviews": "1"
+    }
+  ],
+  "listSpecialities": [
+    {
+      "name": "Plomero",
+      "categoryId": 1,
+      "specialityId": 0,
+      "isActive": true,
+      "createdAt": "0001-01-01T00:00:00"
+    }
+  ],
+  "jobsPostedId": [
+    1,
+    2,
+    3
+  ],
+  "experience": "10 años",
+  "shedules": "10:00 - 17:00",
+  "certificates": [
+    {
+      "id": 0,
+      "src": "https://static.vecteezy.com/system/resources/previews/004/805/384/non_2x/graduation-certificate-template-free-vector.jpg",
+      "alt": "Certificado de Graduación"
+    },
+    {
+      "id": 1,
+      "src": "https://static.vecteezy.com/system/resources/previews/004/805/384/non_2x/graduation-certificate-template-free-vector.jpg",
+      "alt": "Matricula de plomero"
+    }
+  ],
+  "location": {
+    "lat": -34.630220448210295,
+    "lon": -58.462525382577745,
+    "country": "Argentina",
+    "state": "Buenos Aires",
+    "city": "Flores",
+    "address": "Calle falsa 123"
+  },
+  "whatsapp": {
+    "isActive": true,
+    "area": "+54",
+    "number": "123456789"
+  }
+}

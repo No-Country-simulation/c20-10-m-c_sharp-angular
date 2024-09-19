@@ -27,9 +27,9 @@ export class ThemesService {
    * Current theme state, including name, color, and mode
    */
   public currentTheme = signal<Theme>({
-    name: 'lara',
-    color: 'blue',
-    mode: 'dark',
+    name: 'aura',
+    color: 'amber',
+    mode: 'light',
   });
 
   constructor() {
@@ -103,7 +103,7 @@ export class ThemesService {
    * Detects the user's preferred theme mode based on browser settings.
    */
   private detectBrowserTheme(): void {
-    const darkModeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeMatcher = window.matchMedia('(prefers-color-scheme: light)');
     const mode = darkModeMatcher.matches ? 'dark' : 'light';
     this.currentTheme.update(theme => ({ ...theme, mode }));
   }
@@ -112,7 +112,7 @@ export class ThemesService {
    * Listens for changes in the browser's theme preference and updates the theme mode accordingly.
    */
   private listenToBrowserThemeChanges(): void {
-    const darkModeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeMatcher = window.matchMedia('(prefers-color-scheme: light)');
     darkModeMatcher.addEventListener('change', event => {
       const mode = event.matches ? 'dark' : 'light';
       this.setThemeMode(mode);

@@ -1,11 +1,13 @@
 export interface Speciality {
-  id: number;
-  isActive: boolean;
-  createdAt: Date;
   name: string;
   description: string;
   categoryId: number;
-  userSpecialities: string[];
+  specialityId: number;
+  isActive: boolean;
+  createdAt: Date;
+  route?: string;
+  src: string;
+  offerorSpecialities?: string[];
 }
 
 export interface PostSpecialityFormValue {

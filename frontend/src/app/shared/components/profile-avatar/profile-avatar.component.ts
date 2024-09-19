@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UserService } from '../../../features/dashboard/services/user.service';
 import { User } from '../../../core/interfaces';
-import { catchError, tap, throwError } from 'rxjs';
+import { tap } from 'rxjs';
 import { JsonPipe } from '@angular/common';
 import { getStyleAvatar } from '../../utils/stringToColor';
 

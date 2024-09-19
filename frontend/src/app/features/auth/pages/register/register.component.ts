@@ -1,18 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, DestroyRef, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  DestroyRef,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
+import { AutoFocusModule } from 'primeng/autofocus';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
+import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 
-import { AuthFormBase, FormBaseComponent } from '../../components/form-base/form-base.component';
-import { AuthService } from '../../../../core/services/auth.service';
-import { AuthLogin } from '../../../../core/interfaces/auth.interface';
+import { UserFormRegister, AuthLogin } from '../../../../core/interfaces';
+import { UserService, AuthService } from '../../../../core/services';
+import { specialCharacterValidator, uppercaseValidator, numberValidator } from '../../validators';
+import { ShowErrorsPasswordDirective, ShowErrorsDirective } from '../../../../shared/directives';
+import { AuthFormBase } from '../../components/form-base/form-base.component';
 
 @Component({
   selector: 'app-register',
@@ -24,23 +36,66 @@ import { AuthLogin } from '../../../../core/interfaces/auth.interface';
     ButtonModule,
     CheckboxModule,
     DividerModule,
-    FormBaseComponent,
+    RouterLink,
+    AutoFocusModule,
+    PasswordModule,
+    ShowErrorsPasswordDirective,
+    ShowErrorsDirective,
   ],
-  template: `
-    <app-form-base
-      [isLogin]="false"
-      [buttonDisabled]="isButtonDisabled()"
-      (formOutput)="handleRegisterWithEmail($event)" />
+  styles: `
+    .custom-pl {
+      padding-left: 2.5rem !important;
+    }
   `,
+  templateUrl: './register.component.html',
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class RegisterComponent {
   private readonly messageService = inject(MessageService);
   private readonly authService = inject(AuthService);
+  private readonly userService = inject(UserService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
 
   public isButtonDisabled = signal<boolean>(false);
+  public formUserVal = signal<boolean>(false);
+  public userFormRegister = signal<any>(null);
+
+  public readonly formRegister = new FormGroup({
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      specialCharacterValidator(),
+      uppercaseValidator(),
+      numberValidator(),
+    ]),
+  });
+
+  public get firstName() {
+    return this.formRegister.get('firstName');
+  }
+  public get lastName() {
+    return this.formRegister.get('lastName');
+  }
+  public get email() {
+    return this.formRegister.get('email');
+  }
+  public get password() {
+    return this.formRegister.get('password');
+  }
+
+  public handleSubmit() {
+    if (this.formRegister.invalid) {
+      this.formRegister.markAllAsTouched();
+      return;
+    }
+    const formValue = this.formRegister.value as AuthFormBase;
+    this.handleRegisterWithEmail(formValue);
+  }
 
   public handleRegisterWithEmail(event: AuthFormBase): void {
     this.authService
@@ -69,6 +124,7 @@ export default class RegisterComponent {
             summary: 'Sesión iniciada correctamente',
             detail: `Bienvenido, puedes terminar de llenar tus datos personales`,
           });
+          this.putUserData();
           this.router.navigate(['/']);
         },
         error: err => {
@@ -81,5 +137,25 @@ export default class RegisterComponent {
           });
         },
       });
+  }
+
+  public putUserData() {
+    const { firstName, lastName } = this.formRegister.value;
+    if (firstName && lastName) {
+      const updateData: UserFormRegister = { firstName, lastName };
+      this.userService
+        .updateUserData(updateData)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          error: err => {
+            this.messageService.add({
+              key: 'toast',
+              severity: 'error',
+              summary: 'Error al agregar datos del registro',
+              detail: `${err}`,
+            });
+          },
+        });
+    }
   }
 }

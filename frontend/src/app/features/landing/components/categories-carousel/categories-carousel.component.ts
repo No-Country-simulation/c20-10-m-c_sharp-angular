@@ -1,74 +1,42 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CarouselModule } from 'primeng/carousel';
-import { ButtonModule  } from 'primeng/button';
-import { TagModule } from 'primeng/tag';
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
+
+import { register } from 'swiper/element/bundle';
+register();
+
+import { CardImgComponent } from '../../components';
+import { CategoryResponse } from '../../../../core/interfaces';
 
 @Component({
   selector: 'app-categories-carousel',
   standalone: true,
-  imports: [CommonModule, CarouselModule, ButtonModule, TagModule ],
-  templateUrl:"./categories-carousel.component.html",
-  styles: `
+  imports: [CommonModule, CardImgComponent],
+  template: `
+    <swiper-container pagination="false" slides-per-view="1.5" space-between="24" free-mode="true">
+      @for (item of data(); track $index) {
+        <swiper-slide class="relative custom-ml cursor-pointer">
+          <app-card-img [data]="item" />
+        </swiper-slide>
+      }
+    </swiper-container>
   `,
+  styles: `
+    .custom-ml {
+      &:first-child {
+        margin-left: 1.5rem;
+      }
+    }
+    @media (width > 767px) {
+      .custom-ml {
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+  `,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoriesCarouselComponent {
-  items = [{}, {}, {}, {}];
-
-  products : any = [
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Hogar',
-      description: 'Hogar',
-      image: 'assets/images/landing-page/HOGAR.png',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    },
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Belleza',
-      description: 'Belleza',
-      image: 'assets/images/landing-page/Belleza.png',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    }
-  ];
-
-    responsiveOptions: any[] | undefined;
-
-    constructor() {}
-
-    ngOnInit() {
-        // this.productService.getProductsSmall().then((products) => {
-        //     this.products = products;
-        // });
-
-        this.responsiveOptions = [
-            {
-                breakpoint: '1199px',
-                numVisible: 1,
-                numScroll: 1
-            },
-            {
-                breakpoint: '991px',
-                numVisible: 2,
-                numScroll: 1
-            },
-            {
-                breakpoint: '767px',
-                numVisible: 1,
-                numScroll: 1
-            }
-        ];
-    }
-
+  public readonly data = input.required<CategoryResponse[]>();
 }

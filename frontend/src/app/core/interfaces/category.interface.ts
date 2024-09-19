@@ -5,10 +5,15 @@ export interface Category {
 }
 
 export interface CategoryResponse {
+  categoryId: number; // nuevo nombre
   name: string;
   description: string;
-  id: number;
   isActive: boolean;
+  scr: string;
+  src: string; // nueva propiedad
+  createdAt: Date;
+  listSpecialitiesId: number[]; // nueva propiedad con la lista de especialidades
+  route?: string; // Esto es unicamente del frontend
 }
 
 export interface CategoryErrorResponse {

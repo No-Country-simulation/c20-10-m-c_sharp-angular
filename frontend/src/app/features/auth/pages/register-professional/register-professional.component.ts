@@ -29,7 +29,6 @@ export default class RegisterProfessionalComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: res => {
-          console.log(res);
           this.router.navigate(['dashboard/profile'], { state: { task: 'complete-profile' } });
         },
         error: error => {

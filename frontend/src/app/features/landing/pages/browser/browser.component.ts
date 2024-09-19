@@ -1,70 +1,76 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { LandingHeaderComponent } from '../../layout/landing-header/landing-header.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CATEGORIES_LIST } from '../../../../shared/const/categoriesList.const';
-import { CardModule } from 'primeng/card';
-import { OrderFilterComponent } from '../../components';
-import { SearchbarComponent } from '../../components/searchbar/searchbar.component';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
+
+import { SearchbarComponent, CardImgComponent, NotFoundResultsComponent } from '../../components';
+import { CategoryResponse } from '../../../../core/interfaces';
+import { revealAnimation } from '../../../../shared/animations';
 import { ROUTES_PATH } from '../../../../core/routes';
 
 @Component({
   selector: 'app-browser',
   standalone: true,
-  imports: [
-    CommonModule,
-    LandingHeaderComponent,
-    CardModule,
-    OrderFilterComponent,
-    SearchbarComponent,
-  ],
+  imports: [CommonModule, SearchbarComponent, CardImgComponent, NotFoundResultsComponent],
+  animations: [revealAnimation],
   template: `
-    <div class="container-c flex flex-wrap gap-3 py-5">
-      <div class=" w-full">
+    <div class="layout-container flex flex-column gap-5">
+      <div class="w-full">
         <app-searchbar />
       </div>
-      @for (item of categories; track $index) {
-        <div class="custom-width cursor-pointer">
-          <p-card styleClass="h-full overflow-hidden" (click)="onSelectCategory(item.value.url)">
-            <ng-template pTemplate="header">
-              <img alt="Card" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
-            </ng-template>
-            <p>{{ item.label }}</p>
-          </p-card>
+      <div>
+        @if (currentRoute() === routesPath.LANDING_BROWSER) {
+          <h1 class="text-xl">Todas nuestras categorias</h1>
+        } @else {
+          <h1 class="text-xl">Todas las especialidades de {{ currentCategory() }}</h1>
+        }
+        <div class="flex flex-wrap gap-3" [@revealAnimation]>
+          @for (item of alldata(); track $index) {
+            <div class="custom-w">
+              <app-card-img [data]="item" />
+            </div>
+          } @empty {
+            <app-not-found-results />
+          }
         </div>
-      }
+      </div>
     </div>
+  `,
+  styles: `
+    .custom-w {
+      width: calc(50% - 0.5rem);
+    }
+    @media (width <= 768px) {
+      .custom-w {
+        width: 100%;
+      }
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class BrowserComponent implements OnInit {
-  private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
-  public readonly categories = CATEGORIES_LIST;
-  filter: string | null = null;
+  private readonly destroyRef = inject(DestroyRef);
+
+  public readonly currentCategory = signal<string | undefined>(undefined);
+  public readonly currentRoute = signal<string | null>(null);
+
+  public readonly routesPath = ROUTES_PATH;
+  public readonly alldata = signal<CategoryResponse[]>([]);
+  public readonly dataWithRoutes = signal<CategoryResponse[]>([]);
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      console.log(params);
+    this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
+      this.currentCategory.set(data['data']?.currentCategory);
+      this.currentRoute.set(data['data'].currentRoute);
+      this.alldata.set(data['data']?.res);
     });
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.filter = params['filtro'];
-      this.aplicarFiltro(this.filter);
-      console.log(params);
-    });
-  }
-
-  aplicarFiltro(filtro: string | null) {
-    if (filtro === 'mejores-calificados') {
-      // Lógica para aplicar filtro de "mejores calificados"
-    } else if (filtro === 'mas-cercanos') {
-      // Lógica para aplicar filtro de "más cercanos"
-    } else {
-      // Lógica para el caso sin filtro o valor no reconocido
-    }
-  }
-
-  onSelectCategory(category: any) {
-    this.router.navigate([ROUTES_PATH.LANDING_BROWSER_CATEGORIES, category]);
   }
 }
