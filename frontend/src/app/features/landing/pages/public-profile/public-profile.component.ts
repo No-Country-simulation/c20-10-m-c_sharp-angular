@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BtnNavigatePrevComponent } from '@app/shared/components';
 
 @Component({
   selector: 'app-public-profile',
@@ -16,6 +17,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ButtonModule,
     LandingHeaderComponent,
     LandingFooterComponent,
+    BtnNavigatePrevComponent,
     FormsModule,
     RatingModule,
   ],

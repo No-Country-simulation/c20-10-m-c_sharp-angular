@@ -35,6 +35,7 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CheckboxModule } from 'primeng/checkbox';
+import { BtnNavigatePrevComponent } from '@app/shared/components';
 
 // Routes
 const { AUTH_LOGIN } = ROUTES_PATH;
@@ -58,6 +59,7 @@ const { AUTH_LOGIN } = ROUTES_PATH;
     ButtonModule,
     InputSwitchModule,
     CheckboxModule,
+    BtnNavigatePrevComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
