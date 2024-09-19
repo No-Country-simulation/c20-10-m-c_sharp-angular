@@ -8,13 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
@@ -31,6 +25,8 @@ import {
 } from '@app/core/services';
 import { ShowErrorsDirective } from '@app/shared/directives';
 import { atLeastOnePaymentMethodSelected } from '../../validators/payment.validator';
+import { Category, Speciality, User } from '@app/core/interfaces';
+import { Suggestions, Address, Location } from './create-post.interface';
 
 @Component({
   selector: 'app-create-post',
@@ -38,7 +34,6 @@ import { atLeastOnePaymentMethodSelected } from '../../validators/payment.valida
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     InputTextareaModule,
     InputTextModule,
     DropdownModule,
@@ -58,11 +53,10 @@ export default class CreatePostComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
 
-  public readonly allCategories = signal<any[]>([]);
-  public readonly allSpecialities = signal<any[]>([]);
-  public readonly specialitiesByCategory = signal<any[]>([]);
-
-  public address!: unknown;
+  public readonly userData = signal<User>({} as User);
+  public readonly allCategories = signal<Category[]>([]);
+  public readonly allSpecialities = signal<Speciality[]>([]);
+  public readonly specialitiesByCategory = signal<Speciality[]>([]);
 
   public readonly paymentMethodsList = [
     {
@@ -79,22 +73,24 @@ export default class CreatePostComponent implements OnInit {
     },
   ];
 
-  public addressControl = new FormControl();
-  public suggestions = signal<any[]>([]);
+  public suggestions = signal<Suggestions[]>([]);
 
   public readonly createForm = new FormGroup({
     title: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
-    speciality: new FormControl({ value: '', disabled: true }, Validators.required),
+    speciality: new FormControl<Speciality | null>(
+      { value: null, disabled: true },
+      Validators.required
+    ),
     description: new FormControl('', Validators.required),
-    location: new FormControl('', Validators.required),
+    location: new FormControl<Location | null>(null, Validators.required),
     paymentMethods: new FormGroup(
       {
         mercadoPago: new FormControl(false),
         creditCard: new FormControl(false),
         cash: new FormControl(false),
       },
-      atLeastOnePaymentMethodSelected
+      atLeastOnePaymentMethodSelected // Custom validator to ensure at least one payment method is selected
     ),
   });
 
@@ -102,6 +98,7 @@ export default class CreatePostComponent implements OnInit {
     this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
       this.allCategories.set(res[0].allCategories);
       this.allSpecialities.set(res[0].allSpecialities);
+      this.userData.set(res[0].userData);
     });
   }
 
@@ -110,11 +107,39 @@ export default class CreatePostComponent implements OnInit {
       specialities => specialities.categoryId === selectedCategory.value.categoryId
     );
     this.specialitiesByCategory.set(filterSpecialities);
+    // Enable or disable speciality control based on filtered results
     if (filterSpecialities.length > 0) {
       this.speciality?.enable();
     } else {
       this.speciality?.disable();
     }
+  }
+
+  public searchAddress(event: AutoCompleteCompleteEvent) {
+    const query = event.query;
+    this.userLocationService
+      .addressAutocomplete(query)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: res => {
+          /**
+           * Map the API results to the format expected by the autocomplete suggestions
+           * Includes the address components and coordinates
+           */
+          const suggestions = res.results.map((result: Address) => ({
+            value: {
+              lat: result.lat,
+              lng: result.lng,
+              area: `${result.country}, ${result.city}, ${result.name}`,
+            },
+            address: `${result.city}, ${result.name}`,
+          }));
+          this.suggestions.set(suggestions);
+        },
+        error: err => {
+          console.error('Error al buscar dirección:', err);
+        },
+      });
   }
 
   /**
@@ -125,8 +150,10 @@ export default class CreatePostComponent implements OnInit {
   public onSubmit(): void {
     if (this.createForm.invalid) {
       this.createForm.markAllAsTouched();
+
       Object.keys(this.createForm.controls).forEach(key => {
         const control = this.createForm.get(key);
+
         if (control instanceof FormGroup) {
           Object.keys(control.controls).forEach(subKey => {
             control.get(subKey)!.updateValueAndValidity();
@@ -135,37 +162,31 @@ export default class CreatePostComponent implements OnInit {
           control!.updateValueAndValidity();
         }
       });
+
       return;
     }
-    const formValue = this.createForm.value;
-    console.log(formValue);
-    // this.userSpecialitiesService.createUserSpecialities({
-    //   idUser: '',
-    //   idSpeciality: formValue.speciality!.specialityId,
-    //   title: formValue.title!,
-    //   text: formValue.description!,
-    //   area: formValue.location!.city,
-    //   latitude: location.latitude!,
-    //   longitude: location.latitude!,
-    // });
-    this.sendNotification();
-  }
 
-  public searchAddress(event: AutoCompleteCompleteEvent) {
-    const query = event.query;
-    this.userLocationService
-      .addressAutocomplete(query)
+    const formValue = this.createForm.value;
+    const location = formValue.location as Location;
+    const speciality = formValue.speciality as Speciality | null;
+    this.userSpecialitiesService
+      .createUserSpecialities({
+        idUser: this.userData().id,
+        idSpeciality: speciality!.specialityId,
+        title: formValue.title!,
+        text: formValue.description!,
+        area: location.area,
+        latitude: `${location.lat}`,
+        longitude: `${location.lng}`,
+      })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: res => {
-          console.log(res);
-          const suggestions = res.results.map((result: any) => ({
-            name: `${result.city}, ${result.name}`,
-          }));
-          this.suggestions.set(suggestions);
+        next: () => {
+          this.sendNotification();
+          this.router.navigate(['/']);
         },
         error: err => {
-          console.error('Error al buscar dirección:', err);
+          console.error(err);
         },
       });
   }

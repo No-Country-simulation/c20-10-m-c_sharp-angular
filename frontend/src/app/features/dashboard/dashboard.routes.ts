@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { ROUTES_PATH } from '../../core/routes';
+import { createPostResolver } from './resolver/create-post.resolver';
 
 const {
   DASHBOARD_PROFILE,
@@ -10,6 +11,7 @@ const {
   DASHBOARD_MY_POSTS,
   DASHBOARD_MY_WORKS,
   DASHBOARD_NOTIFICATIONS,
+  DASHBOARD_CREATE_POST,
 } = ROUTES_PATH;
 
 export default [
@@ -59,6 +61,12 @@ export default [
     path: DASHBOARD_NOTIFICATIONS,
     title: 'Notificaciones',
     loadComponent: () => import('./pages/notifications/notifications.component'),
+  },
+  {
+    path: DASHBOARD_CREATE_POST,
+    title: 'Crear publicacion',
+    resolve: [createPostResolver],
+    loadComponent: () => import('./pages/create-post/create-post.component'),
   },
   {
     path: '**', // In case of any other path, redirect to 'dashboard/perfil'

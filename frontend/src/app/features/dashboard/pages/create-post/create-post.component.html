@@ -73,12 +73,12 @@
           styleClass="w-full"
           inputStyleClass="w-full"
           minLength="10"
-          optionLabel="name"
+          optionLabel="address"
+          optionValue="value"
+          formControlName="location"
           placeholder="Ciudad y dirección"
           [delay]="800"
-          [ngModelOptions]="{ standalone: true }"
           [suggestions]="suggestions()"
-          [(ngModel)]="address"
           (completeMethod)="searchAddress($event)" />
         <div [appShowErrors]="location"></div>
       </div>
