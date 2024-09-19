@@ -68,4 +68,8 @@ export class UserSpecialitiesService {
       `https://www.contratapp.somee.com/api/userspecialities/search?IdSpeciality=${idSpeciality}`
     );
   }
+
+  public deleteUserSpecialitiesById(id: number) {
+    return this.http.delete(this.baseUrl + this.userSpecilitiesEndpoint + '/' + id);
+  }
 }

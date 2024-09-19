@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { ROUTES_PATH } from '../../core/routes';
-import { createPostResolver } from './resolver/create-post.resolver';
+import { editPostResolver, createPostResolver } from './resolver';
 
 const {
   DASHBOARD_PROFILE,
@@ -12,6 +12,7 @@ const {
   DASHBOARD_MY_WORKS,
   DASHBOARD_NOTIFICATIONS,
   DASHBOARD_CREATE_POST,
+  DASHBOARD_EDIT_POST,
 } = ROUTES_PATH;
 
 export default [
@@ -66,6 +67,12 @@ export default [
     path: DASHBOARD_CREATE_POST,
     title: 'Crear publicacion',
     resolve: [createPostResolver],
+    loadComponent: () => import('./pages/create-post/create-post.component'),
+  },
+  {
+    path: DASHBOARD_EDIT_POST,
+    title: 'Editar publicacion',
+    resolve: [editPostResolver],
     loadComponent: () => import('./pages/create-post/create-post.component'),
   },
   {

@@ -56,14 +56,28 @@ export default class MyPostsComponent implements OnInit {
       acceptButtonStyleClass: 'p-button-danger p-button-outlined ',
       rejectButtonStyleClass: 'p-button-primary',
       accept: () => {
-        // this.userSpecialitiesService.deleteUserSpecialitiesById(id)
-        this.messageService.add({
-          key: 'toast',
-          severity: 'success',
-          summary: 'Se ha eliminado',
-          detail: 'El post se ha eliminado correctamente',
-        });
-        this.getPosts();
+        this.userSpecialitiesService
+          .deleteUserSpecialitiesById(id)
+          .pipe()
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                key: 'toast',
+                severity: 'success',
+                summary: 'Se ha eliminado',
+                detail: 'El post se ha eliminado correctamente',
+              });
+              this.getPosts();
+            },
+            error: error => {
+              this.messageService.add({
+                key: 'toast',
+                severity: 'error',
+                summary: 'Ha ocurrido un error',
+                detail: error,
+              });
+            },
+          });
       },
     });
   }
@@ -73,6 +87,7 @@ export default class MyPostsComponent implements OnInit {
       .getUserData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
+        console.log(res.userSpecialities);
         this.postsData.set(res.userSpecialities);
       });
   }

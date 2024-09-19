@@ -11,7 +11,7 @@
         <p-button
           icon="pi pi-plus"
           label="Crear publicacion"
-          (onClick)="onNavigate('/dashboard/publicar')" />
+          (onClick)="onNavigate('/dashboard/crear-publicacion')" />
       </div>
     </ng-template>
     <ng-template pTemplate="list">
@@ -43,7 +43,7 @@
                 outlined="true"
                 severity="secondary"
                 label="Ver publicacion"
-                (onClick)="onNavigate('/explorar/post/{{item.idSpeciality}}')" />
+                (onClick)="onNavigate('/explorar/post/' + item.id)" />
               <div class="flex gap-2">
                 <p-button
                   class="w-6"
@@ -51,7 +51,8 @@
                   icon="pi pi-pencil"
                   outlined="true"
                   severity="success"
-                  label="Editar" />
+                  label="Editar"
+                  (onClick)="onNavigate('dashboard/editar-publicacion/' + item.id)" />
                 <p-button
                   class="w-6"
                   styleClass="w-full"

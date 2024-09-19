@@ -36,6 +36,6 @@ export interface Value {
 
 export interface Location {
   area: string;
-  lat: number;
-  lng: number;
+  lat: number | string;
+  lng: number | string;
 }

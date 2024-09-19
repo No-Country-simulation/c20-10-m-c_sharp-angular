@@ -25,7 +25,7 @@ import {
 } from '@app/core/services';
 import { ShowErrorsDirective } from '@app/shared/directives';
 import { atLeastOnePaymentMethodSelected } from '../../validators/payment.validator';
-import { Category, Speciality, User } from '@app/core/interfaces';
+import { Category, Speciality, User, UserSpeciality } from '@app/core/interfaces';
 import { Suggestions, Address, Location } from './create-post.interface';
 
 @Component({
@@ -99,7 +99,37 @@ export default class CreatePostComponent implements OnInit {
       this.allCategories.set(res[0].allCategories);
       this.allSpecialities.set(res[0].allSpecialities);
       this.userData.set(res[0].userData);
+      const userSpecialityData = res[0].userSpecialityData;
+      if (userSpecialityData) {
+        this.patchCurrentValues(userSpecialityData);
+      }
     });
+  }
+
+  public patchCurrentValues(data: UserSpeciality) {
+    const category = this.allCategories().find(c => c.id === data.id);
+
+    this.createForm.patchValue({
+      title: data.title,
+      category: category?.name,
+      description: data.text,
+      location: {
+        area: data.area,
+        lat: data.latitude,
+        lng: data.longitude,
+      },
+      paymentMethods: {
+        mercadoPago: false,
+        creditCard: false,
+        cash: false,
+      },
+    });
+
+    if (data.idSpeciality) {
+      this.createForm.get('speciality')?.enable();
+    } else {
+      this.createForm.get('speciality')?.disable();
+    }
   }
 
   public onSelectCategory(selectedCategory: DropdownChangeEvent) {

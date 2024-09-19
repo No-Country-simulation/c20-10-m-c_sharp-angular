@@ -17,13 +17,13 @@ export const ROUTES_PATH = {
   DASHBOARD_PROFILE: 'perfil',
   DASHBOARD_PUBLISH: 'publicar',
 
-
   DASHBOARD_PUBLIC_PROFILE_USER: 'perfil/publico',
   DASHBOARD_PUBLIC_PROFILE_USER_ID: 'perfil/publico/:id',
 
   DASHBOARD_MESSAGES: 'mensajes',
   DASHBOARD_MESSAGES_INBOX: 'mensajes/:id',
   DASHBOARD_CREATE_POST: 'crear-publicacion',
+  DASHBOARD_EDIT_POST: 'editar-publicacion/:id',
   DASHBOARD_PUBLIC_PROFILE: 'perfil-publico',
   DASHBOARD_PUBLIC_PROFILE_ID: 'perfil-publico/:id',
 
