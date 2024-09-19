@@ -70,12 +70,12 @@ export default class BrowserSpecialityComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => {
-      const dataWithDistance = this.distancesService.calculateDistances(
-        this.currentLocation.lat,
-        this.currentLocation.lon,
-        data['data'].offerorResults
-      );
-      this.data.set(dataWithDistance);
+      // const dataWithDistance = this.distancesService.calculateDistances(
+      //   this.currentLocation.lat,
+      //   this.currentLocation.lon,
+      //   data['data'].offerorResults
+      // );
+      this.data.set(data['data'].offerorResults);
       const currentSpeciality = this.formatCurrentSpeciality(data['data'].currentSpeciality);
       this.currentSpeciality.set(currentSpeciality);
     });
@@ -91,10 +91,10 @@ export default class BrowserSpecialityComponent implements OnInit {
             this.defaultOrder();
             break;
           }
-          case ORDER_FILTER.BY_NEAREST: {
-            this.byNearestOrder();
-            break;
-          }
+          // case ORDER_FILTER.BY_NEAREST: {
+          //   this.byNearestOrder();
+          //   break;
+          // }
           case ORDER_FILTER.BY_RATING: {
             this.byRatingOrder();
             break;
@@ -117,10 +117,10 @@ export default class BrowserSpecialityComponent implements OnInit {
     this.currentData.set(data);
   }
 
-  private byNearestOrder(): void {
-    const data = [...this.data()].sort((a, b) => a.distance! - b.distance!);
-    this.currentData.set(data);
-  }
+  // private byNearestOrder(): void {
+  //   const data = [...this.data()].sort((a, b) => a.distance! - b.distance!);
+  //   this.currentData.set(data);
+  // }
 
   public formatCurrentSpeciality(currentSpeciality: string): string {
     const replacedString = currentSpeciality.replace(/-/g, ' ');

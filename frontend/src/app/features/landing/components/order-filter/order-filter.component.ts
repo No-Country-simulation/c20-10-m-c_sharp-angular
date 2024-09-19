@@ -33,10 +33,10 @@ export class OrderFilterComponent {
       label: 'Mejores calificados',
       value: ORDER_FILTER.BY_RATING,
     },
-    {
-      label: 'Mas cercanos',
-      value: ORDER_FILTER.BY_NEAREST,
-    },
+    // {
+    //   label: 'Mas cercanos',
+    //   value: ORDER_FILTER.BY_NEAREST,
+    // },
   ];
 
   public handleOrder(event: DropdownChangeEvent): void {
