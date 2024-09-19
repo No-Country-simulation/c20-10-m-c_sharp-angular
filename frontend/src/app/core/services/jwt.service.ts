@@ -21,7 +21,7 @@ export class JwtService {
   private readonly cookieOptions: CookieOptions = {
     path: '/',
     secure: true,
-    sameSite: 'Strict',
+    sameSite: 'None',
   };
 
   public setAccessToken(token: string): void {
