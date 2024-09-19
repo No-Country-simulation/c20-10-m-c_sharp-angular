@@ -36,7 +36,7 @@ namespace ContratApp.Controllers
             var loggedUser = User.FindFirst(ClaimTypes.NameIdentifier);
             var loggedUserId = loggedUser.Value;
             var user = _context.Users
-                .Include(ue => ue.UserSpecialities)
+                .Include(ue => ue.UserSpecialities.Where(x => x.IsActive))
                 .FirstOrDefault(x => x.Id == loggedUserId);
                 
             if (user == null)
@@ -64,7 +64,7 @@ namespace ContratApp.Controllers
         public ActionResult<User> GetUser(string id)
         {
             var user = _context.Users
-                .Include(ue => ue.UserSpecialities)
+                .Include(ue => ue.UserSpecialities.Where(x => x.IsActive))
                 .FirstOrDefault(x => x.Id == id);
 
             if (user == null)

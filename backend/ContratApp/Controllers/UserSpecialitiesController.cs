@@ -30,6 +30,7 @@ namespace ContratApp.Controllers
             return await _context.UserSpecialities
                                  //.Include(oe => oe.Offeror)
                                  //.Include(oe => oe.Speciality)
+                                 .Where(x => x.IsActive)
                                  .ToListAsync();
         }
 
@@ -60,7 +61,7 @@ namespace ContratApp.Controllers
             var result = _context.UserSpecialities
                 .Include(oe => oe.Speciality)
                 .Include(oe => oe.User)
-                .AsQueryable()
+                .Where(x => x.IsActive)
                 ;
             if (!string.IsNullOrWhiteSpace(userSpecialitiesSearchViewModel.Criteria))
             {
@@ -129,6 +130,14 @@ namespace ContratApp.Controllers
             {
                 existingEntity.Area = userSpecialityAddVM.Area;
             }
+            if (!string.IsNullOrWhiteSpace(userSpecialityAddVM.Latitude))
+            {
+                existingEntity.Latitude = userSpecialityAddVM.Latitude;
+            }
+            if (!string.IsNullOrWhiteSpace(userSpecialityAddVM.Longitude))
+            {
+                existingEntity.Longitude = userSpecialityAddVM.Longitude;
+            }
 
             _context.Entry(existingEntity).State = EntityState.Modified;
 
@@ -149,6 +158,22 @@ namespace ContratApp.Controllers
             }
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Hace inactiva (soft delete) una publicación.
+        /// </summary>
+        /// <param name="id">El ID de userspeciality a ser marcado como inactivo.</param>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUserSpeciality(int id)
+        {
+            if (id <= 0) return BadRequest();
+            var userSpeciality = await _context.UserSpecialities.FindAsync(id);
+            if (userSpeciality == null) return NotFound();
+            userSpeciality.IsActive = false;
+            var affectedRows = await _context.SaveChangesAsync();
+            bool success = affectedRows > 0;
+            return Ok(success);
         }
     }
 }

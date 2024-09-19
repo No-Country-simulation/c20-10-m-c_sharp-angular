@@ -29,5 +29,13 @@ namespace ContratApp.ViewModels
 
         [MaxLength(50)]
         public string? Area { get; set; }
+
+        [MaxLength(256)]
+        public string? Latitude { get; set; }
+
+        [MaxLength(256)]
+        public string? Longitude { get; set; }
+
+
     }
 }

@@ -30,8 +30,12 @@ namespace ContratApp.ViewModels
         public Boolean? ContactByEmail { get; set; }
         public Boolean? MercadoPago { get; set; } 
         public Boolean? CreditCard { get; set; }
-        public Boolean? Cash { get; set; } 
+        public Boolean? Cash { get; set; }
+
+        [MaxLength(256)]
         public string? Latitude { get; set; }
+
+        [MaxLength(256)]
         public string? Longitude { get; set; }
 
         [MaxLength(256)]

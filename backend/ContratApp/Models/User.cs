@@ -8,7 +8,6 @@ namespace ContratApp.Models
         [MaxLength(450)]
         public string? Id { get; set; }
 
-        [Required]
         [MaxLength(256)]
         public string? Email { get; set; }
         
@@ -43,7 +42,10 @@ namespace ContratApp.Models
         public Boolean? CreditCard { get; set; } = false;
         public Boolean? Cash { get; set; } = false;
 
+        [MaxLength(256)]
         public string? Latitude { get; set; }
+        
+        [MaxLength(256)]
         public string? Longitude { get; set; }
 
         [MaxLength(256)]

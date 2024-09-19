@@ -84,7 +84,7 @@ public class CategoriesController : ControllerBase
                 x.Description,
                 x.Src,
                 x.CreatedAt,
-                ListSpecialitiesId = x.Specialities.Select(x => x.Id).ToList(),
+                ListSpecialitiesId = x.Specialities.Where(y => y.IsActive).Select(x => x.Id).ToList(),
             }).First();
         if (category == null) return NotFound();
         return Ok(category);
