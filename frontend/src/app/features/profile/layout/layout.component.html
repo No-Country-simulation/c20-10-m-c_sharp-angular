@@ -89,9 +89,6 @@
         <p-dropdown
           [options]="countries"
           formControlName="country"
-          optionLabel="country"
-          [filter]="true"
-          filterBy="country"
           styleClass="w-full"
           placeholder="Seleccione un país"
           (onChange)="onCountryChange()" />
@@ -104,9 +101,6 @@
         <p-dropdown
           [options]="cities"
           formControlName="state"
-          optionLabel="state"
-          [filter]="true"
-          filterBy="state"
           styleClass="w-full"
           placeholder="Seleccione una ciudad" />
       </div>

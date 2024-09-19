@@ -21,6 +21,7 @@ import { JwtService } from '@core/services';
 import { ROUTES_PATH } from '@core/routes';
 import { UserService, AuthService } from '@core/services';
 import { User } from '@core/interfaces';
+import { PerfilService } from '@features/profile/services/perfil.service';
 
 //PrimeNG
 import { CountriesService } from '@shared/services/countries.service';
@@ -75,8 +76,8 @@ export default class PerfilComponent implements OnInit {
   //selectedCountry: any | object | string = '';
   //selectedCity: object | string = '';
 
-  countries = [];
-  cities = [];
+  countries: string[] = [];
+  cities: string[] | undefined = [];
 
   photoUrl = 'path-to-default-image.jpg'; // Cambiar por el path real o manejar dinámicamente
 
@@ -87,11 +88,15 @@ export default class PerfilComponent implements OnInit {
   jwtService = inject(JwtService);
   router = inject(Router);
   authService = inject(AuthService);
+  perfilService = inject(PerfilService);
 
   ngOnInit(): void {
     if (!this.jwtService.getAccessToken()) {
+      console.log('No hay token JWT');
       this.authService.logout();
       this.router.navigateByUrl(AUTH_LOGIN);
+    } else {
+      console.log('Token JWT', this.jwtService.getAccessToken());
     }
     this.userService.getUserData().subscribe({
       next: user => {
@@ -100,19 +105,14 @@ export default class PerfilComponent implements OnInit {
         this.profileForm.patchValue(user);
       },
       error: error => {
-        console.error('Error fetching user data', error);
+        console.error('Error al acceder a los datos ', error);
+        this.authService.logout();
+        this.router.navigateByUrl(AUTH_LOGIN);
         this.errorRequest = true;
       },
     });
 
-    this.countriesServices.getCountries().subscribe(countries => {
-      this.countries = countries
-        .map((country: any) => ({
-          country: country.name.common,
-          code: country.cca2,
-        }))
-        .sort((a: any, b: any) => a.country.localeCompare(b.country));
-    });
+    this.countries = this.perfilService.getCountries();
 
     this.profileForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -172,19 +172,7 @@ export default class PerfilComponent implements OnInit {
   }
 
   onCountryChange() {
-    if (this.profileForm.controls['country'].value.country) {
-      this.profileForm.controls['state'].disable();
-      this.countriesServices
-        .getCitiesByCountry(this.profileForm.controls['country'].value.code)
-        .subscribe(data => {
-          this.cities = data.geonames
-            .map((city: any) => ({
-              city: city.toponymName,
-            }))
-            .sort((a: any, b: any) => a.city.localeCompare(b.city));
-          this.profileForm.controls['state'].enable();
-        });
-    }
+    this.cities = this.perfilService.getCitiesByCountry(this.profileForm.value.country);
   }
 
   logout(): void {
