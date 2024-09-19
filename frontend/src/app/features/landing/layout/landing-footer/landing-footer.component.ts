@@ -18,93 +18,93 @@ import { ButtonModule } from 'primeng/button';
       </div>
     </footer>
   `,
-  styles: [`
-    .footer-container {
-      padding: 20px;
-      background-color: #231f20;
-      color: #fff;
-    }
+  styles: [
+    `
+      .footer-container {
+        padding: 20px;
+        background-color: #231f20;
+        color: #fff;
+      }
 
-    .footer-sections {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
+      .footer-sections {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
 
-    .footer-column {
-      flex: 1;
-      margin: 0 10px;
-      min-width: 150px;
-    }
+      .footer-column {
+        flex: 1;
+        margin: 0 10px;
+        min-width: 150px;
+      }
 
-    .footer-title {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-      color: #ffcc00;
-    }
+      .footer-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        color: #ffcc00;
+      }
 
-    .footer-items p-button {
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-      color: #fff; 
-    }
+      .footer-items p-button {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+        color: #fff;
+      }
 
-    .footer-items p-button:hover {
-      text-decoration: underline;
-    }
+      .footer-items p-button:hover {
+        text-decoration: underline;
+      }
 
-    .footer-column {
-      margin-bottom: 20px;
-      text-align: center;
-    }
+      .footer-column {
+        margin-bottom: 20px;
+        text-align: center;
+      }
 
-    .footer-title {
-      font-size: 1rem;
-    }
+      .footer-title {
+        font-size: 1rem;
+      }
 
-    .footer-items p-button {
-      font-size: 0.85rem;
-    }
-
-    
-  `],
+      .footer-items p-button {
+        font-size: 0.85rem;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingFooterComponent {
   public readonly footer = [
     {
-      title: 'For Customers',
+      title: 'Para los clientes',
       items: [
         {
-          label: 'Find a Professional',
+          label: 'Encontrar un profesional',
         },
         {
-          label: 'How it works',
+          label: '¿Cómo funciona?',
         },
         {
-          label: 'Login',
+          label: 'Iniciar sesión',
         },
       ],
     },
     {
-      title: 'For Professionals',
+      title: 'Para profesionales',
       items: [
         {
-          label: 'How it works',
+          label: '¿Cómo funciona?',
         },
         {
-          label: 'Join as a Professional',
+          label: 'Ingresa como profesional',
         },
         {
-          label: 'Help center',
+          label: 'Centro de ayuda',
         },
       ],
     },
     {
-      title: 'About',
+      title: 'Sobre',
       items: [
         {
-          label: 'About ContratApp',
+          label: 'Sobre ContratApp',
         },
       ],
     },
