@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
       this.userLocationService
         .getUserLocation()
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(console.log);
+        .subscribe(res => this.userLocationService.currentUserLocation.set(res));
     }
     this.router.events.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
       if (event instanceof NavigationEnd) {

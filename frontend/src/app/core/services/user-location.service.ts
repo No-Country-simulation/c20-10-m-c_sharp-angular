@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { of, shareReplay, tap } from 'rxjs';
 import { SessionStorageService } from './session-storage.service';
 import { environment } from 'environments/environment';
@@ -14,6 +14,8 @@ export class UserLocationService {
   private readonly ipApiEndpoint = environment.LOCATION.CURRENT_USER_LOCATION;
   private readonly addressAutocompleteEndpoint = environment.LOCATION.ADDRESS_AUTOCOMPLETE_BASE_URL;
   private readonly addressAutocompleteKey = environment.LOCATION.ADDRESS_AUTOCOMPLETE_KEY;
+
+  public readonly currentUserLocation = signal<any | null>(null);
 
   public getUserLocation() {
     return this.http.get(this.ipApiEndpoint).pipe(shareReplay(1));

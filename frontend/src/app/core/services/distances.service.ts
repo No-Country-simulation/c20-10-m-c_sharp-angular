@@ -38,7 +38,6 @@ export class DistancesService {
     userLon: number,
     posts: UserSpecialitySearch[]
   ): UserSpecialitySearch[] {
-    console.log(posts);
     return posts.map(post => {
       const distanceKm = this.calculateDistance(userLon, userLat, post.latitude!, post.longitude!);
 

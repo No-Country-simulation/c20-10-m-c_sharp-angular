@@ -64,7 +64,6 @@ export const browserViewSpecialityResolver: ResolveFn<CombinedData> = route => {
         }
         return specialitiesService.getSpecialitiesByCategoryId(matchingCategory.categoryId).pipe(
           map(res => {
-            console.log(res);
             const specialities = Array.isArray(res) ? res : [res];
 
             const data = specialities.map(speciality => ({
