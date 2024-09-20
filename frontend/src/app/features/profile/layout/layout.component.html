@@ -1,0 +1,186 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<div class="layout-container">
+  <app-btn-navigate-prev />
+  <div
+    class="profile-form flex flex-column gap-3 justify-content-center align-items-center mr-2 w-full">
+    <form [formGroup]="profileForm" class="w-full">
+      <!-- Foto -->
+      <p-fieldset class="w-full pr-1" legend="Configuración de perfil">
+        <div class="flex align-items-end justify-content-between gap-2 w-full">
+          <p-avatar [image]="imageUrl" styleClass="h-10rem w-10rem" shape="circle" />
+          <!-- <button (click)="">Cambiar</button> -->
+          <div class="flex align-items-center gap-1">
+            <p
+              style="
+                width: 25px;
+                height: 25px;
+                font-size: 1.5rem;
+                margin: 0;
+                padding: 0;
+                border: 1px solid purple;
+                color: purple;
+                display: grid;
+                place-items: center;
+                border-radius: 8px;
+                box-sizing: border-box;
+                line-height: 0;
+                cursor: pointer;
+              "
+              (keypress)="choisefile.click()"
+              (click)="choisefile.click()">
+              +
+            </p>
+            <!-- (onUpload)="onUpload($event)" -->
+            <p
+              class="p-0 m-0 cursor-pointer"
+              (keypress)="choisefile.click()"
+              (click)="choisefile.click()">
+              Cambiar foto
+            </p>
+          </div>
+          <input
+            type="file"
+            #choisefile
+            style="visibility: hidden; width: 0"
+            accept="image/png, image/gif, image/jpeg"
+            (change)="uploadImage($event)" />
+        </div>
+      </p-fieldset>
+      <p-fieldset class="w-12 pr-1" legend="Tus datos">
+        <!-- Botón editar -->
+        <div class="flex justify-content-end w-full">
+          <p-button [label]="editLabel" (onClick)="toggleEdit()" styleClass="w-10rem" />
+        </div>
+        <!-- Nombre -->
+        <div class="flex flex-column w-full">
+          <label for="firstName">Nombre</label>
+          <input id="firstName" type="text" class="w-full" pInputText formControlName="firstName" />
+          <!-- disabled="!isEditing['name']"  -->
+        </div>
+        <br />
+
+        <!-- Apellido -->
+        <div class="flex flex-column w-full">
+          <label for="lastName">Apellido</label>
+          <input id="lastName" type="text" class="w-full" pInputText formControlName="lastName" />
+        </div>
+        <br />
+
+        <!-- Fecha de nacimiento -->
+        <div class="flex flex-column w-full">
+          <label for="birthDate">Fecha de Nacimiento</label>
+          <p-calendar class="w-full" styleClass="w-full" formControlName="birthDate" />
+        </div>
+        <br />
+
+        <!-- DNI -->
+        <div class="flex flex-column w-full">
+          <label for="dni">DNI</label>
+          <p-inputNumber
+            class="w-full"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+            inputId="integeronly"
+            formControlName="dni" />
+        </div>
+        <br />
+
+        <!-- País -->
+        <div class="flex flex-column w-full">
+          <label for="country">País</label>
+          <p-dropdown
+            [options]="countries"
+            formControlName="country"
+            optionLabel="country"
+            [filter]="true"
+            filterBy="country"
+            styleClass="w-full"
+            placeholder="Seleccione un país"
+            (onChange)="onCountryChange()" />
+        </div>
+        <br />
+
+        <!-- Localidad -->
+        <div class="flex flex-column w-full">
+          <label for="state">Ciudades</label>
+          <p-dropdown
+            [options]="cities"
+            formControlName="state"
+            optionLabel="state"
+            [filter]="true"
+            filterBy="state"
+            styleClass="w-full"
+            placeholder="Seleccione una ciudad" />
+        </div>
+        <br />
+
+        <!-- Teléfono -->
+        <div class="flex flex-column w-full">
+          <div class="flex justify-content-between">
+            <label for="phone">Teléfono</label>
+            <div class="flex align-items-center gap-1">
+              <label for="contactByPhone">Contactar por teléfono</label>
+              <p-inputSwitch formControlName="contactByPhone" />
+            </div>
+          </div>
+
+          <p-inputNumber
+            styleClass="w-full"
+            inputStyleClass="w-full"
+            inputId="integeronly"
+            mode="decimal"
+            formControlName="cellphone" />
+        </div>
+        <br />
+
+        <!-- Email -->
+        <div class="flex flex-column w-full">
+          <div class="flex justify-content-between">
+            <label for="email">Email</label>
+            <div class="flex align-items-center gap-1">
+              <label for="contactByEmail">Contactar por email</label>
+              <p-inputSwitch formControlName="contactByEmail" />
+            </div>
+          </div>
+          <input id="email" type="text" class="w-full" pInputText formControlName="email" />
+        </div>
+        <br />
+
+        <!-- Contraseña -->
+        <div class="flex flex-column w-full">
+          <label for="password">Contraseña</label>
+          <p-password
+            formControlName="password"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+            [toggleMask]="true" />
+        </div>
+        <br />
+      </p-fieldset>
+      <p-fieldset class="w-12 pr-1" legend="Seleccionar medios de pago">
+        <div class="flex flex-column gap-1">
+          <div>
+            <p-checkbox formControlName="mercadoPago" value="Mercado Pago" inputId="mp" />
+            <label for="mp"> Mercado Pago</label>
+          </div>
+
+          <div>
+            <p-checkbox
+              formControlName="creditCard"
+              value="Tarjeta de débito/crédito"
+              inputId="cc" />
+            <label for="cc"> Tarjeta de débito/crédito</label>
+          </div>
+
+          <div>
+            <p-checkbox formControlName="cash" value="Dinero en efectivo" inputId="my" />
+            <label for="my"> Dinero en efectivo</label>
+          </div>
+        </div>
+      </p-fieldset>
+      <p-fieldset class="w-12 pr-1" legend="Sesión">
+        <p-button label="Cerrar sesión" (onClick)="logout()" styleClass="w-10rem" />
+      </p-fieldset>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<form [formGroup]="forgotForm">
+  @switch (currentforgotStep()) {
+    @case (forgotStep.EMAIL) {
+      <div class="flex flex-column gap-5 mt-7">
+        <div class="flex flex-column gap-2">
+          <input
+            class="w-full"
+            pInputText
+            type="email"
+            formControlName="email"
+            placeholder="Correo electrónico *"
+            (keyup.enter)="onEmail()" />
+          <div appFormErrorMessages [appShowErrors]="email"></div>
+        </div>
+        <p-button styleClass="w-full" label="Enviar email" (onClick)="onEmail()" />
+      </div>
+    }
+    @case (forgotStep.OTP) {
+      <div class="">
+        <p-button class="absolute top-0 left-0" label="Regresar" (onClick)="changeStep('email')" />
+        <p-inputOtp />
+        <p-button label="Reenviar codigo" (onClick)="onEmail()" />
+        <p-button label="Confirmar" (onClick)="onOtp()" />
+      </div>
+    }
+    @case (forgotStep.PASSWORD) {
+      <div class="flex flex-column gap-2">
+        <p-password
+          styleClass="w-full"
+          inputStyleClass="w-full"
+          formControlName="newPassword"
+          [feedback]="false" />
+        <p-password
+          styleClass="w-full"
+          inputStyleClass="w-full"
+          formControlName="confirmNewPassword"
+          [feedback]="false" />
+        <p-button label="" />
+      </div>
+    }
+    @case (forgotStep.SUCCESS) {
+      <div>
+        <h2>Se ha actualizado su contraseña correctamente</h2>
+        <p></p>
+        <p-button label="" routerLink="/iniciar-sesion" />
+      </div>
+    }
+    @case (forgotStep.ERROR) {
+      <div>
+        <h2>Se ha producido un error</h2>
+        <p></p>
+        <p-button label="" (onClick)="changeStep('email')" />
+      </div>
+    }
+  }
+</form>

@@ -1,0 +1,9 @@
+{
+  "angular-schematics.schematicsDefaultOptions": {
+    "angular-*": {
+      "externalTemplate": true,
+      "skipStyle": true
+    }
+  },
+  "cSpell.words": ["dinámicamente"]
+}
