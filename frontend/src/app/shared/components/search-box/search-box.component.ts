@@ -1,4 +1,13 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
@@ -12,7 +21,6 @@ import { debounceTime, Subject, Subscription } from 'rxjs';
   styles: ``,
 })
 export class SearchBoxComponent implements OnInit, OnDestroy {
-
   private debouncer: Subject<void> = new Subject();
   private debouncerSubscription?: Subscription;
 
@@ -24,13 +32,9 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
   txt_search!: ElementRef<HTMLInputElement>;
 
   ngOnInit(): void {
-    this.debouncerSubscription = this.debouncer
-      .pipe(
-        debounceTime(500),
-      )
-      .subscribe(() => {
-        this.emitValue();
-      });
+    this.debouncerSubscription = this.debouncer.pipe(debounceTime(500)).subscribe(() => {
+      this.emitValue();
+    });
   }
 
   ngOnDestroy(): void {
@@ -44,5 +48,4 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
   onKeyPress(): void {
     this.debouncer.next();
   }
-
 }

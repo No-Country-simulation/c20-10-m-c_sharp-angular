@@ -41,11 +41,7 @@
       "createdAt": "0001-01-01T00:00:00"
     }
   ],
-  "jobsPostedId": [
-    1,
-    2,
-    3
-  ],
+  "jobsPostedId": [1, 2, 3],
   "experience": "10 años",
   "shedules": "10:00 - 17:00",
   "certificates": [

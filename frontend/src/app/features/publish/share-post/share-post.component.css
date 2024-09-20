@@ -135,7 +135,7 @@
 }
 
 /* Checkbox amarillo */
-.payment-methods input[type="checkbox"] {
+.payment-methods input[type='checkbox'] {
   margin-right: 10px;
   width: 16px;
   height: 16px;

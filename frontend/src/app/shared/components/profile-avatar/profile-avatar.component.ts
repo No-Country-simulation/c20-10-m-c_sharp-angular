@@ -20,7 +20,7 @@ import { getStyleAvatar } from '../../utils/stringToColor';
 export class ProfileAvatarComponent implements OnInit {
   private userService = inject(UserService);
 
-  @Input() user = signal<User | undefined>( undefined )
+  @Input() user = signal<User | undefined>(undefined);
   protected readonly ROUTES_PATH = ROUTES_PATH;
   @Input() classes: any = null;
   @Input() ratingValue: any = 0;
@@ -37,7 +37,7 @@ export class ProfileAvatarComponent implements OnInit {
     } else {
       this.onSetUserProfile();
 
-      this.route.paramMap.subscribe( params => {
+      this.route.paramMap.subscribe(params => {
         const id = params.get('id');
         this.offererParamId.set(id);
         this.onSetUserProfile();

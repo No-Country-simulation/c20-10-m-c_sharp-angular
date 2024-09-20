@@ -1,8 +1,12 @@
 import {
   ChangeDetectionStrategy,
-  Component, ElementRef, EventEmitter,
-  inject, OnDestroy,
-  OnInit, Output,
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
   signal,
   ViewChild,
 } from '@angular/core';
@@ -199,13 +203,13 @@ export class MessageGridComponent implements OnInit, OnDestroy {
     if (!this.isMobile) {
       this.closeModal();
     }
-  }
+  };
 
   searchChatUser(value: string): void {
     this.messages.set(
-      this.userService.userMessages().filter( userMsg =>
-        userMsg.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
-      )
+      this.userService
+        .userMessages()
+        .filter(userMsg => userMsg.name.toLocaleLowerCase().includes(value.toLocaleLowerCase()))
     );
   }
 

@@ -7,13 +7,7 @@ import { NgIf, NgTemplateOutlet } from '@angular/common';
 @Component({
   selector: 'app-generic-dialog',
   standalone: true,
-  imports: [
-    DialogModule,
-    ButtonDirective,
-    RippleModule,
-    NgTemplateOutlet,
-    NgIf,
-  ],
+  imports: [DialogModule, ButtonDirective, RippleModule, NgTemplateOutlet, NgIf],
   templateUrl: './generic-dialog.component.html',
   styles: [],
 })

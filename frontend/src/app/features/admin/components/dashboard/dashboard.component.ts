@@ -25,8 +25,8 @@ import { CommonModule } from '@angular/common';
     MatCardModule,
     MatTableModule,
     ChartModule,
-    CommonModule
-  ]
+    CommonModule,
+  ],
 })
 export class DashboardComponent implements OnInit {
   totalCategorias!: number;
@@ -50,9 +50,9 @@ export class DashboardComponent implements OnInit {
       datasets: [
         {
           data: [300, 50, 100, 200, 80],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#F7464A']
-        }
-      ]
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#F7464A'],
+        },
+      ],
     };
 
     this.oficiosChartData = {
@@ -60,16 +60,26 @@ export class DashboardComponent implements OnInit {
       datasets: [
         {
           data: [120, 100, 140, 60, 90],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#F7464A']
-        }
-      ]
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#F7464A'],
+        },
+      ],
     };
 
     // Datos de usuarios de ejemplo
     this.ultimosUsuarios = [
-      { nombre: 'Juan Pérez', email: 'juan@example.com', rol: 'Solicitante', fechaRegistro: new Date() },
+      {
+        nombre: 'Juan Pérez',
+        email: 'juan@example.com',
+        rol: 'Solicitante',
+        fechaRegistro: new Date(),
+      },
       { nombre: 'Ana Gómez', email: 'ana@example.com', rol: 'Oferente', fechaRegistro: new Date() },
-      { nombre: 'Carlos López', email: 'carlos@example.com', rol: 'Admin', fechaRegistro: new Date() }
+      {
+        nombre: 'Carlos López',
+        email: 'carlos@example.com',
+        rol: 'Admin',
+        fechaRegistro: new Date(),
+      },
     ];
   }
 }

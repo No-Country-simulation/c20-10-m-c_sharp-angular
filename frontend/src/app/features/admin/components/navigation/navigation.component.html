@@ -19,7 +19,13 @@
 <div class="content">
   <p-menubar>
     <ng-template pTemplate="start">
-      <button *ngIf="isHandset" type="button" pButton icon="pi pi-bars" (click)="toggleSidebar()" label="Menu"></button>
+      <button
+        *ngIf="isHandset"
+        type="button"
+        pButton
+        icon="pi pi-bars"
+        (click)="toggleSidebar()"
+        label="Menu"></button>
     </ng-template>
     <ng-template pTemplate="end">
       <span>Administrador</span>

@@ -1,6 +1,7 @@
 <!-- Icono de desplazamiento a la izquierda -->
 <div class="scroll-icon">
-  <i class="pi pi-chevron-left"></i> <!-- Icono de desplazamiento a la izquierda -->
+  <i class="pi pi-chevron-left"></i>
+  <!-- Icono de desplazamiento a la izquierda -->
 </div>
 
 <!-- Contenedor principal de la publicación -->
@@ -12,12 +13,14 @@
 
   <!-- Sección de calificación numérica y estrellas -->
   <div class="rating">
-    <span class="rating-number">4.5</span> <!-- Valor numérico -->
+    <span class="rating-number">4.5</span>
+    <!-- Valor numérico -->
     <span class="star">★</span>
     <span class="star">★</span>
     <span class="star">★</span>
     <span class="star">★</span>
-    <span class="star">☆</span> <!-- Ejemplo de una calificación de 4.5/5 -->
+    <span class="star">☆</span>
+    <!-- Ejemplo de una calificación de 4.5/5 -->
   </div>
 
   <!-- Información del precio y enlace Ver Perfil -->
@@ -28,23 +31,26 @@
 
   <!-- Imágenes desplazables -->
   <div class="image-slider">
-    <img *ngFor="let image of images; let i = index" [src]="image" [alt]="'Imagen ' + (i + 1)">
+    <img *ngFor="let image of images; let i = index" [src]="image" [alt]="'Imagen ' + (i + 1)" />
   </div>
 
   <!-- Indicadores de imagen actual -->
   <div class="image-indicators">
-    <span *ngFor="let image of images; let i = index" [class]="getIndicatorStyle(i)" (click)="setActiveImage(i)"></span>
+    <span
+      *ngFor="let image of images; let i = index"
+      [class]="getIndicatorStyle(i)"
+      (click)="setActiveImage(i)"></span>
   </div>
-
 
   <!-- Descripción del servicio -->
   <div class="service-description">
     <h3>Descripción</h3>
-    <p>PLOMERIA, GAS Y DESTAPACIONES ***Tu Casa Sin Problemas***PRESUPUESTOS ON LINE AL INSTANTE EN NUESTRO
-      WHATSAPP.CONSULTAS ÚNICAMENTE DE 9 A 18 HS.URGENCIAS LAS 24HS TODOS LOS DIAS.Atendemos toda la capital federal
-      y zona
-      norte de Bs. As... Consulte si llegamos a su zonaTrabajos garantidos. Realizamos factura consumidor final.o,
-      cambio..¨</p>
+    <p>
+      PLOMERIA, GAS Y DESTAPACIONES ***Tu Casa Sin Problemas***PRESUPUESTOS ON LINE AL INSTANTE EN
+      NUESTRO WHATSAPP.CONSULTAS ÚNICAMENTE DE 9 A 18 HS.URGENCIAS LAS 24HS TODOS LOS DIAS.Atendemos
+      toda la capital federal y zona norte de Bs. As... Consulte si llegamos a su zonaTrabajos
+      garantidos. Realizamos factura consumidor final.o, cambio..¨
+    </p>
   </div>
 
   <!-- Métodos de pago aceptados con checkboxes marcadas -->
@@ -53,7 +59,7 @@
     <ul>
       <li *ngFor="let method of paymentMethods">
         <label>
-          <input type="checkbox" [checked]="method.selected" disabled>
+          <input type="checkbox" [checked]="method.selected" disabled />
           {{ method.name }}
         </label>
       </li>

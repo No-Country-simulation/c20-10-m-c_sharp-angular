@@ -5,13 +5,13 @@ export interface Message {
 }
 
 export interface MessageResponse {
-  id:        number;
-  message:   string;
+  id: number;
+  message: string;
   createdAt: string;
-  userId:    string;
+  userId: string;
 }
 
 export interface MessageCreatedResponse {
-  "chatId": number,
-  "messageId": number
+  chatId: number;
+  messageId: number;
 }

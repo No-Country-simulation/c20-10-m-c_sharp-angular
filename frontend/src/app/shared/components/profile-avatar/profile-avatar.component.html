@@ -6,27 +6,27 @@
       [label]="user()?.firstName ? user()!.firstName.at(0) : 'U'"
       size="large"
       shape="circle"
-      [style]="getStyleAvatar(user()?.firstName ? user()!.firstName + ' ' + user()!.lastName : 'Usuario Sin Nombre')"
-    ></p-avatar>
+      [style]="
+        getStyleAvatar(
+          user()?.firstName ? user()!.firstName + ' ' + user()!.lastName : 'Usuario Sin Nombre'
+        )
+      "></p-avatar>
   }
   <div class="flex flex-column">
-      <span class="font-bold text-lg">
-          {{ user()?.firstName }} {{ user()?.lastName }}
-      </span>
-      <span class="font-light text-xs pt-1">
-          {{ user()?.email }}
-      </span>
+    <span class="font-bold text-lg"> {{ user()?.firstName }} {{ user()?.lastName }} </span>
+    <span class="font-light text-xs pt-1">
+      {{ user()?.email }}
+    </span>
     <div class="flex flex-column mt-2 gap-1">
       <p-rating [ngModel]="ratingValue" [readonly]="true" [cancel]="false"></p-rating>
       <a
         class="font-medium cursor-pointer hover:text-primary transition-all transition-duration-200 no-underline text-xs"
         [routerLink]="[
           !isPrivate
-              ? '/' + ROUTES_PATH.DASHBOARD_HOME + '/' + ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_USER
-              : '/' + ROUTES_PATH.DASHBOARD_HOME + '/' + ROUTES_PATH.DASHBOARD_PROFILE,
-          !isPrivate ? offererParamId() : []
-        ]"
-      >
+            ? '/' + ROUTES_PATH.DASHBOARD_HOME + '/' + ROUTES_PATH.DASHBOARD_PUBLIC_PROFILE_USER
+            : '/' + ROUTES_PATH.DASHBOARD_HOME + '/' + ROUTES_PATH.DASHBOARD_PROFILE,
+          !isPrivate ? offererParamId() : [],
+        ]">
         {{ message }}
       </a>
     </div>

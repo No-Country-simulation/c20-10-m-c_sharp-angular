@@ -35,7 +35,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-
 }
 
 /* Estilo del área de texto */
@@ -76,7 +75,6 @@
   object-fit: cover;
 }
 
-
 /* Título de la tarjeta */
 .card-title {
   position: absolute;
@@ -100,7 +98,6 @@
   opacity: 0.5;
   pointer-events: none;
 }
-
 
 /* Flexbox centrado con fondo gris claro */
 .flex {
@@ -135,7 +132,6 @@
 
 .p-button-success:hover {
   background-color: #e0a517;
-
 }
 
 .mb12 {
@@ -149,7 +145,6 @@
 /* Configuración responsive */
 @media (max-width: 810px) {
   .justify-content-center {
-
     margin-left: 10%;
     margin-right: 10%;
     margin-bottom: 10%;
@@ -175,7 +170,6 @@
 
   .custom-text-area {
     width: 100%;
-
   }
 
   .p-button-success {
@@ -188,7 +182,6 @@
 
   .p-button-success:hover {
     background-color: #e0a517;
-
   }
 }
 
@@ -196,7 +189,6 @@
   .grid-category {
     grid-template-columns: 1fr;
     gap: 10px;
-
   }
 
   .card {
@@ -210,8 +202,6 @@
 
   .custom-text-area {
     width: 100%;
-
-
   }
 
   .custom-file-upload {
@@ -238,6 +228,5 @@
 
   .p-button-success:hover {
     background-color: #e0a517;
-
   }
 }

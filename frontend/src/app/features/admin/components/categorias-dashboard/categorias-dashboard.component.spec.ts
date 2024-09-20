@@ -1,14 +1,14 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { CategoriasDashboardComponent} from './categorias-dashboard.component';
+import { CategoriasDashboardComponent } from './categorias-dashboard.component';
 
 describe('CategoriasDashboardComponent', () => {
-  let component:CategoriasDashboardComponent;
+  let component: CategoriasDashboardComponent;
   let fixture: ComponentFixture<CategoriasDashboardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule]
+      imports: [NoopAnimationsModule],
     }).compileComponents();
   }));
 

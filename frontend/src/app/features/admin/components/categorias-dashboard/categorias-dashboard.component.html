@@ -3,20 +3,19 @@
   <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Nombre de la Categoría</mat-label>
-      <input matInput formControlName="nombre" required>
+      <input matInput formControlName="nombre" required />
     </mat-form-field>
-  
+
     <mat-form-field>
       <mat-label>Descripción</mat-label>
       <textarea matInput formControlName="descripcion"></textarea>
     </mat-form-field>
-  
+
     <button mat-raised-button color="primary" type="submit">Agregar Categoría</button>
   </form>
-    <mat-card *ngFor="let categoria of categorias">
-      <mat-card-title>{{ categoria.name }}</mat-card-title>
-      <mat-card-content>{{ categoria.description }}</mat-card-content>
-      <button mat-button color="warn" (click)="deleteCategoria(categoria)">Eliminar</button>
-    </mat-card>
-    
- 
+  <mat-card *ngFor="let categoria of categorias">
+    <mat-card-title>{{ categoria.name }}</mat-card-title>
+    <mat-card-content>{{ categoria.description }}</mat-card-content>
+    <button mat-button color="warn" (click)="deleteCategoria(categoria)">Eliminar</button>
+  </mat-card>
+</div>

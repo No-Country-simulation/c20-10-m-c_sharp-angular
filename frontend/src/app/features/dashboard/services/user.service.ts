@@ -7,10 +7,9 @@ import { Message, MessageCreatedResponse } from '../../../core/interfaces/messag
 import { ROUTES_PATH } from '../../../core/routes';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
   private userApi = inject(UserApiService);
   private authApiService = inject(AuthService);
   private jwtService = inject(JwtService);
@@ -20,10 +19,10 @@ export class UserService {
 
   getUserData(): Observable<User> {
     return this.userApi.getUserData().pipe(
-      tap((user) => {
+      tap(user => {
         this.user.set(user);
       }),
-      catchError((error) => {
+      catchError(error => {
         console.error('Error al obtener los datos de usuario', error);
         this.authApiService.logout();
 
@@ -38,19 +37,23 @@ export class UserService {
 
   getUserMessagesFromOneUser(idUser: string): Observable<UserMessages> {
     return this.userApi.getUserMessagesFromOneUser(idUser).pipe(
-      catchError((error) => {
-
-        if( error.includes('404') ) throwError(() => ({ 'errorStatus': 404, 'errorMessage': 'Mensajes del usuario no encontrados' }));
+      catchError(error => {
+        if (error.includes('404'))
+          throwError(() => ({
+            errorStatus: 404,
+            errorMessage: 'Mensajes del usuario no encontrados',
+          }));
 
         return throwError(() => error);
       })
     );
   }
 
-  getAllUserMessages(): Observable<UserMessages[]> { //Promise<any>
+  getAllUserMessages(): Observable<UserMessages[]> {
+    //Promise<any>
     return this.userApi.getAllUserMessages().pipe(
-      tap( userMessages => this.userMessages.set(userMessages) ),
-      catchError((error) => {
+      tap(userMessages => this.userMessages.set(userMessages)),
+      catchError(error => {
         console.error('Error al obtener la lista de chats', error);
         return throwError(() => error);
       })
@@ -58,9 +61,8 @@ export class UserService {
   }
 
   addNewUserMessage(idUser: string, message: Message): Observable<MessageCreatedResponse> {
-
     return this.userApi.addNewUserMessage(idUser, message).pipe(
-      catchError((error) => {
+      catchError(error => {
         console.error('Error al agregar el mensaje', error);
         return throwError(() => 'Error al agregar el mensaje');
       })
@@ -69,7 +71,7 @@ export class UserService {
 
   getProfilesList(): Observable<User[]> {
     return this.userApi.getProfilesList().pipe(
-      catchError((error) => {
+      catchError(error => {
         console.error('Error la lista de perfiles de usuario', error);
         this.jwtService.clearTokens();
 
@@ -77,5 +79,4 @@ export class UserService {
       })
     );
   }
-
 }

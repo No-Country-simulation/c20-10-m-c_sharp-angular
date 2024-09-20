@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlacesService {
-
   // Variable que almacena la ubicación del usuario (longitud, latitud) o undefined si no está disponible
   public useLocation?: [number, number];
 
@@ -29,7 +28,7 @@ export class PlacesService {
           resolve(this.useLocation);
         },
         // En caso de error, muestra una alerta y rechaza la promesa
-        (err) => {
+        err => {
           alert('No se pudo obtener la geolocalización');
           console.log(err);
           reject();

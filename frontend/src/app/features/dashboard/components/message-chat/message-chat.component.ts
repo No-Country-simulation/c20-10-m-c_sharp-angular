@@ -47,7 +47,6 @@ import { getStyleAvatar } from '../../../../shared/utils/stringToColor';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageChatComponent implements OnInit {
-
   protected readonly ROUTES_PATH = ROUTES_PATH;
   protected readonly getStyleAvatar = getStyleAvatar;
 
@@ -58,7 +57,7 @@ export class MessageChatComponent implements OnInit {
   @ViewChild('textChat') textChat!: ElementRef;
 
   offererParamId = signal<string | null>(null);
-  offererMessages = signal<UserMessages | undefined>( undefined );
+  offererMessages = signal<UserMessages | undefined>(undefined);
 
   messageNotData = [{ severity: 'info', summary: 'No hay mensajes que mostrar', detail: '' }];
 
@@ -66,29 +65,31 @@ export class MessageChatComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.offererParamId.set(id);
 
-    this.route.paramMap.subscribe( params => {
+    this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.offererParamId.set(id);
-      this.userService.getUserMessagesFromOneUser(id!).pipe(
-        tap( usersMessages => {
-          this.offererMessages.set(usersMessages);
-        }),
-        catchError((error) => {
-          this.offererMessages.set(undefined);
-          return throwError(() => error);
-        })
-      ).subscribe();
+      this.userService
+        .getUserMessagesFromOneUser(id!)
+        .pipe(
+          tap(usersMessages => {
+            this.offererMessages.set(usersMessages);
+          }),
+          catchError(error => {
+            this.offererMessages.set(undefined);
+            return throwError(() => error);
+          })
+        )
+        .subscribe();
     });
 
-    if(!id) {
+    if (!id) {
       this.router.navigate(['/', ROUTES_PATH.DASHBOARD_HOME, ROUTES_PATH.DASHBOARD_MESSAGES, '']);
       return;
     }
   }
 
   getInputValue() {
-
-    if(!this.textChat.nativeElement.value) {
+    if (!this.textChat.nativeElement.value) {
       return;
     }
 
@@ -96,25 +97,29 @@ export class MessageChatComponent implements OnInit {
       message: this.textChat.nativeElement.value,
       createdAt: new Date(),
       userId: this.userService.user()!.id,
-    }
+    };
 
-    this.userService.addNewUserMessage(this.offererParamId()!, message).pipe(
-      map( res => res),
-      switchMap( () => this.userService.getUserMessagesFromOneUser(this.offererParamId()!) ),
-    ).subscribe({
-      next: (res) => {
-        this.offererMessages.set(res);
-        this.textChat.nativeElement.value = '';
-      },
-      error: () => {
-        this.offererParamId.set(null);
-      }
-    });
+    this.userService
+      .addNewUserMessage(this.offererParamId()!, message)
+      .pipe(
+        map(res => res),
+        switchMap(() => this.userService.getUserMessagesFromOneUser(this.offererParamId()!))
+      )
+      .subscribe({
+        next: res => {
+          this.offererMessages.set(res);
+          this.textChat.nativeElement.value = '';
+        },
+        error: () => {
+          this.offererParamId.set(null);
+        },
+      });
   }
 
   onGetUserMessages() {
-    this.userService.getUserMessagesFromOneUser(this.offererParamId()!).pipe(
-      tap( res => this.offererMessages.set(res) ),
-    ).subscribe();
+    this.userService
+      .getUserMessagesFromOneUser(this.offererParamId()!)
+      .pipe(tap(res => this.offererMessages.set(res)))
+      .subscribe();
   }
 }

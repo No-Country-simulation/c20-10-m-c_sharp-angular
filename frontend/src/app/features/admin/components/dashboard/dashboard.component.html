@@ -35,7 +35,6 @@
       <mat-card-title>Distribución de Categorías</mat-card-title>
       <mat-card-content>
         <p-chart type="pie" [data]="categoriasChartData"></p-chart>
-
       </mat-card-content>
     </mat-card>
   </div>
@@ -44,10 +43,7 @@
     <mat-card>
       <mat-card-title>Distribución de Oficios</mat-card-title>
       <mat-card-content>
-        <p-chart baseChart
-                [data]="oficiosChartData"
-                [type]="'doughnut'">
-        </p-chart>
+        <p-chart baseChart [data]="oficiosChartData" [type]="'doughnut'"> </p-chart>
       </mat-card-content>
     </mat-card>
   </div>
@@ -58,27 +54,27 @@
     <mat-card-content>
       <table mat-table [dataSource]="ultimosUsuarios" class="mat-elevation-z8">
         <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef> Nombre </th>
-          <td mat-cell *matCellDef="let user"> {{user.nombre}} </td>
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let user">{{ user.nombre }}</td>
         </ng-container>
 
         <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef> Email </th>
-          <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
         </ng-container>
 
         <ng-container matColumnDef="rol">
-          <th mat-header-cell *matHeaderCellDef> Rol </th>
-          <td mat-cell *matCellDef="let user"> {{user.rol}} </td>
+          <th mat-header-cell *matHeaderCellDef>Rol</th>
+          <td mat-cell *matCellDef="let user">{{ user.rol }}</td>
         </ng-container>
 
         <ng-container matColumnDef="fechaRegistro">
-          <th mat-header-cell *matHeaderCellDef> Fecha de Registro </th>
-          <td mat-cell *matCellDef="let user"> {{user.fechaRegistro | date}} </td>
+          <th mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
+          <td mat-cell *matCellDef="let user">{{ user.fechaRegistro | date }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </mat-card-content>
   </mat-card>

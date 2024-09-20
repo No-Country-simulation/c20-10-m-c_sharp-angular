@@ -9,7 +9,7 @@ describe('OficiosDashboardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule]
+      imports: [NoopAnimationsModule],
     }).compileComponents();
   }));
 

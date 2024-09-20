@@ -29,7 +29,7 @@ export class CategoriasService {
 
   // Método para eliminar una categoría por ID
   deleteCategoria(id: number): Observable<void> {
-    this.categorias = this.categorias.filter((c) => c.id !== id);
+    this.categorias = this.categorias.filter(c => c.id !== id);
     return of();
   }
 }

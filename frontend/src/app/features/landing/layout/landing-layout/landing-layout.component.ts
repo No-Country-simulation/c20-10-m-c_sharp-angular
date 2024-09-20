@@ -26,7 +26,6 @@ import { LandingMenuComponent } from '../landing-menu/landing-menu.component';
     <router-outlet></router-outlet>
 
     <app-landing-footer *ngIf="showFooter"></app-landing-footer>
-
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -34,10 +33,10 @@ export default class LandingLayoutComponent {
   public showFooter = true;
 
   constructor(private router: Router) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      this.showFooter = !event.url.includes('/dashboard');
-    });
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.showFooter = !event.url.includes('/dashboard');
+      });
   }
 }

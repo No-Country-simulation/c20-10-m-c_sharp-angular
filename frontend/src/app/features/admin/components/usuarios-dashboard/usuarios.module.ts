@@ -13,26 +13,26 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 //import { UsuariosDashboardComponent } from './usuarios-dashboard.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		UsuariosDemoRoutingModule,
-		FormsModule,
-		TableModule,
-		RatingModule,
-		ButtonModule,
-		SliderModule,
-		InputTextModule,
-		ToggleButtonModule,
-		RippleModule,
-		MultiSelectModule,
-		DropdownModule,
-		ProgressBarModule,
-		ToastModule
-	],
-	declarations: [UsuariosDashboardDemoComponent]
+  imports: [
+    CommonModule,
+    UsuariosDemoRoutingModule,
+    FormsModule,
+    TableModule,
+    RatingModule,
+    ButtonModule,
+    SliderModule,
+    InputTextModule,
+    ToggleButtonModule,
+    RippleModule,
+    MultiSelectModule,
+    DropdownModule,
+    ProgressBarModule,
+    ToastModule,
+  ],
+  declarations: [UsuariosDashboardDemoComponent],
 })
-export class UsuariosDemoComponent { }
+export class UsuariosDemoComponent {}
