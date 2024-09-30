@@ -1,0 +1,280 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "frontend": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/frontend",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.min.css",
+              "src/styles.css",
+              {
+                "input": "node_modules/primeng/resources/themes/lara-dark-blue/theme.css",
+                "bundleName": "lara-dark-blue",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+                "bundleName": "lara-light-blue",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/lara-dark-indigo/theme.css",
+                "bundleName": "lara-dark-indigo",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/lara-light-indigo/theme.css",
+                "bundleName": "lara-light-indigo",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/lara-dark-purple/theme.css",
+                "bundleName": "lara-dark-purple",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/lara-light-purple/theme.css",
+                "bundleName": "lara-light-purple",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/lara-dark-teal/theme.css",
+                "bundleName": "lara-dark-teal",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/lara-light-teal/theme.css",
+                "bundleName": "lara-light-teal",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-amber/theme.css",
+                "bundleName": "aura-dark-amber",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-amber/theme.css",
+                "bundleName": "aura-light-amber",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-blue/theme.css",
+                "bundleName": "aura-dark-blue",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-blue/theme.css",
+                "bundleName": "aura-light-blue",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-cyan/theme.css",
+                "bundleName": "aura-dark-cyan",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-cyan/theme.css",
+                "bundleName": "aura-light-cyan",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-green/theme.css",
+                "bundleName": "aura-dark-green",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-green/theme.css",
+                "bundleName": "aura-light-green",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-indigo/theme.css",
+                "bundleName": "aura-dark-indigo",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-indigo/theme.css",
+                "bundleName": "aura-light-indigo",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-lime/theme.css",
+                "bundleName": "aura-dark-lime",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-lime/theme.css",
+                "bundleName": "aura-light-lime",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-noir/theme.css",
+                "bundleName": "aura-dark-noir",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-noir/theme.css",
+                "bundleName": "aura-light-noir",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-pink/theme.css",
+                "bundleName": "aura-dark-pink",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-pink/theme.css",
+                "bundleName": "aura-light-pink",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-purple/theme.css",
+                "bundleName": "aura-dark-purple",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-purple/theme.css",
+                "bundleName": "aura-light-purple",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-dark-teal/theme.css",
+                "bundleName": "aura-dark-teal",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/aura-light-teal/theme.css",
+                "bundleName": "aura-light-teal",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/md-dark-indigo/theme.css",
+                "bundleName": "md-dark-indigo",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/md-light-indigo/theme.css",
+                "bundleName": "md-light-indigo",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/md-dark-deeppurple/theme.css",
+                "bundleName": "md-dark-deeppurple",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
+                "bundleName": "md-light-deeppurple",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/bootstrap4-dark-blue/theme.css",
+                "bundleName": "bootstrap4-dark-blue",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css",
+                "bundleName": "bootstrap4-light-blue",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/bootstrap4-dark-purple/theme.css",
+                "bundleName": "bootstrap4-dark-purple",
+                "inject": false
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/bootstrap4-light-purple/theme.css",
+                "bundleName": "bootstrap4-light-purple",
+                "inject": false
+              }
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "frontend:build:production"
+            },
+            "development": {
+              "buildTarget": "frontend:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "frontend:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "schematicCollections": ["@angular-eslint/schematics"],
+    "analytics": "798c58b5-c5fd-4f69-a4eb-6ac7a331826b"
+  }
+}

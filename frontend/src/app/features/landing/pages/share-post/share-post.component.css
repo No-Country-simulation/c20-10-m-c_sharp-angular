@@ -1,0 +1,28 @@
+.scroll-icon i {
+  cursor: pointer;
+}
+
+.ver-perfil {
+  font-weight: bold;
+  text-decoration: underline;
+  float: right;
+}
+
+.contenedor-boton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.price-and-profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-size: 1rem;
+}
+
+.public-container {
+  padding-left: 20px;
+}

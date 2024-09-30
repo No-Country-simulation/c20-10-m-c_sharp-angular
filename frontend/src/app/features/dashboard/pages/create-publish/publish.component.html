@@ -1,0 +1,171 @@
+<!-- Formulario que maneja el evento de envío a través de (ngSubmit)="onSubmit()" -->
+<form class="justify-content-center" (ngSubmit)="onSubmit()">
+  <!-- Tarjeta de PrimeNG que contiene el formulario para publicar un servicio -->
+  <p-card class="text-category">
+    <!-- Sección de categorías -->
+    <div class="center">
+      <h2 class="tittle-1">¿A qué categoría pertenece tu servicio?</h2>
+
+      <!-- Contenedor grid para organizar las categorías en 3 columnas -->
+      <div class="grid-category">
+        <!-- Categoría Electricidad con Ripple effect -->
+        <div
+          pRipple
+          class="card styled-box-green shadow-2 cursor-pointer"
+          [ngClass]="{
+            selected: selectedCategory === 'Electricidad',
+            disabled: selectedCategory && selectedCategory !== 'Electricidad',
+          }"
+          (click)="selectCategory('Electricidad')">
+          <!-- Al hacer clic, selecciona o deselecciona la categoría -->
+          <img
+            src="assets/images/publish-categories/electricidad.jpg"
+            alt="Electricidad"
+            class="card-image" />
+          <!-- Imagen representativa de la categoría -->
+          <p class="card-title">Electricidad</p>
+          <!-- Título de la categoría -->
+        </div>
+
+        <!-- Categoría Plomería -->
+        <div
+          pRipple
+          class="card styled-box-green shadow-2 cursor-pointer"
+          [ngClass]="{
+            selected: selectedCategory === 'Plomería',
+            disabled: selectedCategory && selectedCategory !== 'Plomería',
+          }"
+          (click)="selectCategory('Plomería')">
+          <img
+            src="assets/images/publish-categories/plomero.jpg"
+            alt="Plomería"
+            class="card-image" />
+          <p class="card-title">Plomería</p>
+        </div>
+
+        <!-- Categoría Jardinería -->
+        <div
+          pRipple
+          class="card styled-box-green shadow-2 cursor-pointer"
+          [ngClass]="{
+            selected: selectedCategory === 'Jardinería',
+            disabled: selectedCategory && selectedCategory !== 'Jardinería',
+          }"
+          (click)="selectCategory('Jardinería')">
+          <img
+            src="assets/images/publish-categories/jardinero.jpg"
+            alt="Jardinería"
+            class="card-image" />
+          <p class="card-title">Jardinería</p>
+        </div>
+
+        <!-- Categoría Cuidados -->
+        <div
+          pRipple
+          class="card styled-box-green shadow-2 cursor-pointer"
+          [ngClass]="{
+            selected: selectedCategory === 'Cuidados',
+            disabled: selectedCategory && selectedCategory !== 'Cuidados',
+          }"
+          (click)="selectCategory('Cuidados')">
+          <img
+            src="assets/images/publish-categories/cuidados.jpg"
+            alt="Cuidados"
+            class="card-image" />
+          <p class="card-title">Cuidados</p>
+        </div>
+
+        <!-- Categoría Pintura -->
+        <div
+          pRipple
+          class="card styled-box-green shadow-2 cursor-pointer"
+          [ngClass]="{
+            selected: selectedCategory === 'Pintura',
+            disabled: selectedCategory && selectedCategory !== 'Pintura',
+          }"
+          (click)="selectCategory('Pintura')">
+          <img
+            src="assets/images/publish-categories/pintura.jpg"
+            alt="Pintura"
+            class="card-image" />
+          <p class="card-title">Pintura</p>
+        </div>
+
+        <!-- Categoría Otros -->
+        <div
+          pRipple
+          class="card styled-box-green shadow-2 cursor-pointer"
+          [ngClass]="{
+            selected: selectedCategory === 'Otros',
+            disabled: selectedCategory && selectedCategory !== 'Otros',
+          }"
+          (click)="selectCategory('Otros')">
+          <img src="assets/images/publish-categories/otros.jpg" alt="Otros" class="card-image" />
+          <p class="card-title">Otros</p>
+        </div>
+      </div>
+
+      <!-- Sección para ingresar información adicional sobre el servicio -->
+      <div class="text-area">
+        <h3 class="tittle-2">Ingresar información</h3>
+        <div class="text-area-flex">
+          <!-- Textarea para ingresar detalles del servicio -->
+          <textarea pInputTextarea [autoResize]="true" rows="5" class="custom-text-area"></textarea>
+        </div>
+      </div>
+
+      <!-- Campo de entrada para ingresar la ubicación del servicio -->
+      <h3 class="tittle-2">Ubicación en el mapa</h3>
+      <input
+        class="input mb12"
+        name="address"
+        autocomplete="billing address-line1"
+        placeholder="Ubicación" />
+
+      <!-- Sección para subir imágenes relacionadas con el servicio -->
+      <h3 class="tittle-2">Sube imágenes de tu trabajo</h3>
+      <div class="flex upload-images">
+        <p-toast />
+        <!-- Componente de PrimeNG para mostrar mensajes (toast) -->
+        <p-fileUpload
+          name="demo[]"
+          url="https://www.primefaces.org/cdn/api/upload.php"
+          (onUpload)="onUpload($event)"
+          [multiple]="true"
+          accept="image/*"
+          maxFileSize="1000000"
+          styleClass="custom-file-upload">
+          <!-- Plantilla personalizada para mostrar archivos subidos -->
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <!-- Muestra la lista de archivos subidos -->
+              <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </div>
+
+      <!-- Sección para seleccionar un método de pago -->
+      <h3 class="tittle-2">Métodos de pago</h3>
+      <div class="flex-column gap-3">
+        <div *ngFor="let method of paymentMethods" class="field-checkbox">
+          <p-checkbox
+            [(ngModel)]="selectedPaymentMethod"
+            [label]="method.name"
+            name="group"
+            [value]="method"></p-checkbox>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón para crear la publicación -->
+    <div class="button-flex">
+      <button
+        pButton
+        pRipple
+        label="Crear Publicación"
+        class="p-button-success"
+        (click)="navigateTo()"></button>
+    </div>
+  </p-card>
+</form>

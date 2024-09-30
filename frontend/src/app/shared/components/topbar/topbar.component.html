@@ -1,0 +1,70 @@
+<p-toolbar [style]="{ padding: '.5rem', 'background-color': '#F3CC00', 'text-decoration': 'none' }">
+  <ng-template pTemplate="start">
+    <img src="./assets/images/contractapp-logo.png" alt="logo" height="150" width="150" />
+
+    <p-splitButton
+      label="Explorer"
+      [model]="items"
+      (onClick)="save('info')"
+      raised
+      severity="secondary" />
+  </ng-template>
+
+  <!-- <ng-template pTemplate="center">
+    <a [routerLink]="'/'" class="no-underline font-semibold text-2xl" style="color: var(--text-color)">
+      <p>ContratApp </p>
+    </a>
+  </ng-template>-->
+
+  <ng-template pTemplate="end">
+    <p-button
+      label="¿Que es CA?"
+      [link]="true"
+      class="no-underline font-bold"
+      routerLink="/auth/login" />
+    <p-button
+      label="Iniciar Sesión"
+      [link]="true"
+      class="no-underline font-bold"
+      routerLink="/auth/login" />
+    <a
+      routerLink="/auth/register"
+      target="_blank"
+      severity="secondary"
+      rel="noopener noreferrer"
+      class="p-button font-bold"
+      style="text-decoration: none">
+      Registrarse
+    </a>
+
+    <div class="flex flex-wrap px-4">
+      <button
+        pButton
+        type="button"
+        (click)="visibleSidebarTheme = true"
+        icon="pi pi-wrench"></button>
+    </div>
+  </ng-template>
+</p-toolbar>
+
+<p-sidebar [(visible)]="visibleSidebarTheme" position="right" [baseZIndex]="10000">
+  <h2>Temas</h2>
+  <div class="flex flex-column">
+    <div class="flex gap-1">
+      <p-button label="Modo oscuro" (onClick)="themesService.setThemeMode('dark')" />
+      <p-button label="Modo claro" (onClick)="themesService.setThemeMode('light')" />
+    </div>
+    @for (themes of themesService.themesList; track $index) {
+      <h3>{{ themes.title }}</h3>
+      <div class="flex flex-wrap align-self-start gap-2">
+        @for (theme of themes.colors; track $index) {
+          <p-button
+            outlined="true"
+            label="{{ theme.color }}"
+            styleClass="{{ theme.color }}"
+            (onClick)="themesService.setTheme(themes.prefix, theme.color)" />
+        }
+      </div>
+    }
+  </div>
+</p-sidebar>
